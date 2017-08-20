@@ -1,2 +1,2 @@
 <?php
-define( 'IN_DEV', TRUE );
+define( 'IN_DEV', FALSE );

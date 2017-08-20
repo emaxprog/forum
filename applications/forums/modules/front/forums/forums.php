@@ -402,7 +402,7 @@ class _forums extends \IPS\Dispatcher\Controller
 			}
 			
 			$newQuestions = \IPS\forums\Topic::getItemsWithPermission( $newQuestionsWhere, 'start_date DESC', 5 );			
-			$forumOutput = \IPS\Theme::i()->getTemplate( 'forums' )->qaForum( (string) $table, $popularQuestions, $newQuestions, $featuredTopic, $forum );
+			$forumOutput = \IPS\Theme::i()->getTemplate( 'forums' )->qaForum( (string) $table, $popularQuestions, $newQuestions, $featuredTopic,$category=312, $forum );
 		}
 		else if( $forum->sub_can_post )
 		{
