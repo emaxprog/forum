@@ -1,0 +1,84 @@
+<ips:template parameters="$items, $menus" />
+
+<div data-controller='core.admin.system.menuManager'>
+	<div class='cMenuManager_preview ipsResponsive_hidePhone' data-role='preview'>
+		<h2 class='ipsType_reset'>
+			<a href='#' data-action='previewToggle' class='ipsPos_right'>
+				<span class='ipsHide' data-role='closePreview'>&times;</span>
+				<i class='fa fa-chevron-up' data-role='openPreview'></i>
+			</a>
+			{lang="menu_manager_live_preview"}
+			&nbsp;&nbsp;&nbsp;
+			{{$themes = \IPS\Theme::getThemesWithAccessPermission();}}
+			{{if count ( $themes ) > 1 }}
+				<a href='#elPreviewTheme_menu' id='elPreviewTheme' data-ipsMenu data-ipsMenu-above class='ipsType_medium ipsType_light'>{lang="menu_manager_preview_theme"} <i class='fa fa-caret-down'></i></a>
+				<ul id='elPreviewTheme_menu' class='ipsMenu ipsMenu_selectable ipsHide'>
+				{{foreach $themes as $id => $set }}
+					<li class='ipsMenu_item{{if ( isset( \IPS\Request::i()->previewThemeId ) and $id == \IPS\Request::i()->previewThemeId ) or ( !isset( \IPS\Request::i()->previewThemeId ) and $id == \IPS\Theme::i()->id )}} ipsMenu_itemChecked{{endif}}'>
+						<a href="{url="app=core&module=applications&controller=menu&previewThemeId={$id}"}">{$set->_title}</a>
+					</li>
+				{{endforeach}}
+				</ul>
+			{{endif}}
+		</h2>
+		<div data-role='previewBody'>
+			{{if $previewThemeId = \IPS\Request::i()->previewThemeId}}
+				<iframe src="{url="app=core&module=system&controller=ajax&do=menuPreview&theme={$previewThemeId}" base="front"}"></iframe>
+			{{else}}
+				<iframe src="{url="app=core&module=system&controller=ajax&do=menuPreview" base="front"}"></iframe>
+			{{endif}}
+		</div>
+	</div>
+	<div class='cMenuManager'>
+		<div class='ipsColumns ipsColumns_collapsePhone'>
+			<div class='ipsColumn ipsColumn_veryWide cMenuManager_column'>
+				<div class='cMenuManager_editorWrapper'>
+					<div class='cMenuManager_main' data-manager='main'>
+						<div class='ipsSpacer_bottom'>
+							<p class='ipsType_reset ipsType_light ipsType_medium ipsType_center ipsSpacer_bottom ipsSpacer_half'>
+								{lang="menu_manager_publish_desc"}
+							</p>
+							<a href='{url="app=core&module=applications&controller=menu&do=publish"}' class='ipsButton ipsButton_primary ipsButton_fullWidth ipsButton_medium {{if ( isset( \IPS\Data\Store::i()->frontNavigation ) && \IPS\Data\Store::i()->frontNavigation == \IPS\core\FrontNavigation::frontNavigation( TRUE ) )}}ipsButton_disabled{{endif}}' data-action='publishMenu'><i class='fa fa-cloud-upload'></i> {lang="menu_manager_publish"}</a>
+						</div>
+						<hr class='ipsHr'>
+						<ul class='ipsList_inline ipsClearfix'>
+							<li class='ipsPos_right'>
+								<a href="{url="app=core&module=applications&controller=menu&do=form&parent=0"}" class='ipsButton ipsButton_verySmall ipsButton_alternate' data-ipsTooltip title='{lang="add_menu_item"}' data-action='newItem'>{lang="add_menu_item_short"}</a>
+							</li>
+						</ul>
+						<h2 class='ipsType_sectionHead ipsSpacer_top ipsSpacer_half'>
+							{lang="menu_manager_main_menu"}
+						</h2>
+
+						<div class='cMenuManager_root'>
+							<ol data-bar-id='0' class='cMenuManager_branch'>
+								{{foreach $items[0] as $id => $item}}
+									<li id='menu_{$id}' data-role='menuNode'>
+										{template="menuItem" group="applications" app="core" params="$item, $id"}
+										<ol>
+											{{if isset( $items[ $id ] ) && count( $items[ $id ] )}}
+												{{foreach $items[ $id ] as $cid => $citem}}
+													<li id='menu_{$cid}' data-role='menuNode'>
+														{template="menuItem" group="applications" app="core" params="$citem, $cid"}
+													</li>
+												{{endforeach}}
+											{{endif}}
+										</ol>
+									</li>
+								{{endforeach}}
+							</ol>
+						</div>
+					</div>
+					<div class='cMenuManager_dropdown ipsHide' data-manager='dropdown'>
+						{{foreach $menus as $id => $item}}
+							{template="menuManagerDropdown" group="applications" app="core" params="$item, $id, 0"}
+						{{endforeach}}
+					</div>
+				</div>
+			</div>
+			<div class='ipsColumn ipsColumn_fluid cMenuManager_form' data-role='editForm' id='elMenuManager_formColumn'>
+				
+			</div>
+		</div>
+	</div>
+</div>

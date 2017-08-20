@@ -1,0 +1,181 @@
+/* Tag lists & prefixes */
+.ipsTags_inline {
+	display: inline;
+}
+
+html[dir="ltr"] .ipsTags > li {
+	margin-right: 0;
+}
+html[dir="rtl"] .ipsTags > li {
+	margin-left: 0;
+}
+
+.ipsTags li {
+	position: relative;
+	display: inline-block;
+	height: 18px;
+}
+
+html[dir="ltr"] .ipsTags li:first-child .ipsTag {
+	margin-left: 8px;
+}
+html[dir="rtl"] .ipsTags li:first-child .ipsTag {
+	margin-right: 8px;
+}
+
+	html[dir="ltr"] .ipsTags li.ipsTags_edit:not( :only-child ) a {
+		margin-left: 5px;
+	}
+	html[dir="rtl"] .ipsTags li.ipsTags_edit:not( :only-child ) a {
+		margin-right: 5px;
+	}
+
+.ipsTags .ipsTag, .ipsTag_prefix {
+	background: {theme="tag"};
+	color: #fff !important; /* important required to override title coloring */
+	font-size: 10px;
+	vertical-align: middle;
+	line-height: 18px;
+	height: 18px;
+	padding: 0 7px;
+	margin: 0 3px 0 8px;
+	display: block;
+	position: relative;
+	letter-spacing: 0;
+	border-radius: 0px 4px 4px 0;
+}
+html[dir="rtl"] .ipsTags .ipsTag,
+html[dir="rtl"] .ipsTag_prefix {
+	margin: 0 8px 0 3px;
+	border-radius: 4px 0 0 4px;
+}
+
+	.ipsTags .ipsTag > span, .ipsTag_prefix > span {
+		display: inline-block;
+		max-width: 250px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	
+	.ipsTags .ipsTag:hover {
+		background: #707070;
+	}
+
+		html[dir="ltr"] .ipsTags .ipsTag:hover:before {
+			border-color: transparent transparent #707070 #707070;
+		}
+		html[dir="rtl"] .ipsTags .ipsTag:hover:before {
+			border-color: #707070 #707070 transparent transparent;
+		}
+		
+	.ipsTags .ipsTag:before, .ipsTag_prefix:before {
+		display: block;
+		position: absolute;
+		font-size: 28px;
+		line-height: 30px;
+		overflow: hidden;
+		text-shadow: none;
+		content: '';
+		top: 0;
+		bottom: 0;
+		width: 0px;
+		border-style: solid;
+		border-width: 9px;
+		{prefix="transform" value="scaleX(0.666667) rotate(45deg)"}
+	}
+	html[dir="ltr"] .ipsTags .ipsTag:before, 
+	html[dir="ltr"] .ipsTag_prefix:before {
+		left: -8px;
+		border-radius: 10px 9px 10px 1px;
+		border-color: transparent transparent {theme="tag"} {theme="tag"};
+	}
+	html[dir="rtl"] .ipsTags .ipsTag:before, 
+	html[dir="rtl"] .ipsTag_prefix:before {
+		right: -8px;
+		border-radius: 10px 1px 10px 9px;
+		border-color: {theme="tag"} {theme="tag"} transparent transparent;
+	}
+
+	.ipsTags .ipsTag:after, .ipsTag_prefix:after {
+		content: '';
+		display: block;
+		width: 4px;
+		height: 4px;
+		border-radius: 4px;
+		background: #fff;
+		position: absolute;
+		top: 7px;
+	}
+	html[dir="ltr"] .ipsTags .ipsTag:after, 
+	html[dir="ltr"] .ipsTag_prefix:after {
+		left: -3px;
+	}
+	html[dir="rtl"] .ipsTags .ipsTag:after, 
+	html[dir="rtl"] .ipsTag_prefix:after {
+		right: -3px;
+	}
+
+	/* Search results */
+	.ipsTags a mark, .ipsTag_prefix mark {
+		background: #fff !important;
+		border-bottom: none;
+	}
+
+/* Tag management stuff */
+.ipsTags_deletable .ipsTag {
+	padding-right: 20px;
+}
+
+.ipsTag_remove {
+	background: #000;
+	color: #fff;
+	display: block;
+	height: 18px;
+	width: 16px;
+	position: absolute;
+	top: 0;
+	font-size: 11px;
+	line-height: 18px;
+	text-align: center;
+	{prefix="transition" value="0.1s all linear"}
+}
+
+html[dir="ltr"] .ipsTag_remove {
+	right: 0;
+	border-radius: 0 4px 4px 0;
+}
+html[dir="rtl"] .ipsTag_remove {
+	left: 0;
+	border-radius: 4px 0 0 4px;
+}
+
+.ipsTag_remove:hover {
+	background: #000;
+	color: #fff;
+}
+
+.ipsTags_edit .ipsButton_veryVerySmall {
+	line-height: 15px;
+    height: 18px;
+    margin-top: -3px;
+}
+
+/* Prefix: shown before titles on content items */
+.ipsTag_prefix {
+	background: {theme="prefix"};
+	color: #fff !important;
+}
+html[dir="ltr"] .ipsTag_prefix {
+	margin-left: 8px;
+}
+html[dir="rtl"] .ipsTag_prefix {
+	margin-right: 8px;
+}
+
+	html[dir="ltr"] .ipsTag_prefix:before {
+		border-color: transparent transparent {theme="prefix"} {theme="prefix"};
+	}
+	html[dir="rtl"] .ipsTag_prefix:before {
+		border-color: {theme="prefix"} {theme="prefix"} transparent transparent;
+	}

@@ -1,0 +1,109 @@
+.ipsTabs {
+	background: #dddce0;
+	padding: 4px 4px 0 4px;
+}
+
+.ipsTabs_item:not( .ipsTabs_activeItem ) {
+	color: rgba(0,0,0,0.6);
+	background: rgba(255,255,255,0.4);
+	border-top: 2px solid transparent;
+}
+
+	.ipsTabs_item:not( .ipsTabs_activeItem ):hover {
+		color: rgba(0,0,0,0.8);
+	}
+
+.ipsTabs_activeItem {
+	background: #fff;
+	color: #3b6c99;
+	font-weight: 500;
+	border-top: 2px solid #3b6c99;
+}
+
+/* Don't apply above to forms when they're the only thing in a tab, though */ 
+.ipsTabs_panel > .ipsForm,
+.ipsTabs_panel div[data-controller="core.global.core.table"],
+.ipsTabs_panel .acpTrees_buttons + .acpBlock,
+.ipsTabs_panel .ipsForm,
+.ipsTabs_panel .ipsChart {
+	margin: 10px;
+}
+
+.ipsTabs_panel *:not( [data-controller="core.global.core.table"] ) .ipsToolList {
+	padding: 10px 10px 0 10px;
+}
+
+	.ipsTabs_panel > .ipsForm *:not( [data-controller="core.global.core.table"] ) .ipsToolList,
+	.ipsTabs_panel div[data-controller="core.global.core.table"] .ipsToolList {
+		padding: 0;
+	}
+
+.ipsTabs_panel .acpBlock {
+	border: 0;
+	padding: 0;
+	box-shadow: none;
+}
+
+/* Dark tabs */
+.ipsTabs.ipsTabs_alt {
+	background: #2E3D49;
+}
+
+	.ipsTabs.ipsTabs_alt .ipsTabs_item:not( .ipsTabs_activeItem ) {
+		background: rgba(255,255,255,0.1);
+		color: rgba(255,255,255,0.8);
+	}
+
+/* Vertical tabs */
+.ipsTabs.ipsTabs_vertical {
+	padding: 2px 0 2px 2px;
+}
+
+.ipsTabs.ipsTabs_vertical > ul {
+	display: flex;
+	flex-direction: column;
+	width: 50px;
+}
+
+	.ipsTabs.ipsTabs_vertical > ul > li {
+		flex-grow: 1;
+	}
+
+		.ipsTabs.ipsTabs_vertical > ul > li > a {
+			width: 100%;
+		}
+
+.ipsTabs.ipsTabs_vertical .ipsTabs_item {
+	border-top: 0;
+	border-left: 2px solid transparent;
+	margin-bottom: 2px;
+	padding: 0 15px;
+}
+
+.ipsTabs.ipsTabs_vertical .ipsTabs_activeItem {
+	border-left: 2px solid #3b6c99;
+}
+
+.cBulkRecipient_count {
+	line-height: 24px;
+	background: #ddd;
+	color: #222;
+	font-weight: 400;
+	font-size: 12px;
+	border-radius: 2px;
+	display: inline-block;
+	padding: 0 10px;
+}
+html[dir="ltr"] .cBulkRecipient_count {
+	margin-left: 8px;
+	margin-right: 8px;
+}
+html[dir="rtl"] .cBulkRecipient_count {
+	margin-right: 8px;
+	margin-left: 8px;
+}
+
+.ipsTabs_activeItem .cBulkRecipient_count {
+	background: #3b6c99;
+	color: #fff;
+}

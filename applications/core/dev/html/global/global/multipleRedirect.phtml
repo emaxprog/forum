@@ -1,0 +1,15 @@
+<ips:template parameters="$url" />
+<div class="ipsRedirect_manualButton">
+	<a href='{$url->setQueryString( array( 'mr' => '0', '_mrReset' => 1 ) )}' class="ipsButton ipsButton_primary">{lang="start"}</a>
+</div>
+<div data-controller="core.global.core.multipleRedirect" data-url="{$url}">
+	<div class="ipsRedirect ipsHide ipsPad">
+		<div class="ipsLoading ipsRedirect_loading" data-role="loadingIcon"></div>
+		<div class="ipsRedirect_progress ipsHide" data-role="progressBarContainer">
+			<div class="ipsProgressBar ipsProgressBar_animated">
+				<div class="ipsProgressBar_progress" data-role="progressBar"></div>
+			</div>
+		</div>
+		<span data-role="message"></span>
+	</div>
+</div>

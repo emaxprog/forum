@@ -1,0 +1,146 @@
+/* BOTH */
+@media screen and (max-width: 979px) {
+	
+	html[dir="ltr"] #elMobileNav {
+		text-align: right;
+	}
+	html[dir="rtl"] #elMobileNav {
+		text-align: left;
+	}
+
+		html[dir="ltr"] #elMobileNav li {
+			margin-right: 0;
+		}
+		html[dir="rtl"] #elMobileNav li {
+			margin-left: 0;
+		}
+
+		#elMobileNav li:not( #elMobileBreadcrumb ) a {
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+			color: #fff;
+			text-align: center;
+			font-size: 26px;
+			margin: 0;
+			position: relative;
+			display: block;
+		}
+
+		#elMobileNav .icon-newspaper {
+			font-size: 24px;
+		}
+
+		#elMobileNav .ipsNotificationCount {
+			top: 6px;
+		}
+		html[dir="ltr"] #elMobileNav .ipsNotificationCount {
+			right: 6px;
+		}
+		html[dir="rtl"] #elMobileNav .ipsNotificationCount {
+			left: 6px;
+		}
+
+	#ipsLayout_mobileNav li a {
+		display: block;
+		color: #fff;
+		line-height: 52px;
+		padding: 0 20px;
+		font-size: 14px;
+	}
+
+	#ipsLayout_header > nav {
+		padding: 0;
+		display: none;
+	}
+
+	/* Search */
+	#elSearch {
+		display: none; /* ...and hide search elem by default... */
+		height: 40px;
+	}
+
+		body.cSearchOpen #ipsLayout_header > nav {
+			display: block;
+			height: 40px; /* ...but set to 40px height when search is showing, because that's in the header element */
+		}
+
+		body.cSearchOpen #ipsLayout_header > nav .ipsLayout_container {
+			padding: 0;
+		}
+
+		body.cSearchOpen #ipsLayout_header .ipsNavBar_primary {
+			margin-bottom: 0;
+			top: 0;
+		}
+
+		body.cSearchOpen #elSearch {
+			display: block;
+			opacity: 1;
+			width: 100%;
+			margin: 0;
+			{prefix="transition" value="opacity 0.2s ease-out"}
+		}
+
+			body.cSearchOpen #elSearch input[type="search"] {
+				line-height: 40px;
+				height: 40px;
+			}
+
+			body.cSearchOpen #elSearch button {
+				font-size: 22px;
+				line-height: 36px;
+			}
+
+		body.cSearchOpen #elSearch #elSearchFilter {
+			display: block;
+			line-height: 40px;
+			border-radius: 0;
+			font-size: 12px;
+		}
+
+		body.cSearchOpen #elSearchField {
+			width: auto;
+		}
+		html[dir="ltr"] body.cSearchOpen #elSearchField {
+			left: 115px;
+		}
+		html[dir="rtl"] body.cSearchOpen #elSearchField {
+			right: 115px;
+		}
+
+	/* Code and pre need to wrap */
+	code, pre {
+		white-space: pre-wrap;
+		word-break: break-word;
+	}
+
+	#elQueryLog, #elCachingLog {
+		display: none !important;
+	}
+}
+
+/* PHONES */
+@media screen and (max-width: 767px) {
+	body {
+		font-size: 13px;
+	}
+	
+	#elFlashMessage {
+		width: 100%;
+		padding: 7px;
+	}
+	html[dir="ltr"] #elFlashMessage {
+		left: auto;
+		margin-left: 0;
+	}
+	html[dir="rtl"] #elFlashMessage {
+		right: auto;
+		margin-right: 0;
+	}
+}
+
+/* GOOGLE AD CODE FOR RESPONSIVE ADS */
+#ipsLayout_mainArea .adsbygoogle { width: 320px; height: 100px; }
+@media (min-width:500px) { #ipsLayout_mainArea .adsbygoogle { width: 468px; height: 60px; } }
+@media (min-width:1050px) { #ipsLayout_mainArea .adsbygoogle { width: 728px; height: 90px; } }

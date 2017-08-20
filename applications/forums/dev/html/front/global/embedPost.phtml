@@ -1,0 +1,24 @@
+<ips:template parameters="$comment, $item, $url" />
+
+<div data-embedInfo-maxSize='500' class='ipsRichEmbed'>
+	{template="embedHeader" group="embed" app="core" params="$comment, \IPS\Member::loggedIn()->language()->addToStack( 'x_replied_to_a_topic', FALSE, array( 'sprintf' => array( $comment->author()->name ) ) ), $comment->mapped('date'), $url"}
+	<div class='ipsPad'>
+		<div class='ipsRichEmbed_originalItem ipsAreaBackground_reset ipsPad ipsSpacer_bottom ipsType_blendLinks'>
+			<div>
+				{template="embedOriginalItem" group="embed" app="core" params="$item, TRUE"}
+			</div>
+		</div>
+
+		<div class='ipsType_richText ipsType_medium' data-truncate='3'>
+			{$comment->truncated(TRUE)|raw}
+		</div>
+
+		{{if \IPS\IPS::classUsesTrait( $comment, 'IPS\Content\Reactable' ) and count( $comment->reactions() ) and settings.reputation_enabled}}
+			<ul class='ipsList_inline ipsSpacer_top ipsSpacer_half'>
+				<li>
+					{template="reactionOverview" app="core" group="global" params="$comment, TRUE, 'small'"}
+				</li>
+			</ul>
+		{{endif}}		
+	</div>
+</div>

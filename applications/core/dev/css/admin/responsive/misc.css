@@ -1,0 +1,30 @@
+/* PHONES */
+@media screen and (max-width: 767px) {
+	.acpWidgetSearch {
+		position: absolute;
+		right: 12px;
+		top: 12px;
+	}
+}
+
+
+/* BOTH */
+@media screen and (max-width: 979px) {
+	.cWithInfoPanel {
+		display: block;
+	}
+
+	.cWithInfoPanel_main {
+		margin: 0;
+	}
+
+	.cWithInfoPanel_info {
+		margin: 20px 0 0 0;
+		min-width: 0;
+		max-width: 100%;
+	}
+	
+	.cWithInfoPanel .ipsType_sectionTitle {
+	    margin: -7px -7px 7px -7px;
+	}
+}

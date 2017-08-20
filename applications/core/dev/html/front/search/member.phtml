@@ -1,0 +1,42 @@
+<ips:template parameters="$member" />
+<li class="ipsGrid_span4 ipsStreamItem ipsStreamItem_contentBlock ipsAreaBackground_reset ipsPad ipsType_center">
+	{template="userPhoto" group="global" app="core" params="$member, 'medium'"}
+	<div class='ipsStreamItem_container'>
+		<div class='ipsStreamItem_header ipsSpacer_top ipsSpacer_half'>
+			<h2 class='ipsType_reset ipsStreamItem_title ipsTruncate ipsTruncate_line'>
+				<a href='{$member->url()}' data-searchable>
+					{template="userLink" app="core" group="global" params="$member"}
+				</a>
+			</h2>
+			<p class='ipsType_reset ipsType_medium'>{$member->groupName|raw}</p>
+			{template="reputationBadge" group="global" app="core" params="$member"}
+		</div>
+
+		<hr class='ipsHr ipsHr_small'>
+
+		<ul class='ipsList_reset ipsGrid'>
+			<li class='ipsGrid_span6 ipsList_reset ipsType_center'>
+				<h3 class='ipsType_minorHeading ipsType_unbold'>{lang="joined"}</h3>
+				<p class='ipsType_reset ipsTruncate ipsTruncate_line'>{datetime="$member->joined"}</p>
+			</li>
+			<li class='ipsGrid_span6 ipsList_reset ipsType_center'>
+				<h3 class='ipsType_minorHeading ipsType_unbold'>{lang="members_member_posts"}</h3>
+				<p class='ipsType_reset ipsTruncate ipsTruncate_line'>{number="$member->member_posts"}</p>
+			</li>
+		</ul>
+
+		<hr class='ipsHr ipsHr_small'>
+
+		<ul class='ipsList_reset'>
+			<li class='ipsSpacer_bottom ipsSpacer_half'>
+				<a href='{url="app=core&module=members&controller=profile&do=content&id={$member->member_id}" base="front" seoTemplate="profile_content" seoTitle="$member->members_seo_name"}' class='ipsButton ipsButton_fullWidth ipsButton_light ipsButton_small'>{lang="find_content"}</a>
+			</li>
+			{{if \IPS\Member::loggedIn()->member_id != $member->member_id and ( !$member->members_bitoptions['pp_setting_moderate_followers'] or \IPS\Member::loggedIn()->following( 'core', 'member', $member->member_id ) )}}
+				<li>
+					{{$memberFollowers = $member->followers();}}
+					{template="memberFollow" app="core" group="profile" params="'core', 'member', $member->member_id, ( $memberFollowers === NULL ) ? 0 : $memberFollowers->count( TRUE ), TRUE"}
+				</li>
+			{{endif}}
+		</ul>
+	</div>
+</li>

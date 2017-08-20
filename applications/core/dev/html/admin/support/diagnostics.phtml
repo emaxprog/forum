@@ -1,0 +1,182 @@
+<ips:template parameters="$requirementsFail, $upgradeNeededOrPatches, $md5Fail, $databaseFail, $connectionCheckResult, $thirdPartyCustomizations, $recommendations, $requirements" />
+{{$fails = FALSE;}}
+<div class="ipsPad">
+	<div class='ipsBox'>
+		<h2 class="ipsBox_titleBar">{lang="support_diagnostics"}</h2>
+		<ul class="ipsDataList ipsSpacer_top">
+			
+			{{if $requirementsFail}}
+				{{$fails = TRUE;}}
+				<li class="ipsDataItem">
+					<div class="ipsDataItem_icon ipsType_warning ipsPos_top ipsType_large"><i class="fa fa-exclamation-triangle"></i></div>
+					<div class="ipsDataItem_generic ipsType_warning">
+						<div>{lang="requirements_check_fail"}</div>
+						<a href="#requiredChanges" data-ipsDialog-content="#requiredChanges"  data-ipsDialog data-ipsDialog-title="{lang="self_service"}" class="ipsButton ipsButton_negative ipsButton_verySmall ipsSpacer_top ipsSpacer_half">{{if count( $recommendations )}}{lang="requirements_check_link_rec"}{{else}}{lang="requirements_check_link"}{{endif}}</a>
+					</div>
+				</li>
+			{{elseif count( $recommendations )}}
+				<li class="ipsDataItem">
+					<div class="ipsDataItem_icon ipsType_issue ipsPos_top ipsType_large"><i class="fa fa-info-circle"></i></div>
+					<div class="ipsDataItem_generic ipsType_issue">
+						<div>{lang="recommendations_check_fail"}</div>
+						<a href="#recommendedChanges" data-ipsDialog-content="#recommendedChanges" data-ipsDialog data-ipsDialog-title="{lang="self_service"}" class="ipsButton ipsButton_intermediate ipsButton_verySmall ipsSpacer_top ipsSpacer_half">{lang="recommendations_check_link"}</a>
+					</div>
+				</li>
+			{{else}}
+				<li class="ipsDataItem">
+					<div class="ipsDataItem_icon ipsType_success ipsPos_top ipsType_large"><i class="fa fa-check"></i></div>
+					<div class="ipsDataItem_generic ipsType_success">{lang="requirements_check_ok"}</div>
+				</li>
+			{{endif}}
+			
+			{{if $upgradeNeededOrPatches === TRUE}}
+				{{$fails = TRUE;}}
+				<li class="ipsDataItem">
+					<div class="ipsDataItem_icon ipsType_warning ipsPos_top ipsType_large"><i class="fa fa-exclamation-triangle"></i></div>
+					<div class="ipsDataItem_generic ipsType_warning">
+						<div>{lang="upgrade_check_fail"}</div>
+						<a href="{url="app=core&module=system&controller=upgrade&_new=1"}" target="_blank" class="ipsButton ipsButton_negative ipsButton_verySmall ipsSpacer_top ipsSpacer_half">{lang="upgrade_now"}</a>
+					</div>
+				</li>
+			{{elseif $upgradeNeededOrPatches}}
+				<li class="ipsDataItem">
+					<div class="ipsDataItem_icon ipsType_issue ipsPos_top ipsType_large"><i class="fa fa-info-circle"></i></div>
+					<div class="ipsDataItem_generic ipsType_issue">
+						<div>{lang="upgrade_check_patches"}</div>
+						<div class="ipsSpacer_top ipsSpacer_half">
+							<ul>
+								{{foreach $upgradeNeededOrPatches as $issue}}
+									<li>{$issue}</li>
+								{{endforeach}}
+							</ul>
+						</div>
+						<a href="{url="app=core&module=system&controller=upgrade&_new=1&patch=1"}" target="_blank" class="ipsButton ipsButton_intermediate ipsButton_verySmall ipsSpacer_top ipsSpacer_half">{lang="upgrade_apply_patch"}</a>
+					</div>
+				</li>
+			{{else}}
+				<li class="ipsDataItem">
+					<div class="ipsDataItem_icon ipsType_success ipsPos_top ipsType_large"><i class="fa fa-check"></i></div>
+					<div class="ipsDataItem_generic ipsType_success">{lang="upgrade_check_ok"}</div>
+				</li>
+			{{endif}}
+			
+			{{if !\IPS\CIC}}
+				{{if $md5Fail}}
+					{{$fails = TRUE;}}
+					<li class="ipsDataItem">
+						<div class="ipsDataItem_icon ipsType_warning ipsPos_top ipsType_large"><i class="fa fa-exclamation-triangle"></i></div>
+						<div class="ipsDataItem_generic ipsType_warning">
+							<div>{lang="md5_check_fail"}</div>
+							<a href="{url="app=core&module=support&controller=support&do=md5fail"}" data-ipsDialog data-ipsDialog-title="{lang="self_service"}" class="ipsButton ipsButton_negative ipsButton_verySmall ipsSpacer_top ipsSpacer_half">{lang="help_me_fix_this"}</a>
+						</div>
+					</li>
+				{{else}}
+					<li class="ipsDataItem">
+						<div class="ipsDataItem_icon ipsType_success ipsPos_top ipsType_large"><i class="fa fa-check"></i></div>
+						<div class="ipsDataItem_generic ipsType_success">{lang="md5_check_ok"}</div>
+					</li>
+				{{endif}}
+			{{endif}}
+			
+			{{if $databaseFail}}
+				{{$fails = TRUE;}}
+				<li class="ipsDataItem">
+					<div class="ipsDataItem_icon ipsType_warning ipsPos_top ipsType_large"><i class="fa fa-exclamation-triangle"></i></div>
+					<div class="ipsDataItem_generic ipsType_warning">
+						<div>{lang="support_database_check_fail"}</div>
+						<a href="{url="app=core&module=support&controller=support&do=databasefail"}" data-ipsDialog data-ipsDialog-title="{lang="self_service"}" class="ipsButton ipsButton_negative ipsButton_verySmall ipsSpacer_top ipsSpacer_half">{lang="help_me_fix_this"}</a>
+					</div>
+				</li>
+			{{else}}
+				<li class="ipsDataItem">
+					<div class="ipsDataItem_icon ipsType_success ipsPos_top ipsType_large"><i class="fa fa-check"></i></div>
+					<div class="ipsDataItem_generic ipsType_success">{lang="support_database_check_ok"}</div>
+				</li>
+			{{endif}}
+			
+			{{if !is_int( $connectionCheckResult )}}
+				{{$fails = TRUE;}}
+				<li class="ipsDataItem">
+					<div class="ipsDataItem_icon ipsType_warning ipsPos_top ipsType_large"><i class="fa fa-exclamation-triangle"></i></div>
+					<div class="ipsDataItem_generic ipsType_warning">
+						<div>{lang="connection_check_fail"}</div>
+						<a href="{url="app=core&module=support&controller=support&do=connectionfail"}" data-ipsDialog data-ipsDialog-title="{lang="self_service"}" class="ipsButton ipsButton_negative ipsButton_verySmall ipsSpacer_top ipsSpacer_half">{lang="help_me_fix_this"}</a>
+					</div>
+				</li>
+			{{else}}
+				<li class="ipsDataItem">
+					<div class="ipsDataItem_icon ipsType_success ipsPos_top ipsType_large"><i class="fa fa-check"></i></div>
+					<div class="ipsDataItem_generic ipsType_success">{lang="connection_check_ok"}</div>
+				</li>
+				{{if abs( $connectionCheckResult - time() ) > 30}}
+					{{$fails = TRUE;}}
+					<li class="ipsDataItem">
+						<div class="ipsDataItem_icon ipsType_warning ipsPos_top ipsType_large"><i class="fa fa-exclamation-triangle"></i></div>
+						<div class="ipsDataItem_generic ipsType_warning">
+							<div>{lang="server_time_fail"}</div>
+							<a href="{url="app=core&module=support&controller=support&do=servertimefail"}" data-ipsDialog data-ipsDialog-title="{lang="self_service"}" class="ipsButton ipsButton_negative ipsButton_verySmall ipsSpacer_top ipsSpacer_half">{lang="help_me_fix_this"}</a>
+						</div>
+					</li>
+				{{else}}
+					<li class="ipsDataItem">
+						<div class="ipsDataItem_icon ipsType_success ipsPos_top ipsType_large"><i class="fa fa-check"></i></div>
+						<div class="ipsDataItem_generic ipsType_success">{lang="server_time_ok"}</div>
+					</li>
+				{{endif}}
+			{{endif}}
+					
+			<li class="ipsDataItem">
+				<div class="ipsDataItem_icon ipsType_neutral ipsPos_top ipsType_large"><i class="fa fa-info-circle"></i></div>
+				<div class="ipsDataItem_generic ipsType_neutral">{lang="support_caches_cleared"}</div>
+			</li>
+		</ul>
+	
+		<div class='ipsPad'>
+			<a href="{url="app=core&module=support&controller=support"}" class="ipsButton ipsButton_light ipsButton_verySmall ipsSpacer_top ipsSpacer_half">{lang="support_check_again"}</a>
+		</div>
+	</div>	
+</div>
+
+<div data-controller="core.admin.support.diagnostics" data-fails="{expression="intval( $fails )"}" data-thirdParty="{expression="intval( $thirdPartyCustomizations )"}">
+	{{if $thirdPartyCustomizations}}
+		<div class="ipsPad">
+			<div class='ipsBox'>
+				<h2 class="ipsBox_titleBar">{lang="support_third_party_head"}</h2>
+				<div class='ipsPad ipsType_richText' data-role="thirdPartyInfo">
+					<p>{lang="support_third_party_blurb"}</p>
+					<a href="{url="app=core&module=support&controller=support&do=thirdparty"}" target="_blank" data-action="disableThirdParty" class="ipsButton ipsButton_important ipsButton_small">{lang="support_third_party_disable"}</a>
+				</div>
+			</div>
+		</div>
+	{{endif}}
+	
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<a href="{url="app=core&module=support&controller=support&next=1"}" data-action="contactSupport" class="ipsButton ipsButton_primary">{lang="still_need_help"}</a>
+	</div>
+</div>
+
+<div class='ipsHide' id='recommendedChanges'>
+	<div class='ipsPad'>
+		<ul class='ipsDataList'>
+			{{foreach $recommendations as $suggestion}}
+				<li class='ipsDataItem'>
+					<span class="ipsDataItem_generic">
+						<i class="fa fa-info-circle"></i>
+						{$suggestion|raw}
+					</span>
+				</li>
+			{{endforeach}}
+		</ul>
+	</div>
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<a href="{url="app=core&module=support&controller=support"}" class="ipsButton ipsButton_alternate">{lang="support_check_again"}</a>
+	</div>
+</div>
+<div class='ipsHide' id='requiredChanges'>
+	<div class='ipsPad'>
+		{template="healthcheck" app="core" group="support" location="admin" params="$requirements"}
+	</div>
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<a href="{url="app=core&module=support&controller=support"}" class="ipsButton ipsButton_alternate">{lang="support_check_again"}</a>
+	</div>
+</div>

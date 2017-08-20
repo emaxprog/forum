@@ -1,0 +1,32 @@
+<ips:template parameters="$rows" />
+<table class="ipsTable">
+	<tr>
+		<th>{lang="api_param_name"}</th>
+		<th>{lang="api_param_type"}</th>
+		<th>{lang="api_param_desc"}</th>
+	</tr>
+	{{foreach $rows as $column}}
+		<tr>
+			<td>
+				{{if isset( $column[4] )}}
+					<span class="ipsBadge ipsBadge_neutral">{lang="required"}</span>
+				{{endif}}
+				<code>{$column[1]}</code>
+			</td>
+			<td>
+				{{if in_array( $column[0], array( 'int', 'string', 'float', 'datetime', 'bool', 'object' ) )}}
+					{$column[0]}
+				{{elseif mb_substr( $column[0], 0, 1 ) == '['}}
+					{{if in_array( mb_substr( $column[0], 1, -1 ), array( 'int', 'string', 'float', 'datetime', 'bool', 'object' ) )}}
+						{lang="api_array_of_scalar" sprintf="mb_substr( $column[0], 1, -1 )"}
+					{{else}}
+						{lang="api_array_of"} <a href="#object-{expression="mb_strtolower( mb_substr( $column[0], mb_strrpos( $column[0], '\\' ) + 1, -1 ) )"}">{expression="mb_strtolower( mb_substr( $column[0], mb_strrpos( $column[0], '\\' ) + 1, -1 ) )"}</a> {lang="api_array_objects"}
+					{{endif}}
+				{{else}}
+					<a href="#object-{expression="mb_strtolower( mb_substr( $column[0], mb_strrpos( $column[0], '\\' ) + 1 ) )"}">{expression="mb_strtolower( mb_substr( $column[0], mb_strrpos( $column[0], '\\' ) + 1 ) )"}</a> {lang="api_object"}
+				{{endif}}
+			</td>
+			<td class='ipsTable_wrap'>{lang="$column[2]"}</td>
+		</tr>
+	{{endforeach}}
+</table>

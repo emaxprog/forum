@@ -1,0 +1,24 @@
+<ips:template parameters="" />
+{{if $newVersion = \IPS\Application::load('core')->availableUpgrade( TRUE ) and member.hasAcpRestriction( 'core', 'system', 'upgrade_manage' )}}
+	{{if \IPS\Application::load('core')->missingSecurityPatches()}}
+		<div class="ipsMessage ipsMessage_error" id='elLicenseKey'>
+			{lang="dashboard_version_info" sprintf="$newVersion['version']"}
+			{lang="this_is_a_security_update"}
+			<ul class='ipsList_inline'>
+				<li>
+					<a href='{url="app=core&module=system&controller=upgrade&_new=1" base="admin"}' class='ipsButton ipsButton_verySmall ipsButton_veryLight'>{lang="upgrade_now"}</a>
+				</li>
+			</ul>
+		</div>
+	{{elseif !isset( \IPS\Request::i()->cookie['updateBannerDismiss'] )}}
+		<div class="ipsMessage ipsMessage_general" id='elLicenseKey' data-controller='core.global.core.updateBanner'>
+			{lang="dashboard_version_info" sprintf="$newVersion['version']"}
+			<ul class='ipsList_inline'>
+				<li>
+					<a href='{url="app=core&module=system&controller=upgrade&_new=1" base="admin"}' class='ipsButton ipsButton_verySmall ipsButton_veryLight'>{lang="upgrade_now"}</a>
+				</li>
+			</ul>
+			<a href='#' data-role='closeMessage' data-ipsTooltip title='{lang="license_dismiss"}'>&times;</a>
+		</div>
+	{{endif}}
+{{endif}}

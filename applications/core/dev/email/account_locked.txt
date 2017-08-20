@@ -1,0 +1,11 @@
+<ips:template parameters="$member, $location, $unlockTime=NULL, $email" />
+{$email->language->addToStack("email_account_locked", FALSE, array( 'sprintf' => array( \IPS\Settings::i()->ipb_bruteforce_attempts, $location ) ) )}
+
+{$email->language->addToStack("email_account_locked_change_password")}
+{{if $unlockTime}}
+{$email->language->addToStack("email_account_locked_safely_ignore", FALSE, array( 'sprintf' => $unlockTime ) )}
+{{else}}
+{$email->language->addToStack("email_account_locked_no_unlock")}
+{{endif}}
+
+{$email->language->addToStack("change_password", FALSE)}: {url="app=core&module=system&controller=settings&area=password" seoTemplate="settings_password" base="front"}

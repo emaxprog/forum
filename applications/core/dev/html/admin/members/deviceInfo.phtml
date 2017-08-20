@@ -1,0 +1,29 @@
+<ips:template parameters="$device" />
+<ul class="ipsDataList ipsType_normal">
+	<li class="ipsDataItem">
+		<span class="ipsDataItem_generic ipsDataItem_size5"><strong>{lang="device_table_user_agent"}</strong></span>
+		<span class="ipsDataItem_generic">
+			{$device->userAgent()}<br>
+			<code class="ipsType_small">{$device->user_agent}</code>
+		</span>
+	</li>
+	<li class="ipsDataItem">
+		<span class="ipsDataItem_generic ipsDataItem_size5"><strong>{lang="device_table_login_key"}</strong></span>
+		<span class="ipsDataItem_generic">
+			{template="deviceAuthorization" group="members" params="(bool) $device->login_key, TRUE, $device->anonymous"}<br>
+			<span class="ipsType_small ipsType_light">{lang="device_table_login_key_info"}</span>
+		</span>
+	</li>
+	<li class="ipsDataItem">
+		<span class="ipsDataItem_generic ipsDataItem_size5"><strong>{lang="device_table_login_handler"}</strong></span>
+		<span class="ipsDataItem_generic">
+			{template="deviceHandler" group="members" params="$device->login_handler"}
+		</span>
+	</li>
+	<li class="ipsDataItem">
+		<span class="ipsDataItem_generic ipsDataItem_size5"><strong>{lang="device_table_last_seen"}</strong></span>
+		<span class="ipsDataItem_generic">
+			{datetime="$device->last_seen"}
+		</span>
+	</li>
+</ul>

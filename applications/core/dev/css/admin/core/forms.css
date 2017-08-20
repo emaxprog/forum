@@ -1,0 +1,170 @@
+/* RESET FORM STYLES */
+.ipsFieldRow.ipsPad_half {
+	padding: 3px;
+}
+.ipsWidthHeight {
+	background: white;
+	border: black dashed 1px;
+	margin-bottom: 10px;
+}
+/* jQuery UI doesn't support resizing RTL */
+html[dir="rtl"] .ipsWidthHeight {
+	display: none;
+}
+
+.ui-icon-gripsmall-diagonal-se {
+	background: url( "{resource="resizable.png" app="core" location="global"}" );
+}
+
+.ui-resizable {
+	position: relative;
+}
+.ui-resizable-handle {
+	position: absolute;
+	font-size: 0.1px;
+	display: block;
+}
+.ui-resizable-se {
+	cursor: nwse-resize;
+	width: 12px;
+	height: 12px;
+	right: 0px;
+	bottom: 0px;
+}
+
+html[dir] .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_label, 
+html[dir] .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_title,
+html[dir="ltr"] .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_checkbox ) .ipsFieldRow_content {
+	padding: 10px;
+}
+
+html[dir] .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_label, 
+html[dir] .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_title,
+html[dir] .ipsForm_vertical .ipsFieldRow > .ipsFieldRow_label, 
+html[dir] .ipsForm_vertical .ipsFieldRow > .ipsFieldRow_title {
+	float: none;
+	min-width: 340px;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+	html[dir] .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_label, 
+	html[dir] .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_title {
+		margin-bottom: 0;
+	}
+
+html[dir] .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_yesNo ) > .ipsFieldRow_label,
+html[dir] .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_yesNo ) > .ipsFieldRow_title {
+	padding-top: 15px;
+}
+
+html[dir="ltr"] .ipsApp .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_checkbox ) .ipsFieldRow_content {
+	margin-left: 0;
+	width: 100%;
+	padding-left: 13px;
+}
+
+/* FLEXBOX FORMS */
+.ipsForm_horizontal .ipsFieldRow {
+	display: flex;
+}
+
+	.ipsForm_horizontal .ipsFieldRow.ipsFieldRow_noFlex {
+		display: block;
+	}
+
+.ipsFieldRow [data-ipsMatrix] {
+	width: 100%;
+}
+
+/* GENERAL FORM STYLING */
+.ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_label,
+.ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_title {
+	width: 340px;
+}
+
+html[dir="ltr"] .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_checkbox ) .ipsFieldRow_content {
+	margin-left: 345px;
+}
+html[dir="rtl"] .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_checkbox ) .ipsFieldRow_content {
+	margin-right: 345px;
+}
+
+.ipsFieldRow_section {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.ipsForm > .ipsFieldRow:not( :last-child ) {
+	border-bottom: 1px solid rgba(0,0,0,0.05);
+	margin-bottom: 0;
+}
+
+html[dir="ltr"] .ipsFieldRow_required {
+	margin-left: 0;
+}
+
+.ipsApp textarea.ipsField_short,
+.ipsApp input[type="text"].ipsField_short,
+.ipsApp input[type="password"].ipsField_short,
+.ipsApp input[type="datetime"].ipsField_short,
+.ipsApp input[type="datetime-local"].ipsField_short,
+.ipsApp input[type="month"].ipsField_short,
+.ipsApp input[type="time"].ipsField_short,
+.ipsApp input[type="week"].ipsField_short,
+.ipsApp input[type="number"].ipsField_short,
+.ipsApp input[type="email"].ipsField_short,
+.ipsApp input[type="url"].ipsField_short,
+.ipsApp input[type="search"].ipsField_short,
+.ipsApp input[type="tel"].ipsField_short,
+.ipsApp input[type="color"].ipsField_short,
+.ipsApp select.ipsField_short {
+	width: 100px;
+	max-width: 100px;
+}
+
+	.ipsApp input[type="date"].ipsField_short {
+		width: 150px;
+		max-width: 150px;
+	}
+	
+	/* Image edit dialog number input is too small, so make it a little larger */
+	.ipsApp .ipsDialog input[type="number"].ipsField_short {
+		width: 150px;
+		max-width: 150px;
+	}
+
+
+.ipsFieldRow_content .ipsType_warning {
+	display: block;
+}
+
+.ipsFieldRow .cCopyNode {
+	line-height: 20px;
+}
+
+html[dir] .ipsFieldRow > .ipsFieldRow_label, 
+html[dir] .ipsFieldRow > .ipsFieldRow_title {
+	color: #000;
+}
+
+.ipsFieldRow_desc {
+	color: #909499;
+	font-size: 12px;
+}
+
+.ipsField_fieldList_content label ~ .ipsFieldRow_desc {
+	margin-top: 0;
+}
+
+/* STACKS */
+.ipsField_stackItem .ipsField_stackDelete {
+	background: #323232;
+	color: #fff;
+	width: 19px;
+	height: 19px;
+	border-radius: 19px;
+	line-height: 17px;
+	top: 5px;
+}

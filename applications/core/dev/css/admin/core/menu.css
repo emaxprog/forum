@@ -1,0 +1,11 @@
+.ipsSideMenu_itemActive a,
+a.ipsSideMenu_itemActive,
+.ipsSideMenu_withChecks .ipsSideMenu_item > input[type="checkbox"]:checked ~ a,
+.ipsSideMenu_withRadios .ipsSideMenu_item > input[type="radio"]:checked ~ a {
+	background: #2E3D49;
+}
+
+.ipsSideMenu_list > li:last-child .ipsSideMenu_item a, 
+.ipsSideMenu_list > li:last-child a.ipsSideMenu_item {
+	margin-bottom: 0;
+}

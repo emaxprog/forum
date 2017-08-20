@@ -1,0 +1,8 @@
+<ips:template parameters="$category, $parents" />
+<div class="ipsPad">
+{{$databaseId = \IPS\Request::i()->database_id;}}
+{{foreach $parents as $cat}}
+	<a href="{url="app=cms&module=databases&controller=categories&do=form&id={$cat->_id}&database_id={$databaseId}"}" class="ipsType_light">{$cat->_title}</a> <i class="ipsType_light fa fa-angle-right"></i>
+{{endforeach}}
+<a href="{url="app=cms&module=databases&controller=categories&do=form&id={$category->_id}&database_id={$databaseId}"}">{$category->_title}</a>
+</div>

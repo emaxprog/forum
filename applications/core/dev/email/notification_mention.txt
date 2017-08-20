@@ -1,0 +1,5 @@
+<ips:template parameters="$content, $email" />
+
+{$email->language->addToStack("email_mentioned", FALSE, array( 'sprintf' => array( $content->author()->name, $content->indefiniteArticle( $email->language ), ( $content instanceof \IPS\Content\Comment ) ? $content->item()->mapped('title') : $content->mapped('title') ) ) )}
+
+-- {setting="board_name"}

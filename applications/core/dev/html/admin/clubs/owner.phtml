@@ -1,0 +1,7 @@
+<ips:template parameters="$owner" />
+{template="userPhoto" group="global" params="$owner, 'tiny'"}
+{{if $owner->member_id}}
+	{template="userLink" group="global" params="$owner"}
+{{else}}
+	<em class="ipsType_light">{lang="deleted_member"}</em>
+{{endif}}

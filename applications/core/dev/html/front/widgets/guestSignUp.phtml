@@ -1,0 +1,59 @@
+<ips:template parameters="$login, $title, $text, $orientation='vertical'" />
+{{if $orientation == 'vertical'}}
+<div class='ipsWidget_inner ipsPos_center ipsPad_half'>
+    <div class="ipsAreaBackground_light ipsPad">
+        {{if $title}}<h3 class="ipsType_sectionHead ipsSpacer_bottom ipsSpacer_half">{$title}</h3>{{endif}}
+        <div class="ipsType_richText ipsType_normal ipsType_contained ipsSpacer_bottom">
+            {$text|raw}
+        </div>
+        <ul class='ipsList_reset'>
+            <li>
+                <a href='{url="app=core&module=system&controller=login" seoTemplate="login" protocol="\IPS\Settings::i()->logins_over_https"}' class="ipsButton ipsButton_primary ipsButton_fullWidth ipsButton_verySmall">{lang="sign_in_short"}</a>
+            </li>
+            <li class='ipsSpacer_top ipsSpacer_half'>
+                <a href='{url="app=core&module=system&controller=register" seoTemplate="register" protocol="\IPS\Settings::i()->logins_over_https"}'  {{if \IPS\Settings::i()->quick_register}}data-ipsDialog data-ipsDialog-size='narrow' data-ipsDialog-title='{lang="sign_up"}'{{endif}} class="ipsButton ipsButton_primary ipsButton_fullWidth ipsButton_verySmall">{lang="sign_up"}</a>
+            </li>
+            {{if count ( $login->forms( TRUE, TRUE ) ) > 1}}
+                {{foreach $login->forms( FALSE, TRUE ) as $k => $form}}
+                    {{if $k !== '_standard'}}
+                        <li class='ipsSpacer_top ipsSpacer_half'>
+                            {$form|raw}
+                        </li>
+                    {{endif}}
+                {{endforeach}}
+            {{endif}}
+        </ul>
+    </div>
+</div>
+{{else}}
+<div class='ipsWidget_inner ipsPos_center ipsPad_half'>
+    <div class="ipsAreaBackground_light ipsPad">
+        <div class="ipsGrid">
+            <div class='ipsGrid_span {{if count ( $login->forms( FALSE, TRUE ) ) > 1}}3{{endif}}'>
+                {{if $title}}<h2 class="ipsType_sectionHead ipsSpacer_bottom ipsSpacer_half">{$title}</h2>{{endif}}
+                <div class="ipsType_richText ipsType_normal ipsType_contained ipsSpacer_bottom">
+                    {$text|raw}
+                </div>
+                <ul class="ipsList_inline">
+                    <li>
+                        <a href='{url="app=core&module=system&controller=login" seoTemplate="login" protocol="\IPS\Settings::i()->logins_over_https"}' class="ipsButton ipsButton_primary ipsButton_verySmall ipsPos_right">{lang="sign_in_short"}</a>
+                    </li>
+                    <li>{lang="or"}</li>
+                    <li>
+                        <a href='{url="app=core&module=system&controller=register" seoTemplate="register" protocol="\IPS\Settings::i()->logins_over_https"}'  {{if \IPS\Settings::i()->quick_register}}data-ipsDialog data-ipsDialog-size='narrow' data-ipsDialog-title='{lang="sign_up"}'{{endif}} class="ipsButton ipsButton_primary ipsButton_verySmall ipsPos_right">{lang="sign_up"}</a>
+                    </li>
+                    {{if count ( $login->forms( FALSE, TRUE ) ) > 1}}
+                        {{foreach $login->forms( FALSE, TRUE ) as $k => $form}}
+                            {{if $k !== '_standard'}}
+                                <li>
+                                    {$form|raw}
+                                </li>
+                            {{endif}}
+                        {{endforeach}}
+                    {{endif}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{{endif}}

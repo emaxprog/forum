@@ -1,0 +1,8 @@
+<ips:template parameters="$member, $vid, $email" />
+{$email->language->addToStack("mfa_recovery_email_plain", FALSE)}
+
+=====
+{$email->language->addToStack("mfa_recovery_email_confirm", FALSE)}: {url="app=core&module=system&controller=settings&do=mfarecoveryvalidate&vid={$vid}&mid={$member->member_id}" seoTemplate="mfarecoveryvalidate" plain="true" base="front"}
+=====
+
+-- {setting="board_name"}

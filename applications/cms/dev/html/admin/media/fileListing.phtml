@@ -1,0 +1,16 @@
+<ips:template parameters="$url, $item" />
+
+{{if $item instanceof \IPS\cms\Media}}
+	<li class='ipsGrid_span4' data-role='mediaItem' data-fileid='{$item->id}' data-uploaded='{datetime="$item->added" dateonly="true"}' data-path='{$item->full_path}' data-filename='{$item->filename}' data-url='{$item->url()}' {{if $item->is_image}}data-isImage{{endif}}>
+		<div class='cMedia_item {{if $item->is_image}}cMedia_itemImage{{endif}}'>
+			<div class='ipsAreaBackground_light'>
+				{{if $item->is_image}}
+					<img src='{$item->url()}'>
+				{{else}}
+					<div class='ipsNoThumb'></div>
+				{{endif}}
+			</div>
+			<p class='cMedia_filename ipsType_reset ipsTruncate ipsTruncate_line'>{$item->filename}</p>
+		</div>
+	</li>
+{{endif}}

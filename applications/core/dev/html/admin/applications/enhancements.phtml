@@ -1,0 +1,78 @@
+<ips:template parameters="$rows" />
+<div id='acpEnhancements'>
+	<h2 class='ipsType_pageTitle'>{lang="enhancements_ips"}</h2>
+	<br>
+
+	<ul class='ipsGrid ipsGrid_collapsePhone ipsSpacer_bottom ipsSpacer_double' data-ipsGrid data-ipsGrid-minItemSize='320' data-ipsGrid-maxItemSize='500' data-ipsGrid-equalHeights='row'>
+		{{foreach $rows[1] as $key => $data}}
+			<li class='ipsBox ipsGrid_span4 acpEnhancement  {{if $data['enabled'] == 1}}acpEnhancement_enabled{{endif}}'>
+				{{if $data['enabled'] == 1}}
+					<span class='ipsBadge ipsBadge_icon ipsBadge_positive' data-ipsTooltip title='{lang="enabled"}'><i class='fa fa-check'></i></span>
+				{{endif}}
+				{{if $data['icon'] != ""}}<img src='{resource="enhancements/{$data['icon']}" app="core" location="admin"}' class='acpEnhancement_logo ipsPos_right'>{{endif}}
+				<h3 class='ipsBox_titleBar'>{lang="$data['title']"}</h3>
+				<div class='ipsType_normal ipsPad'>
+					{{if $data['description']}}
+						<div class='ipsType_richText'>
+							<p>
+								{lang="$data['description']"}
+							</p>
+						</div>
+					{{endif}}
+					<ul class='ipsGrid acpEnhancement_buttons'>
+						<li class='{{if $data['config'] && $data['enabled'] == 1}}ipsGrid_span6{{else}}ipsGrid_span12{{endif}}'>
+							{{if $data['enabled'] == 1}}
+								<a href='{url="app=core&module=applications&controller=enhancements&do=enableToggle&id={$key}&status=0"}' class='ipsButton ipsButton_fullWidth ipsButton_medium ipsButton_light' data-keyAction='t'>{lang="disable"}</a>
+							{{else}}
+								<a href='{url="app=core&module=applications&controller=enhancements&do=enableToggle&id={$key}&status=1"}' class='ipsButton ipsButton_fullWidth ipsButton_medium ipsButton_primary' data-keyAction='t'>{lang="enable"}</a>
+							{{endif}}
+						</li>
+						{{if $data['config'] && $data['enabled'] == 1}}
+							<li class='ipsGrid_span6'>
+								<a href='{url="app=core&module=applications&controller=enhancements&do=edit&id={$key}"}' class='ipsButton ipsButton_fullWidth ipsButton_light ipsButton_medium'>{lang="enhancements_configure"}</a>
+							</li>
+						{{endif}}
+					</ul>
+				</div>
+			</li>
+		{{endforeach}}
+	</ul>
+
+	<h2 class='ipsType_pageTitle'>{lang="enhancements_thirdparty"}</h2>
+	<br>
+
+	<ul class='ipsGrid ipsGrid_collapsePhone' data-ipsGrid data-ipsGrid-minItemSize='320' data-ipsGrid-maxItemSize='500' data-ipsGrid-equalHeights='row'>
+		{{foreach $rows[0] as $key => $data}}
+			<li class='ipsBox ipsGrid_span4 acpEnhancement {{if $data['enabled'] == 1}}acpEnhancement_enabled{{endif}}'>
+				{{if $data['enabled'] == 1}}
+					<span class='ipsBadge ipsBadge_icon ipsBadge_positive' data-ipsTooltip title='{lang="enabled"}'><i class='fa fa-check'></i></span>
+				{{endif}}
+				{{if $data['icon'] }}<img src='{resource="enhancements/{$data['icon']}" app="{$data['app']}" location="admin"}' class='acpEnhancement_logo ipsPos_right'>{{endif}}
+				<h3 class='ipsBox_titleBar'>{lang="$data['title']"}</h3>
+				<div class='ipsType_normal ipsPad'>
+					{{if $data['description']}}
+						<div class='ipsType_richText'>
+							<p>
+								{lang="$data['description']"}
+							</p>
+						</div>
+					{{endif}}
+					<ul class='ipsGrid acpEnhancement_buttons'>
+						<li class='{{if $data['config'] && $data['enabled'] == 1}}ipsGrid_span6{{else}}ipsGrid_span12{{endif}}'>
+							{{if $data['enabled'] == 1}}
+								<a href='{url="app=core&module=applications&controller=enhancements&do=enableToggle&id={$key}&status=0"}' class='ipsButton ipsButton_fullWidth ipsButton_medium ipsButton_light'>{lang="disable"}</a>
+							{{else}}
+								<a href='{url="app=core&module=applications&controller=enhancements&do=enableToggle&id={$key}&status=1"}' class='ipsButton ipsButton_fullWidth ipsButton_medium ipsButton_primary'>{lang="enable"}</a>
+							{{endif}}
+						</li>
+						{{if $data['config'] && $data['enabled'] == 1}}
+							<li class='ipsGrid_span6'>
+								<a href='{url="app=core&module=applications&controller=enhancements&do=edit&id={$key}"}' class='ipsButton ipsButton_fullWidth ipsButton_light ipsButton_medium'>{lang="enhancements_configure"}</a>
+							</li>
+						{{endif}}
+					</ul>
+				</div>
+			</li>
+		{{endforeach}}
+	</ul>
+</div>

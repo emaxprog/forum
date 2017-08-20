@@ -1,0 +1,74 @@
+.ipsModal {
+	background: rgba(69,88,107,0.7);
+}
+.ipsDialog > div {
+	box-shadow: 0px 5px 35px rgba(69,88,107,0.4);
+	border-radius: 5px;
+}
+
+.ipsDialog_title {
+	font-size: 23px;
+}
+
+.ipsMenu {
+	box-shadow: 0px 5px 50px rgba(30, 30, 30, 0.2);
+	border: 1px solid #ddd;
+}
+
+	.ipsMenu_item > a, 
+	.ipsMenu_item > span {
+		color: #666;
+	}
+	
+	.ipsMenu:not( .ipsMenu_noStem ):after {
+		border-width: 9px;
+	}
+	.ipsMenu:not( .ipsMenu_noStem ):before {
+		border-width: 10px;
+	}
+
+	.ipsMenu.ipsMenu_topLeft:before {
+		border-color: #ddd transparent transparent transparent;
+	}
+
+	.ipsMenu.ipsMenu_topRight:before {
+		border-color: #ddd transparent transparent transparent;
+	}
+
+	.ipsMenu.ipsMenu_topCenter:before {
+		border-color: #ddd transparent transparent transparent;
+	}
+
+	.ipsMenu.ipsMenu_bottomRight:before {
+		border-color: transparent transparent #ddd transparent;
+	}
+
+	.ipsMenu.ipsMenu_bottomLeft:before {
+		border-color: transparent transparent #ddd transparent;
+	}
+
+	.ipsMenu.ipsMenu_bottomCenter:before {
+		border-color: transparent transparent #ddd transparent;
+	}
+
+	.ipsMenu.ipsMenu_bottomLeft,
+	.ipsMenu.ipsMenu_bottomRight,
+	.ipsMenu.ipsMenu_bottomCenter {
+		margin-top: 3px;
+	}
+	.ipsMenu.ipsMenu_topLeft,
+	.ipsMenu.ipsMenu_topRight,
+	.ipsMenu.ipsMenu_topCenter {
+		margin-bottom: 3px;
+	}
+
+.ipsDialog_title {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+.ipsDialog_content .ipsForm {
+	margin: 15px;
+}
+
+.pac-container {
+	z-index: 2000;
+}

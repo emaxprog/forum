@@ -1,0 +1,4 @@
+<ips:template parameters="$url, $width=NULL, $height=NULL, $embedId=NULL" />
+<div class='ipsEmbeddedOther {{if \IPS\Settings::i()->max_video_width > 0}}ipsEmbeddedOther_limited{{endif}}' contenteditable="false">
+	<iframe src="{$url|raw}" data-controller="core.front.core.autosizeiframe" {{if $embedId}}data-embedId='{$embedId}'{{endif}} allowfullscreen=''></iframe>
+</div>

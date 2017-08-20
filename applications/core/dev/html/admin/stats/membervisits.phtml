@@ -1,0 +1,15 @@
+<ips:template parameters="$form, $count, $members" />
+<div class=''>
+	<div class='ipsBox'>
+		<h1 class='ipsBox_titleBar'>{lang="visit_date"}</h1>
+		<div>
+			{$form|raw}
+		</div>
+	</div>
+</div>
+
+{{if $count !== NULL}}
+	<div class='ipsSpacer_top ipsSpacer_double'>
+		{$members|raw}
+	</div>
+{{endif}}

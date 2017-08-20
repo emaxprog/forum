@@ -1,0 +1,14 @@
+<ips:template parameters="$items, $value, $disabled, $toggles" />
+
+<div class='ipsGrid_span4'>
+	<ul class='ipsSideMenu_list ipsSideMenu_withRadios' role='radiogroup'>
+		{{foreach $items as $k => $option}}
+			<li {{if $disabled === TRUE or ( is_array( $disabled ) and in_array( $k, $disabled ) )}}title="{lang="menu_manager_feature_disabled"}" data-ipsTooltip{{endif}}>
+				<a href='#' class='ipsSideMenu_item {{if (string) $value == (string) $k}}ipsSideMenu_itemActive{{endif}} {{if $disabled === TRUE or ( is_array( $disabled ) and in_array( $k, $disabled ) )}}ipsSideMenu_itemDisabled{{endif}}' data-ipsMenuValue='{$k}' id='elRadioType_{$k}'>
+					<input type="radio" name="menu_manager_extension" value="{$k}" {{if (string) $value == (string) $k}}checked{{endif}} {{if $disabled === TRUE or ( is_array( $disabled ) and in_array( $k, $disabled ) )}}disabled{{endif}} {{if isset( $toggles[ $k ] ) and !empty( $toggles[ $k ] )}}data-control="toggle" data-toggles="{expression="implode( ',', $toggles[ $k ] )"}" data-toggle-visibleCheck="#elRadioType_{$k}" {{endif}} id="elRadio_menu_manager_extension_{$k}">
+					<label for='elMenuManagerExtension_{$k}'>{lang="$option"}</label>
+				</a>
+			</li>
+		{{endforeach}}
+	</ul>
+</div>

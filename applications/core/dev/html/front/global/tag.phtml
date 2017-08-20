@@ -1,0 +1,9 @@
+<ips:template parameters="$tag, $tagEditUrl=NULL" />
+
+{{$urlEncodedTag = rawurlencode( $tag );}}
+<li {{if $tagEditUrl}}class='ipsTags_deletable'{{endif}}>
+	<a href="{url="app=core&module=search&controller=search&tags={$urlEncodedTag}" seoTemplate="tags"}" class='ipsTag' title="{lang="find_tagged_content" sprintf="$tag"}" rel="tag"><span>{$tag}</span></a>
+	{{if $tagEditUrl}}
+		<a href='{$tagEditUrl->setQueryString( 'do', 'editTags' )->setQueryString( 'removeTag', $tag )->csrf()}' class='ipsTag_remove' data-action='removeTag' data-ipsTooltip title='{lang="remove_tag"}'>&times;</a>
+	{{endif}}
+</li>

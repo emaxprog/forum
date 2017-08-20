@@ -1,0 +1,2 @@
+<ips:template parameters="$entry, $email" />
+{$email->language->addToStack("x_created_cms_in", FALSE, array( 'sprintf' => array( $entry->author()->name, $entry::database()->recordWord( 1 ), $entry->container()->_title ) ) )}: {$entry->_title} ({$entry->url()})

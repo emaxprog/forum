@@ -1,0 +1,15 @@
+<ips:template parameters="$key" />
+{{if $key}}
+	{{$handlers = \IPS\Login::handlers( TRUE );}}
+	{{if isset( $handlers[ $key ] )}}
+		{{$handler = $handlers[ $key ];}}
+		{{if $handler::$icon}}
+			<i class="fa fa-{$handler::$icon}"></i>
+		{{endif}}
+		{$handler->_title}
+	{{else}}
+		{$key}
+	{{endif}}
+{{else}}
+	<span title='{lang="device_handler_unknown_desc"}' data-ipsTooltip>{lang="device_handler_unknown"}</span>
+{{endif}}

@@ -1,0 +1,22 @@
+.ipsBadge {
+	padding: 0px 12px;
+}
+
+.ipsBadge, 
+.ipsBadge.ipsBadge_normal {
+	height: 19px;
+	line-height: 19px;
+	border-radius: 19px;
+}
+
+.ipsBadge_positive, .ipsBadge_style4 {
+	background: #558B2F;
+}
+
+.ipsItemStatus:not( .ipsItemStatus_large ) {
+	color: #385e8a;
+}
+
+.ipsApp .ipsNotificationCount {
+	background: #B63F3F;
+}

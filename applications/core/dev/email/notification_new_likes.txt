@@ -1,0 +1,7 @@
+<ips:template parameters="$comment, $member, $email" />
+
+{{$item = ( $comment instanceof \IPS\Content\Item ) ? $comment : $comment->item();}}{$email->language->addToStack("email_new_likes", FALSE, array( 'sprintf' => array( ( $comment->author()->group['gbw_view_reps'] ) ? $member->name : $email->language->get( 'notifications_anonymous' ), $item->indefiniteArticle( $email->language ) ) ) )} {$item->mapped('title')}
+
+{$email->language->addToStack("go_to_this_x", FALSE, array( 'sprintf' => array( mb_strtolower( $email->language->addToStack( $item::$title, FALSE ) ) ) ) )}: {$item->url()}
+
+-- {setting="board_name"}

@@ -1,0 +1,149 @@
+<ips:template parameters="$club, $activity, $fieldValues" />
+
+{template="header" group="clubs" app="core" params="$club"}
+
+<div class='ipsColumns ipsColumns_collapsePhone'>
+	<section class='ipsColumn ipsColumn_fluid'>
+	
+		{{if settings.clubs_require_approval and !$club->approved}}
+			<div class='ipsBox ipsPad ipsSpacer_bottom ipsModerated'>
+				<div class='ipsColumns ipsColumns_collapsePhone'>
+		    		<div class='ipsColumn ipsColumn_fluid'>
+						<div class='ipsPhotoPanel ipsPhotoPanel_notPhone ipsPhotoPanel_tiny cClubStatus'>
+							<i class='fa fa-eye-slash ipsPos_left ipsType_large'></i>
+							<div>
+								<h3 class='ipsType_reset ipsType_large'>{lang="club_unapproved"}</h3>
+								<p class='ipsType_reset ipsType_medium'>
+									{{if member.modPermission('can_access_all_clubs')}}
+										{lang="club_unapproved_desc_mod"}
+									{{else}}
+										{lang="club_unapproved_desc_public"}
+									{{endif}}
+								</p>
+							</div>
+						</div>
+					</div>
+					{{if member.modPermission('can_access_all_clubs')}}
+						<div class='ipsColumn ipsColumn_narrow'>
+							<a class="ipsButton ipsButton_medium ipsButton_fullWidth ipsButton_positive" href="{$club->url()->setQueryString( array( 'do' => 'approve', 'approved' => 1 ) )->csrf()}" data-confirm>
+								{lang="approve"}
+							</a>
+						</div>
+						<div class='ipsColumn ipsColumn_narrow'>
+							<a class="ipsButton ipsButton_medium ipsButton_fullWidth ipsButton_negative" href="{$club->url()->setQueryString( array( 'do' => 'approve', 'approved' => 0 ) )->csrf()}" data-confirm>
+								{lang="delete"}
+							</a>
+						</div>
+					{{endif}}
+				</div>
+			</div>
+		{{endif}}
+
+		{{$memberStatus = $club->memberStatus( \IPS\Member::loggedIn(), 2 );}}
+		{template="nonMemberClubStatus" group="clubs" app="core" params="$club, $memberStatus"}
+
+		{{if $club->about || ( $club->location() && settings.clubs_locations && ( !settings.googlemaps or !settings.google_maps_api_key ) )}}
+			<div class='ipsBox ipsPad ipsSpacer_bottom'>
+				{{if $club->about}}
+					<div>
+						<h3 class='ipsType_minorHeading'>{lang="club_about_this_club"}</h3>
+						<div class='ipsType_richText ipsType_medium'>
+							{$club->about}
+						</div>
+					</div>
+				{{endif}}
+				{{if $club->location() && settings.clubs_locations && ( !settings.googlemaps or !settings.google_maps_api_key )}}
+					<div class='{{if $club->about}}ipsSpacer_top{{endif}}'>
+						<h3 class='ipsType_minorHeading'>{lang="club_location"}</h3>
+						<div class='ipsType_richText ipsType_medium'>
+							{$club->location()}
+						</div>
+					</div>
+				{{endif}}
+			</div>
+			<hr class='ipsHr'>
+		{{endif}}
+		{{foreach \IPS\Member\Club\CustomField::roots() as $field}}
+			{{if isset( $fieldValues[ "field_" . $field->id ] )}}
+				<div class='ipsSpacer_bottom'>
+					<h3 class='ipsType_minorHeading'>{$field->_title}</h3>
+					<div class='ipsType_richText ipsType_medium'>
+						{$field->displayValue( $fieldValues[ "field_" . $field->id ] )|raw}
+					</div>
+				</div>
+			{{endif}}
+		{{endforeach}}
+
+		{{if $club->isLeader() and $club->type === $club::TYPE_CLOSED and $pendingMembers = $club->members( array( $club::STATUS_REQUESTED ), NULL, NULL, 3 ) and count( $pendingMembers )}}
+			<div class='ipsBox ipsSpacer_bottom'>
+				<h2 class='ipsType_sectionTitle ipsType_reset ipsType_medium'><i class='fa fa-lock' data-ipsTooltip title="{lang="club_requested_users_desc"}"></i> {lang="club_requested_users"}</h2>
+				<div data-controller='core.front.clubs.requests'>
+					{template="membersRows" group="clubs" params="$club, $pendingMembers"}
+				</div>
+			</div>
+			<hr class='ipsHr'>
+		{{endif}}
+
+		{{if $club->canRead()}}
+			<ol class="ipsStream ipsStream_withTimeline ipsList_reset ipsSpacer_top">
+				<li class='ipsStreamItem_time'>{lang="club_whats_new"}</li>
+				{{foreach $activity as $result}}
+					{$result->html()|raw}
+				{{endforeach}}
+				<li class='ipsStreamItem_terminator'>&nbsp;</li>
+			</ol>
+		{{endif}}
+	</section>
+	<aside class='ipsColumn ipsColumn_wide'>
+		{{if settings.google_maps_api_key and settings.clubs_locations and $location = $club->location()}}
+			<div class='ipsBox ipsPad_half ipsSpacer_bottom'>
+				{$location->map()->render( 500, 300 )|raw}
+				<h3 class='ipsType_minorHeading ipsSpacer_top'>{lang="club_location"}</h3>
+				<div class='ipsType_richText ipsType_medium'>
+					{$location}
+				</div>
+			</div>
+		{{endif}}
+		
+		{{if $club->type != $club::TYPE_PUBLIC}}
+			<div class="ipsWidget ipsWidget_vertical ipsBox">
+				<h2 class='ipsWidget_title ipsType_reset'>{lang="club_members_count" pluralize="$club->members"}</h2>
+				<div class='ipsWidget_inner'>
+					<ol class='ipsDataList ipsDataList_reducedSpacing'>
+						{{$membersToShow = $club->members( array('member', 'moderator', 'leader'), 15, "IF(core_clubs_memberships.status='leader' OR core_clubs_memberships.status='moderator',0,1), core_clubs_memberships.joined ASC", 1);}}
+						{{foreach $membersToShow as $memberData}}
+							{{$member = \IPS\Member::constructFromData( $memberData['core_members'] );}}
+							<li class='ipsDataItem ipsClearfix'>
+								<div class='ipsDataItem_icon ipsPos_top'>
+									{template="userPhoto" app="core" group="global" params="$member, 'mini'"}
+								</div>
+								<div class='ipsDataItem_main'>
+									<h3 class='ipsType_sectionHead ipsType_normal'>
+										{template="userLink" group="global" app="core" params="$member"}
+									</h3>
+	
+									{{if $memberData['core_clubs_memberships']['status'] == \IPS\Member\Club::STATUS_LEADER && ( $club->owner and $club->owner == $member ) }}
+										<br><span class="ipsBadge ipsBadge_positive">{lang="club_owner"}</span>
+									{{elseif $memberData['core_clubs_memberships']['status'] == \IPS\Member\Club::STATUS_LEADER}}
+										<br><span class="ipsBadge ipsBadge_positive">{lang="club_leader"}</span>
+									{{elseif $memberData['core_clubs_memberships']['status'] == \IPS\Member\Club::STATUS_MODERATOR}}
+										<br><span class="ipsBadge ipsBadge_intermediary">{lang="club_moderator"}</span>
+									{{endif}}
+	
+									<p class='ipsType_reset ipsType_light ipsType_medium'>
+										{lang="club_joined" htmlsprintf="\IPS\DateTime::ts( $memberData['core_clubs_memberships']['joined'] )->relative()"}
+									</p>
+								</div>
+							</li>	
+						{{endforeach}}
+					</ol>
+					{{if $club->members > count( $membersToShow	)}}
+						<div class='ipsType_center ipsType_medium ipsPad_half ipsType_blendLinks'>
+							<a href='{$club->url()->setQueryString('do', 'members')}'>{lang="club_see_all_members"} <i class='fa fa-angle-right'></i></a>
+						</div>
+					{{endif}}
+				</div>
+			</div>
+		{{endif}}
+	</aside>
+</div>

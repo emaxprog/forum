@@ -1,0 +1,8 @@
+<ips:template parameters="$url, $row" />
+
+{{if !( $row instanceof \IPS\cms\Media )}}
+	<li class='ipsTreeList_inactiveBranch' data-role="mediaFolder" data-folderID='{$row->id}'>
+		<a href='{$url->setQueryString( array( 'root' => $row->id ) )}'>{$row->name}</a>
+		<ul></ul>				
+	</li>
+{{endif}}

@@ -1,0 +1,15 @@
+/* PHONES */
+@media screen and (max-width: 767px) {
+	html[dir="ltr"] .ipsButtonBar.ipsPos_left .ipsButtonRow, 
+	html[dir="ltr"] .ipsButtonBar .ipsButtonRow:not( .ipsPos_right ) {
+		margin: 4px;
+	}
+
+	.ipsButtonBar.ipsResponsive_hideDesktop {
+		margin-top: 7px;
+	}
+
+	.ipsTabs_panel *:not( [data-controller="core.global.core.table"] ) .ipsToolList {
+		padding: 0;
+	}
+}

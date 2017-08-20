@@ -1,0 +1,73 @@
+<ips:template parameters="$preview=FALSE" />
+{{if !in_array('ipsLayout_minimal', \IPS\Output::i()->bodyClasses )}}
+	<nav data-controller='core.front.core.navBar' class='{{if !count( \IPS\core\FrontNavigation::i()->subBars( $preview ) )}}ipsNavBar_noSubBars{{endif}}'>
+		<div class='ipsNavBar_primary ipsLayout_container {{if !count( \IPS\core\FrontNavigation::i()->subBars( $preview ) )}}ipsNavBar_noSubBars{{endif}} ipsClearfix'>
+			{{if !$preview and \IPS\Member::loggedIn()->canAccessModule( \IPS\Application\Module::get( 'core', 'search' ) ) AND !in_array('ipsLayout_minimal', \IPS\Output::i()->bodyClasses )}}
+				<div id='elSearch' class='ipsPos_right' data-controller='core.front.core.quickSearch' data-default="{expression="\IPS\Output::i()->defaultSearchOption[0]"}">
+					<form accept-charset='utf-8' action='{url="app=core&module=search&controller=search" seoTemplate="search" noprotocol="true"}' method='post'>
+						<a href='#' id='elSearchFilter' data-ipsMenu data-ipsMenu-selectable='radio' data-ipsMenu-appendTo='#elSearch' class="ipsHide">
+							<span data-role='searchingIn'>
+								{{if count( output.contextualSearchOptions )}}
+									{{foreach output.contextualSearchOptions as $name => $data}}
+										{$name}
+										{{$defaultSearchType = $data['type'];}}
+										{{foreach $data as $k => $v}}
+											<input name="{$k}" value="{$v}" data-role="searchFilter" type="hidden">
+										{{endforeach}}
+										{{break;}}
+									{{endforeach}}
+								{{else}}
+									{{$defaultSearchType = \IPS\Output::i()->defaultSearchOption[0];}}
+									{expression="\IPS\Member::loggedIn()->language()->addToStack( \IPS\Output::i()->defaultSearchOption[1] )"}
+								{{endif}}
+							</span>
+							<i class='fa fa-caret-down'></i>
+						</a>
+						<input type="hidden" name="type" value="{$defaultSearchType}" data-role="searchFilter">
+						<ul id='elSearchFilter_menu' class='ipsMenu ipsMenu_selectable ipsMenu_narrow ipsHide'>
+							<li class='ipsMenu_item {{if output.defaultSearchOption[0] == 'all' AND !count(output.contextualSearchOptions)}}ipsMenu_itemChecked{{endif}}' data-ipsMenuValue='all'>
+								<a href='{url="app=core&module=search&controller=search" csrf="1"}' title='{lang="search_everything"}'>{lang="search_everything"}</a>
+							</li>
+							<li class='ipsMenu_sep'><hr></li>
+							{{if count( output.contextualSearchOptions )}}
+								{{$setDefault = FALSE;}}
+								{{foreach output.contextualSearchOptions as $name => $data}}
+									<li class='ipsMenu_item {{if $setDefault === FALSE}}ipsMenu_itemChecked{{$setDefault = TRUE;}}{{endif}}' data-ipsMenuValue='{expression="json_encode( $data )"}' data-options='{expression="json_encode( $data )"}'>
+										<a href='#'>{$name}</a>
+									</li>
+								{{endforeach}}
+								<li class='ipsMenu_sep'><hr></li>
+							{{endif}}
+							<li data-role='globalSearchMenuOptions'></li>
+							<li class='ipsMenu_item ipsMenu_itemNonSelect'>
+								<a href='{url="app=core&module=search&controller=search" seoTemplate="search"}' accesskey='4'><i class='fa fa-cog'></i> {lang="advanced_search"}</a>
+							</li>
+						</ul>
+						<input type='search' id='elSearchField' placeholder='{lang="search_placeholder"}' name='q'>
+						<button type='submit'><i class='fa fa-search'></i></button>
+					</form>
+				</div>
+			{{endif}}
+			<ul data-role="primaryNavBar" class='{{if !$preview}}ipsResponsive_showDesktop ipsResponsive_block{{endif}}'>
+				{template="navBarItems" app="core" group="global" location="front" params="\IPS\core\FrontNavigation::i()->roots( $preview ), \IPS\core\FrontNavigation::i()->subBars( $preview ), 0, $preview"}
+				<li class='ipsHide' id='elNavigationMore' data-role='navMore'>
+					<a href='#' data-ipsMenu data-ipsMenu-appendTo='#elNavigationMore' id='elNavigationMore_dropdown'>{lang="more"}</a>
+					<ul class='ipsNavBar_secondary ipsHide' data-role='secondaryNavBar'>
+						<li class='ipsHide' id='elNavigationMore_more' data-role='navMore'>
+							<a href='#' data-ipsMenu data-ipsMenu-appendTo='#elNavigationMore_more' id='elNavigationMore_more_dropdown'>{lang="more"} <i class='fa fa-caret-down'></i></a>
+							<ul class='ipsHide ipsMenu ipsMenu_auto' id='elNavigationMore_more_dropdown_menu' data-role='moreDropdown'></ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</nav>
+{{elseif member.group['g_view_board']}}
+	<nav>
+		<div class='ipsLayout_container'>
+			<div class='ipsNavBar_primary ipsNavBar_noSubBars ipsClearfix'>
+				<a id='elBackHome' href='{setting="base_url"}' title='{lang="go_community_home"}'><i class='fa fa-angle-left'></i> {lang="community_home"}</a>
+			</div>
+		</div>
+	</nav>
+{{endif}}

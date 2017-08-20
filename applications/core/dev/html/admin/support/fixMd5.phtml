@@ -1,0 +1,24 @@
+<ips:template parameters="$modifiedFiles, $form" />
+<div data-controller="core.admin.support.md5">
+	<div class="ipsPad {{if $form->error}}ipsHide{{endif}}" data-role="initialScreen">
+		{lang="md5_fail_help_1"}
+		<ul>
+			{{foreach $modifiedFiles as $file}}
+				<li>{$file}</li>
+			{{endforeach}}
+		</ul>
+		{lang="md5_fail_help_2"}
+		<div class="ipsType_center">
+			<div class="ipsJS_show">
+				<a href="#" class="ipsButton ipsButton_important ipsButton_large" data-action="downloadDelta"><i class="fa fa-cloud-download"></i> {lang="md5_fail_download"}</a>
+				<p><a href="{url="client_area" ips="true"}" target="_blank">{lang="delta_upgrade_download_full"}</a></p>
+			</div>
+			<div class="ipsJS_hide">
+				<a href="{url="client_area" ips="true"}" class="ipsButton ipsButton_important ipsButton_large" target="_blank">{lang="delta_upgrade_go_to_clientarea"}</a>
+			</div>
+		</div>
+	</div>
+	<div data-role="downloadForm" {{if !$form->error}}class="ipsHide"{{endif}}>
+		{$form|raw}
+	</div>
+</div>

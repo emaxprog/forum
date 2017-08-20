@@ -1,0 +1,69 @@
+/* PHONES */
+@media screen and (max-width: 767px) {
+
+	.ipsApp_admin .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_title {
+		display: block;
+		background: #f5f5f5;
+		padding: 10px;
+		text-align: left;
+		margin: -3px -3px 10px -3px;
+		font-size: 15px;
+	}
+	html[dir="rtl"] .ipsApp_admin .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_title {
+		text-align: right;
+	}
+
+	.ipsFieldRow_section {
+		background: #2E3D49;
+		color: #fff;
+		font-weight: normal;
+		padding: 10px;
+		margin-top: 5px;
+		font-size: 16px;
+	}
+
+	.ipsApp_admin .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_checkbox ) .ipsFieldRow_content {
+		padding: 7px;
+	}
+
+	.ipsForm .ipsFieldRow {
+		margin-bottom: 0;
+	}
+
+	.ipsForm_horizontal .ipsFieldRow {
+		display: block;
+	}
+
+	html[dir] .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_label, 
+	html[dir] .ipsForm_horizontal .ipsFieldRow > .ipsFieldRow_title, 
+	html[dir] .ipsForm_vertical .ipsFieldRow > .ipsFieldRow_label, 
+	html[dir] .ipsForm_vertical .ipsFieldRow > .ipsFieldRow_title {
+		min-width: 0;
+	}
+
+	html[dir] .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_yesNo ) > .ipsFieldRow_label,
+	html[dir] .ipsForm_horizontal .ipsFieldRow:not( .ipsFieldRow_yesNo ) > .ipsFieldRow_title {
+		padding-top: 10px;
+	}
+
+	.ipsTabs_panel > .ipsForm, .ipsTabs_panel div[data-controller="core.global.core.table"],
+	.ipsTabs_panel .acpTrees_buttons + .acpBlock, 
+	.ipsTabs_panel .ipsForm, .ipsTabs_panel .ipsChart {
+		margin: 0;
+	}
+
+	.ipsAttachment_dropZone [data-action="uploadFile"] {
+		width: 100%;
+		float: none;
+	}
+
+	html[dir="ltr"] .ipsAttachment_dropZone.ipsAttachment_dropZoneSmall > .ipsAttachment_dropZoneSmall_info {
+		margin: 5px 0 0 0;
+	}
+
+	.ipsFieldRow .cCopyNode {
+		margin-top: -40px;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

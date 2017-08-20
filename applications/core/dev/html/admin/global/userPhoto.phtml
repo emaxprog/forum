@@ -1,0 +1,10 @@
+<ips:template parameters="$member, $size='small'" />
+{{if $member->member_id}}
+	<a href="{$member->url()}" class="ipsUserPhoto ipsUserPhoto_{$size}" target="_blank">
+		<img src='{$member->photo}' alt=''>
+	</a>
+{{else}}
+	<span class="ipsUserPhoto ipsUserPhoto_{$size}">
+		<img src='{$member->photo}' alt=''>
+	</span>
+{{endif}}

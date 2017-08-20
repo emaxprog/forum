@@ -1,0 +1,11 @@
+#form_site_social_profiles .ipsField_stack {
+	max-width: 500px;
+}
+
+	#form_site_social_profiles .ipsField_stack .ipsField_stackItem_keyValue input {
+		max-width: 300px;
+	}
+
+	#form_site_social_profiles .ipsField_stack .ipsField_stackItem_keyValue select {
+		margin-left: 10px;
+	}

@@ -1,0 +1,3 @@
+<ips:template parameters="$group" />
+{{$url = "app=core&module=members&controller=members&advanced_search_submitted=1&members_member_group_id={$group['g_id']}&noColumn=1";}}
+<a href='{url="$url" csrf="true"}'><span data-ipsGroupCount data-ipsGroupId='{$group['g_id']}' class='ipsLoading ipsLoading_tiny'>&nbsp;</span></a>

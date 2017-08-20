@@ -1,0 +1,39 @@
+<ips:template parameters="$item, $id, $parent" />
+{{$children = $item->children( TRUE );}}
+{{if $children !== NULL}}
+	<div data-dropdownID='{$id}'>
+		<ul class='ipsList_inline ipsList_noSpacing ipsClearfix'>
+			<li class='ipsPos_right'>
+				<a href="{url="app=core&module=applications&controller=menu&do=form&parent={$id}"}" class='ipsButton ipsButton_verySmall ipsButton_alternate' data-ipsTooltip title='{lang="add_menu_item"}' data-action='newDropdown'>{lang="add_menu_item_short"}</a>
+			</li>
+			<li>
+				{{if $parent}}
+					<a href='#' class='ipsButton ipsButton_link ipsButton_narrow ipsButton_verySmall' data-action='navBack' data-parentID='{$parent->id}'><i class='fa fa-chevron-left'></i> {lang="menu_manager_back_to" sprintf="$parent->title()"}</a>
+				{{else}}
+					<a href='#' class='ipsButton ipsButton_link ipsButton_narrow ipsButton_verySmall' data-action='navBack' data-parentID='0'><i class='fa fa-chevron-left'></i> {lang="menu_manager_back_to" sprintf="\IPS\Member::loggedIn()->language()->addToStack('menu_manager_main_menu')"}</a>
+				{{endif}}
+			</li>
+		</ul>
+		<h2 class='ipsType_sectionHead ipsSpacer_top ipsSpacer_half'>
+			{lang="menu_manager_dropdown_for" sprintf="$item->title()"}
+		</h2>
+
+		<ol id="elDropDownMenu_{$id}" data-menuID='{$id}' class="ipsList_reset ipsMenu ipsMenu_auto ipsMenu_bottomCenter">
+			{{if count( $children )}}
+				{{foreach $children as $cid => $citem}}
+					{template="menuManagerDropdownItem" group="applications" app="core" params="$citem, $cid"}
+				{{endforeach}}
+			{{else}}
+				<li class='cMenuManager_emptyList ipsType_light ipsType_center'>{lang="menu_manager_list"}</li>
+			{{endif}}
+		</ol>
+	</div>
+	{{$parent = $item;}}
+	{{foreach $children as $i => $_items}}
+		{{foreach $_items as $id => $item}}
+			{{if $item instanceof \IPS\core\extensions\core\FrontNavigation\Menu}}
+				{template="menuManagerDropdown" group="applications" app="core" params="$item, $id, $parent"}
+			{{endif}}
+		{{endforeach}}
+	{{endforeach}}
+{{endif}}

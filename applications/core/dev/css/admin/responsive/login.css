@@ -1,0 +1,19 @@
+/* PHONES */
+@media screen and (max-width: 767px) {
+	#elLogin_box {
+		width: 320px;
+	}
+
+	.ipsApp #elLogin_box > .ipsColumns {
+		min-height: 240px;
+	}
+
+	.ipsApp#elLogin {
+		padding-top: 10px;
+	}
+
+	.ipsApp #elLogin_box {
+		width: auto;
+		margin: 7px;
+	}
+}

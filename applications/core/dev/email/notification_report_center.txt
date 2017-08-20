@@ -1,0 +1,8 @@
+<ips:template parameters="$report, $latestReport, $reportedContent, $email" />
+{{$item = $reportedContent instanceof \IPS\Content\Item ? $reportedContent : $reportedContent->item();}}
+{$email->language->addToStack("email_content_reported_plain", FALSE, array( 'sprintf' => array( \IPS\Member::load( $latestReport['report_by'] )->name, $reportedContent->indefiniteArticle( $email->language ), $item->mapped('title') ) ) )}
+
+{$email->language->addToStack("go_to_the_report", FALSE)}: {$report->url()}
+{$email->language->addToStack("go_to_this_x", FALSE, array( 'sprintf' => array( mb_strtolower( $email->language->addToStack( $reportedContent::$title, FALSE ) ) ) ) )}: {$reportedContent->url()}
+
+-- {setting="board_name"}

@@ -1,0 +1,7 @@
+<ips:template parameters="$comment, $email" />
+
+{{$item = $comment->item();}}{$email->language->addToStack("email_new_profile_reply_plain", FALSE, array( 'sprintf' => array( $comment->author()->name ) ) )}
+
+{$email->language->addToStack("email_ignore_user_pm", FALSE, array( 'sprintf' => array( $comment->author()->name ) ) )}
+
+-- {setting="board_name"}

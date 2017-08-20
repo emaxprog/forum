@@ -1,0 +1,495 @@
+/* Post content styles: quotes, spoilers, other formatting */
+/* We recommend you don't change these too much; users expect certain styles to look a certain way */
+
+/* ======================================================== */
+/* Fix some CKEditor styles									*/
+/* ======================================================== */
+.cke_source {
+	/* IE collapses the source textarea; if we force a minimum here, it will be able to calculate the correct size */
+	min-height: 300px !important;
+	min-width: 300px !important;
+}
+
+.cke_wysiwyg_div {
+	padding: 15px !important;
+	min-height: 200px;
+}
+
+	.cke_wysiwyg_div > p:first-child {
+		margin-top: 0 !important;
+	}
+
+.ipsApp .cke_widget_wrapper:hover > .cke_widget_element,
+.ipsApp .cke_widget_wrapper:hover .cke_widget_editable {
+	outline-width: 1px;
+	outline-style: solid;
+	outline-color: #8ec2ed;
+}
+	
+	.ipsApp .cke_widget_wrapper:hover .cke_widget_editable.cke_widget_editable_focused {
+		box-shadow: 0 1px 1px rgba(0,0,0,0.075), 0px 1px 9px rgba(82,168,236,0.7);
+	}
+
+.ipsMenu_item[data-mentionid] > a {
+	padding: 3px 15px;
+}
+
+.cke_wysiwyg_div ul {
+	list-style-type: disc;
+}
+
+	.cke_wysiwyg_div ul ul,
+	.cke_wysiwyg_div ol ul {
+		list-style-type: circle;
+	}
+
+		.cke_wysiwyg_div ul ul ul,
+		.cke_wysiwyg_div ol ol ul,
+		.cke_wysiwyg_div ol ul ul,
+		.cke_wysiwyg_div ul ol ul {
+			list-style-type: square;
+		}
+
+/* ======================================================== */
+/* QUOTES													*/
+/* ======================================================== */
+
+pre {
+	overflow: auto;
+}
+
+/* Basic quote style */
+.ipsQuote {
+	margin: 0;
+	padding: 0px 15px;
+	border-width: 1px 1px 1px 2px;
+	border-color: #ededed #e8e8e8 #dbdbdb #666666;
+	border-style: solid;
+	position: relative;
+	background: #fbfbfb;
+	clear: both;
+}
+
+	.ipsQuote + .ipsQuote {
+		margin-top: 15px;
+	}
+
+	html[dir="rtl"] .ipsQuote {
+		border-width: 1px 2px 1px 2px;
+		border-color: #ededed #666666 #dbdbdb #e8e8e8;
+	}
+	
+	/* Citation bar */
+	.ipsQuote_citation {
+		background: #f3f3f3;
+		margin: 0px -15px;
+		padding: 5px 15px;
+		color: #222;
+		font-weight: bold;
+		font-size: 13px;
+		display: block;
+	}
+	.ipsQuote .ipsQuote_citation a {
+		color: #222;
+		text-decoration: none;
+	}
+	
+	/* The open/close icon */
+	.ipsQuote_citation [data-action='toggleQuote'] {
+		vertical-align: middle;
+		font-family: 'FontAwesome';
+		font-size: 16px;
+		margin-top: -4px;
+	}
+	.ipsQuote_citation.ipsQuote_closed [data-action='toggleQuote']:before {
+		content: "\f138";
+	}
+	html[dir="rtl"] .ipsQuote_citation.ipsQuote_closed [data-action='toggleQuote']:before {
+		content: "\f137";
+	}
+	.ipsQuote_citation.ipsQuote_open [data-action='toggleQuote']:before {
+		content: "\f13a";
+		color: #bdbdbd;
+	}
+	
+	/* The snapback icon */
+	.ipsQuote_citation .fa {
+		line-height: 23px;
+		opacity: 0.1;
+		{prefix="transition" value="all 0.3s linear"}
+	}
+		.ipsQuote_citation:hover .fa {
+			opacity: 1;
+		}
+
+a[data-mentionid] {
+	display: inline-block;
+	border-radius: 2px;
+	padding: 0px 5px;
+	font-size: 90%;
+	color: #fff;
+	text-decoration: none !important;
+	background: {theme="mentions"};
+}
+
+/* ======================================================== */
+/* CODE														*/
+/* ======================================================== */
+.ipsCode {
+	background: #fafafa;
+	padding: 15px !important;
+	border: 0 !important;
+	border-left: 4px solid #e0e0e0 !important;
+	clear: both;
+	direction: ltr;
+	word-wrap: normal;
+}
+
+/* ======================================================== */
+/* SPOILERS													*/
+/* ======================================================== */
+
+.ipsSpoiler, .ipsStyle_spoiler {
+	margin: 0;
+	padding: 0px 15px;
+	border-width: 1px 1px 1px 1px;
+	border-color: #e5e5e5;
+	border-style: solid;
+	position: relative;
+	background: #fafafa;
+	clear: both;
+}
+
+	.ipsSpoiler_header {
+		background: #e5e5e5;
+		margin: 0px -15px;
+		padding: 5px 15px;
+		color: #353535;
+		font-weight: bold;
+		font-size: 13px;
+		display: block;
+		cursor: pointer;
+	}
+	.ipsSpoiler .ipsSpoiler_header a, .ipsStyle_spoiler .ipsSpoiler_header a {
+		color: #222;
+		text-decoration: none;
+	}
+	
+	/* The open/close icon */
+	.ipsSpoiler_header [data-action='toggleSpoiler'] {
+		vertical-align: middle;
+		font-family: 'FontAwesome';
+		font-size: 16px;
+		margin-top: -4px;
+	}
+	.ipsSpoiler_header.ipsSpoiler_closed [data-action='toggleSpoiler']:before {
+		content: "\f138";
+	}
+	html[dir="rtl"] .ipsSpoiler_header.ipsSpoiler_closed [data-action='toggleSpoiler']:before {
+		content: "\f137";
+	}
+	.ipsSpoiler_header.ipsSpoiler_open [data-action='toggleSpoiler']:before {
+		content: "\f13a";
+		color: #bdbdbd;
+	}
+
+/* ======================================================== */
+/* IMAGES */
+/* ======================================================== */
+.ipsAttachLink_image,
+.ipsAttachLink {
+	margin-bottom: 15px;
+}
+
+html[dir="ltr"] .ipsAttachLink_image.ipsAttachLink_right,
+html[dir="ltr"] .ipsAttachLink.ipsAttachLink_right,
+html[dir="rtl"] .ipsAttachLink_image.ipsAttachLink_left,
+html[dir="rtl"] .ipsAttachLink.ipsAttachLink_left {
+	margin-left: 30px;
+}
+html[dir="ltr"] .ipsAttachLink_image.ipsAttachLink_left,
+html[dir="ltr"] .ipsAttachLink.ipsAttachLink_left,
+html[dir="rtl"] .ipsAttachLink_image.ipsAttachLink_right,
+html[dir="rtl"] .ipsAttachLink.ipsAttachLink_right {
+	margin-right: 30px;
+}
+
+/* ======================================================== */
+/* EMBEDDABLES - Internal Embeds							*/
+/* These styles are used for the iframes when a user posts  */
+/* a link to another piece of content on the suite (for		*/
+/* example, a topic)										*/
+/* ======================================================== */
+
+iframe[data-embedContent] {
+	width: 100%;
+	min-height: 165px;
+	{{if settings.max_video_width}}
+		max-width: {setting="max_video_width"}px;
+	{{else}}
+		max-width: 500px;
+	{{endif}}
+	min-width: 250px;
+	margin: 10px 0;
+	border: 1px solid transparent;
+	position: relative;
+	background-size: 40px 40px;
+	border-radius: 2px;
+	display: block;
+}
+	
+	iframe[data-embedContent].ipsEmbed_finishedLoading {
+		background-color: #fcfcfc;
+		background-image: none;
+		border: 1px solid rgba(0,0,0,0.1);
+	}
+
+.ipsRichEmbed .ipsRichEmbed_masthead {
+	background: {theme="area_background_dark"};
+}
+
+.ipsRichEmbed .ipsRichEmbed_mastheadBg > a,
+.ipsRichEmbed .ipsRichEmbed_mastheadBg > span {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 120px;
+	display: block;
+}
+
+	.ipsRichEmbed .ipsRichEmbed_mastheadBg.ipsRichEmbed_mastheadBg_small > a,
+	.ipsRichEmbed .ipsRichEmbed_mastheadBg.ipsRichEmbed_mastheadBg_small > span {
+		height: 80px;
+	}
+
+.ipsRichEmbed .ipsImage	{
+	max-height: 350px;
+}
+
+.ipsRichEmbed_header {
+	border-bottom: 1px solid rgba(0,0,0,0.05);
+	padding: 10px 45px 10px 15px;
+}
+
+.ipsRichEmbed_openItem {
+	font-size: 26px;
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	color: #000;
+	opacity: 0.1;
+	{prefix="transition" value="all 0.2s ease-in-out"}
+}
+
+	.ipsRichEmbed_openItem:hover {
+		color: inherit;
+		opacity: 1;
+	}
+
+.ipsRichEmbed_title {
+	font-size: 14px;
+	font-weight: 600;
+	padding-top: 2px;
+}
+
+.ipsRichEmbed_moreInfo {
+	border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.ipsRichEmbed_metaLine {
+	
+}
+
+.ipsApp .ipsRichEmbed_stats.ipsSpacer_top {
+	border-top: 1px solid rgba(0,0,0,0.1);
+	padding-top: 10px;
+	margin-top: 10px;
+}
+
+.ipsRichEmbed_originalItem {
+	border: 1px solid rgba(0,0,0,0.1);
+	box-shadow: 0px 0px 3px rgba(0,0,0,0.1);
+}
+
+	.ipsRichEmbed_originalItem.ipsPad,
+	.ipsRichEmbed_originalItem .ipsPad {
+		padding: 10px;
+	}
+
+.ipsRichEmbed_itemTitle {
+	margin: 0;
+	font-size: 17px;
+	color: {theme="text_dark"};
+	font-weight: 400;
+	line-height: 1.2;
+}
+
+.ipsRichEmbed_phone .ipsPhotoPanel > .ipsUserPhoto {
+	display: none !important;
+}
+
+html[dir] .ipsRichEmbed_phone .ipsPhotoPanel > div {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+html[dir="ltr"] .ipsList_inline .ipsRichEmbed_commentPhoto {
+	margin-right: 2px;
+}
+html[dir="rtl"] .ipsList_inline .ipsRichEmbed_commentPhoto {
+	margin-left: 2px;
+}
+
+.ipsRichEmbed hr.ipsHr {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+	/* 	A nasty hack which forces iOS to honor max-widths on iframes. Without this, our iframe
+		pushes the page width out because of the white-space:nowrap; on the embeddable titles.
+		See: http://stackoverflow.com/a/23083463
+	*/
+	.ipsEmbedded {
+		width: 1px;
+        min-width: 100%;
+        *width: 100%;
+	}
+	
+	.ipsEmbedded_image {
+		background-color: #333;
+		background-size: cover;
+		background-position: 50%;
+		background-repeat: no-repeat;
+		overflow: hidden;
+	}
+
+	.ipsEmbedded_image, .ipsEmbedded_image a  {
+		width: 110px;
+		height: 110px;
+	}
+
+	.ipsEmbedded_image a {
+		display: block;
+	}
+
+	.ipsEmbedded_image img {
+		display: none;
+	}
+
+		.ipsEmbedded_withImage .ipsEmbedded_image {
+			position: absolute;
+			top: 10px;
+			border: 3px solid #fff;
+		}
+		html[dir="ltr"] .ipsEmbedded_withImage .ipsEmbedded_image {
+			left: 10px;
+		}
+		html[dir="rtl"] .ipsEmbedded_withImage .ipsEmbedded_image {
+			right: 10px;
+		}
+
+	.ipsEmbedded_headerArea {
+		background: #efefef;
+		border-bottom: 1px solid rgba(0,0,0,0.055);
+		padding: 10px;
+		line-height: 1;
+		font-size: 16px;
+	}
+
+		.ipsEmbedded_headerArea .ipsEmbedded_type {
+			font-size: 12px;
+		} 
+
+	.ipsEmbedded .ipsType_medium, .ipsEmbedded .ipsType_small {
+		line-height: 1.3;
+	}
+
+	.ipsEmbedded_content {
+		padding: 9px 7px 7px;
+		background-color: #fcfcfc;
+		min-height: 75px;
+	}
+
+	.ipsEmbedded_stats {
+		margin-top: 9px;
+		padding: 7px 0;
+		border-top: 1px solid rgba(0,0,0,0.05);
+	}
+
+	.ipsEmbedded .ipsUserPhoto_tiny img {
+		width: 30px;
+		height: 30px;
+	}
+
+	html[dir="ltr"] .ipsEmbedded_withImage .ipsEmbedded_headerArea,
+	html[dir="ltr"] .ipsEmbedded_withImage .ipsEmbedded_content {
+		padding-left: 130px;
+	}
+	html[dir="rtl"] .ipsEmbedded_withImage .ipsEmbedded_headerArea,
+	html[dir="rtl"] .ipsEmbedded_withImage .ipsEmbedded_content {
+		padding-right: 130px;
+	}
+
+	.ipsEmbedded_error {
+		text-align: center;
+		padding-top: 50px;
+		font-size: 12px;
+		color: rgba(0,0,0,0.3);
+	}
+
+/* ======================================================== */
+/* EMBEDDABLES - oEmbed Videos								*/
+/* These styles are used for embedded links to oEmbed		*/
+/* services that identify themselves as videos (for example	*/
+/* YouTube, Vimeo and Hulu)									*/
+/* ======================================================== */
+{{if settings.max_video_width}}
+.ipsEmbeddedVideo.ipsEmbeddedVideo_limited {
+	max-width: {setting="max_video_width"}px;
+}
+{{endif}}
+	
+	.ipsEmbeddedVideo.ipsEmbeddedVideo_limited > div,
+	.ipsEmbeddedVideo:not( .ipsEmbeddedVideo_limited ) {
+		float: none;
+	    clear: both;
+		width: 100%;
+		overflow: auto;
+		position: relative;
+		/* This allows videos to resize responsively */
+	    padding-bottom: 56.25%;
+	    padding-top: 25px;
+	}
+
+	.ipsEmbeddedVideo iframe {
+		position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	}
+
+	.ipsQuote .ipsEmbeddedVideo.ipsEmbeddedVideo_limited > div,
+	.ipsQuote .ipsEmbeddedVideo:not( .ipsEmbeddedVideo_limited ) {
+		width: 98%;
+		margin-bottom: 15px;
+	}
+
+/* ======================================================== */
+/* EMBEDDABLES - oEmbed Misc								*/
+/* These styles are used for embedded links to oEmbed		*/
+/* services that are not videos or photos (for example		*/
+/* Twitter and Instagram)									*/
+/* ======================================================== */
+
+.ipsEmbeddedOther iframe {
+	float: none;
+	clear: both;
+	width: 100%;
+	position: relative;
+	border: none;
+}
+
+.ipsEmbeddedOther.ipsEmbeddedOther_limited {
+	max-width: {setting="max_video_width"}px;
+}

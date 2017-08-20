@@ -1,0 +1,45 @@
+<ips:template parameters="$endPoints, $tree, $selected, $content" />
+
+<div class="ipsColumns ipsColumns_collapsePhone cApiReference ipsAreaBackground_light" data-controller='core.admin.system.api'>
+	<div class="ipsColumn ipsColumn_veryWide">
+		<div class='ipsPad'>
+			<h2 class='ipsBox_title'>{lang="api_endpoints"}</h2>
+			<div class='ipsBox'>
+				<div class="ipsPad_half ipsScrollbar">
+					<ul class="cApiTree ipsList_reset ipsSpacer_both ipsSpacer_half">
+						{{foreach $tree as $app => $controllers}}
+							<li class='cApiTree_activeBranch'>
+								<a href='#' data-action='toggleBranch'>{lang="__app_{$app}"}</a>
+								<ul class='ipsList_reset'>
+									{{foreach $controllers as $controller => $endpoints}}
+										{{if count( $endpoints ) > 1}}
+											<li class='cApiTree_inactiveBranch'>
+												<a href='#' data-action='toggleBranch'>{lang="__api_{$app}_{$controller}"}</a>
+												<ul class='ipsList_reset'>
+													{{foreach $endpoints as $key => $endpoint}}
+														<li><a href='{url="app=core&module=applications&controller=api&tab=apiReference&endpoint={$key}"}' data-action='showEndpoint'><code>{expression="\IPS\Api\Controller::parseEndpointForDisplay( $endpoint['title'] )" raw="true"}</code></a></li>
+													{{endforeach}}
+												</ul>
+											</li>
+										{{else}}
+											<li>
+												{{foreach $endpoints as $key => $endpoint}}
+													<a href='{url="app=core&module=applications&controller=api&tab=apiReference&endpoint={$key}"}' data-action='showEndpoint'><code>{expression="\IPS\Api\Controller::parseEndpointForDisplay( $endpoint['title'] )" raw="true"}</code></a>
+												{{endforeach}}
+											</li>
+										{{endif}}
+									{{endforeach}}
+								</ul>
+							</li>
+						{{endforeach}}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ipsColumn ipsColumn_fluid" data-role="referenceContainer">
+		{{if $content}}
+			{$content|raw}
+		{{endif}}
+	</div>
+</div>

@@ -1,0 +1,84 @@
+<ips:template parameters="" />
+{{if !\IPS\Request::i()->isAjax()}}
+	<script type='text/javascript'>
+		var ipsDebug = {{if ( \IPS\IN_DEV and \IPS\DEV_DEBUG_JS ) or \IPS\DEBUG_JS}}true{{else}}false{{endif}};		
+	{{if \IPS\IN_DEV}}
+		var CKEDITOR_BASEPATH = '{url="applications/core/dev/ckeditor" base="none" protocol="\IPS\Http\Url::PROTOCOL_RELATIVE"}/';
+	{{else}}
+		var CKEDITOR_BASEPATH = '{url="applications/core/interface/ckeditor/ckeditor" base="none" protocol="\IPS\Http\Url::PROTOCOL_RELATIVE"}/';
+	{{endif}}
+		var ipsSettings = {
+			{{if \IPS\Dispatcher::hasInstance() and \IPS\Dispatcher::i()->controllerLocation == 'admin'}}
+			adsess: "{expression="\IPS\Request::i()->adsess"}",
+			{{endif}}
+			{{if \IPS\COOKIE_DOMAIN !== NULL}}
+			cookie_domain: "{expression="\IPS\COOKIE_DOMAIN"}",
+			{{endif}}
+			cookie_path: "{expression="\IPS\Request::getCookiePath()"}",
+			{{if \IPS\COOKIE_PREFIX !== NULL}}
+			cookie_prefix: "{expression="\IPS\COOKIE_PREFIX"}",
+			{{endif}}
+			{{if mb_substr( \IPS\Settings::i()->base_url, 0, 5 ) == 'https' AND \IPS\COOKIE_BYPASS_SSLONLY !== TRUE}}
+			cookie_ssl: true,
+			{{else}}
+			cookie_ssl: false,
+			{{endif}}
+			imgURL: "{resource="./" location="front"}",
+			baseURL: "{expression="\IPS\Http\Url::baseUrl( \IPS\Http\Url::PROTOCOL_RELATIVE )"}",
+			jsURL: "{expression="rtrim( \IPS\Http\Url::baseUrl( \IPS\Http\Url::PROTOCOL_RELATIVE ), '/' )"}/applications/core/interface/js/js.php",
+			csrfKey: "{expression="\IPS\Session::i()->csrfKey"}",
+			antiCache: "{expression="\IPS\CACHEBUST_KEY"}",
+			disableNotificationSounds: {{if member.members_bitoptions['disable_notification_sounds']}}true{{else}}false{{endif}},
+			useCompiledFiles: {{if \IPS\IN_DEV}}false{{else}}true{{endif}},
+			links_external: {setting="links_external"},
+			memberID: {expression="( \IPS\Member::loggedIn()->member_id ) ? \IPS\Member::loggedIn()->member_id : 0"},
+			analyticsProvider: "{expression="\IPS\Settings::i()->ipbseo_ga_provider"}",
+			viewProfiles: {{if \IPS\Member::loggedIn()->canAccessModule( \IPS\Application\Module::get( 'core', 'members' ) )}}true{{else}}false{{endif}},
+			{{if \IPS\Settings::i()->ipbseo_ga_provider == 'custom' && \IPS\Settings::i()->ipbseo_ga_paginatecode}}
+			paginateCode: function () {
+				{setting="ipbseo_ga_paginatecode"}
+			}
+			{{endif}}
+		};
+	</script>
+{{endif}}
+{{foreach array_unique( array_filter( \IPS\Output::i()->jsFiles ), SORT_STRING ) as $js}}
+{{$js = \IPS\Http\Url::external( $js );}}
+<script type='text/javascript' src='{{if $js->data['host'] == parse_url( \IPS\Settings::i()->base_url, PHP_URL_HOST )}}{expression="$js->setQueryString( 'v', \IPS\SUITE_UNIQUE_KEY )"}{{else}}{expression="$js"}{{endif}}' data-ips></script>
+{{endforeach}}
+{{foreach array_unique( \IPS\Output::i()->jsFilesAsync, SORT_STRING ) as $js}}
+<script type="text/javascript" src="{expression="\IPS\Http\Url::external( $js )->setQueryString( 'v', \IPS\SUITE_UNIQUE_KEY )"}" async="true"></script>
+{{endforeach}}
+{{if !\IPS\Request::i()->isAjax() and ( count( \IPS\Output::i()->jsVars ) || \IPS\Output::i()->headJs)}}
+	<script type='text/javascript'>
+		{{foreach \IPS\Output::i()->jsVars as $k => $v}}
+			ips.setSetting( '{$k}', {{if ! is_array( $v )}}jQuery.parseJSON('{expression="json_encode( $v )" raw="true"}'){{else}}{expression="json_encode( $v )" raw="true"}{{endif}} );
+		{{endforeach}}
+		{expression="\IPS\Output::i()->headJs" raw="true"}
+	</script>
+{{endif}}
+{{if $cicSiteTrackingId = \IPS\IPS::cicTrackingId()}}
+	<!-- IPS CiC Stats -->
+	<script type="text/javascript">
+	  var _paq = _paq || [];
+	  // tracker methods like "setCustomDimension" should be called before "trackPageView"
+	  _paq.push(['trackPageView']);
+	  _paq.push(['enableLinkTracking']);
+	  (function() {
+	    var u="//invisioncloudstats.com/";
+	    _paq.push(['setTrackerUrl', u+'invision.php']);
+	    _paq.push(['setSiteId', '{$cicSiteTrackingId}']);
+	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	    g.type='text/javascript'; g.async=true; g.defer=true; g.src='//source.invisioncloudstats.com/invision.js'; s.parentNode.insertBefore(g,s);
+	  })();
+	</script>
+	<noscript><p><img src="//invisioncloudstats.com/invision.php?idsite={$cicSiteTrackingId}&rec=1" style="border:0;" alt="" /></p></noscript>
+	<!-- End IPS CiC Stats -->
+{{endif}}
+{{if count( \IPS\Output::i()->jsonLd )}}
+{{foreach \IPS\Output::i()->jsonLd as $object}}
+<script type='application/ld+json'>
+{expression="json_encode( $object, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES )" raw="true"}	
+</script>
+{{endforeach}}
+{{endif}}

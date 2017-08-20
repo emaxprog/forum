@@ -1,0 +1,21 @@
+<ips:template parameters="" />
+
+{{if count( \IPS\Output::i()->breadcrumb )}}
+	<nav class='ipsBreadcrumb ipsSubNavigation'>
+		<ul id='breadcrumb'>
+			{{$i = 0;}}
+			{{foreach \IPS\Output::i()->breadcrumb as $k => $b}}
+				<li>
+					{{if $b[0] === NULL}}
+						{lang="$b[1]"}
+					{{else}}
+						<a href='{$b[0]}'>
+							<span>{lang="$b[1]"} {{if ( $i + 1 != count( \IPS\Output::i()->breadcrumb ) )}}<i class='fa fa-angle-right'></i>{{endif}}</span>
+						</a>
+					{{endif}}
+				</li>
+				{{$i++;}}
+			{{endforeach}}
+		</ul>
+	</nav>
+{{endif}}

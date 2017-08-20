@@ -1,0 +1,12 @@
+<ips:template parameters="$member, $vid, $email" />
+
+{$email->language->addToStack("mfa_recovery_email_html", FALSE)}
+<br /><br />
+
+<table width='100%' cellpadding='15' cellspacing='0' border='0' style='background: #f9f9f9;'>
+	<tr>
+		<td dir='{dir}' align='center'>
+			<a href='{url="app=core&module=system&controller=settings&do=mfarecoveryvalidate&vid={$vid}&mid={$member->member_id}" seoTemplate="mfarecoveryvalidate" base="front"}' style="color: #ffffff; font-family: 'Helvetica Neue', helvetica, sans-serif; text-decoration: none; font-size: 14px; background: {setting="email_color"}; line-height: 32px; padding: 0 10px; display: inline-block; border-radius: 3px;">{$email->language->addToStack("mfa_recovery_email_confirm", FALSE)}</a>
+		</td>
+	</tr>
+</table>

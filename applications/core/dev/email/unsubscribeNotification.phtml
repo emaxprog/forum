@@ -1,0 +1,10 @@
+<ips:template parameters="$key, $member, $email" />
+{{if $member instanceof \IPS\Member}}
+	<tr>
+		<td dir='{dir}' valign="top"><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+		<td dir='{dir}' valign='middle' align='center' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 12px; line-height: 18px; padding-left: 10px;">
+			{$email->language->addToStack("unsubscribe_blurb", FALSE)} <a href="{url="app=core&module=system&controller=notifications&do=options&type={$key}" seoTemplate="notifications_options"}" style='color: #4a8aca; text-decoration: none; display: inline-block'>{$email->language->addToStack( 'adjust_notification_prefs', FALSE )}</a>.
+			<br />
+		</td>
+	</tr>
+{{endif}}

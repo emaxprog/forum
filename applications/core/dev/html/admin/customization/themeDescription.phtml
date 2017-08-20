@@ -1,0 +1,12 @@
+<ips:template parameters="$author, $url='', $version" />
+{{if ! $author or mb_strtolower( $author ) != 'invision power services'}}
+	{{if $version}}
+		{lang="theme_version" sprintf="$version"}
+	{{endif}}
+	{{if $author}}
+		{{if $url}}
+			{{$author = "<a href='{$url}' target='_blank'>{$author}</a>";}}
+		{{endif}}
+		{lang="theme_by" htmlsprintf="$author"}
+	{{endif}}
+{{endif}}

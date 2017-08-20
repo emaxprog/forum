@@ -1,0 +1,78 @@
+<ips:template parameters="$forum, $table" />
+
+{{if $club = $forum->club()}}
+	{{if settings.clubs and settings.clubs_header == 'full'}}
+		{template="header" app="core" group="clubs" params="$club, $forum"}
+	{{endif}}
+	<div id='elClubContainer'>
+{{endif}}
+
+{{if !\IPS\Request::i()->advancedSearchForm}}
+	{{$followerCount = \IPS\forums\Topic::containerFollowerCount( $forum );}}
+	<div class="ipsPageHeader ipsClearfix">
+		<header class='ipsSpacer_bottom'>
+			{{if $forum->feature_color}}
+				<div class="cForumContainerHint" style="background-color: {$forum->feature_color}"></div>
+			{{endif}}
+			<h1 class="ipsType_pageTitle">{$forum->_title}</h1>
+			{{if $forum->sub_can_post and !$forum->password}}
+				<div class='ipsPos_right ipsResponsive_noFloat ipsResponsive_hidePhone'>
+					{template="follow" app="core" group="global" params="'forums','forum', $forum->_id, $followerCount"}
+				</div>
+			{{endif}}
+			{{if $forum->description}}
+				<div class='ipsType_richText ipsType_normal'>
+					{$forum->description|raw}
+				</div>
+			{{endif}}
+
+			{{if $forum->show_rules == 1}}
+				<hr class='ipsHr'>
+				<a href="#elForumRules" class='ipsJS_show ipsType_normal' data-ipsDialog data-ipsDialog-title="{lang="forums_forum_{$forum->id}_rulestitle"}" data-ipsDialog-content="#elForumRules">{lang="forums_forum_{$forum->id}_rulestitle"}</a>
+				<div id='elForumRules' class='ipsAreaBackground_light ipsPad ipsJS_hide'>
+					<div class='ipsType_richText ipsType_medium'>{lang="forums_forum_{$forum->id}_rules"}</div>
+				</div>
+			{{elseif $forum->show_rules == 2}}
+				<hr class='ipsHr'>
+				<strong class='ipsType_normal'>{lang="forums_forum_{$forum->id}_rulestitle"}</strong>
+				<div class='ipsType_richText ipsType_normal ipsSpacer_top'>{lang="forums_forum_{$forum->id}_rules"}</div>
+			{{endif}}
+		</header>
+	</div>
+	
+	{{if $forum->children()}}
+		<div class='ipsList_reset cForumList ipsBox ipsSpacer_bottom' data-controller='forums.front.forum.forumList' data-baseURL=''>
+			<h2 class='ipsType_sectionTitle ipsType_reset'>{{if $forum->sub_can_post}}{lang="subforums_header"}{{else}}{lang="subforums_header_category"}{{endif}}</h2>
+			{{if \IPS\forums\Forum::getMemberView() === 'grid'}}
+				<div class='ipsAreaBackground ipsPad' data-role="forums">
+					<div class='ipsGrid ipsGrid_collapsePhone' data-ipsGrid data-ipsGrid-minItemSize='300' data-ipsGrid-maxItemSize='400' data-ipsGrid-equalHeights='row'>
+						{{foreach $forum->children( 'view' ) as $childforum}}
+							{template="forumGridItem" group="index" app="forums" params="$childforum"}
+						{{endforeach}}
+					</div>
+				</div>
+			{{else}}
+				<ol class="ipsDataList ipsDataList_zebra ipsDataList_large ipsAreaBackground_reset">
+					{{foreach $forum->children( 'view' ) as $childforum}}
+						{template="forumRow" group="index" app="forums" params="$childforum, TRUE"}
+					{{endforeach}}
+				</ol>
+			{{endif}}				
+		</div>
+	{{endif}}
+{{endif}}
+<div data-controller='forums.front.forum.forumPage'>
+	<ul class="ipsToolList ipsToolList_horizontal ipsClearfix ipsSpacer_both">
+		{template="forumButtons" group="forums" params="$forum"}
+	</ul>
+	{$table|raw}
+</div>
+{{if !\IPS\Request::i()->advancedSearchForm && $forum->sub_can_post and !$forum->password}}
+	<div class='ipsResponsive_showPhone ipsResponsive_block ipsSpacer ipsSpacer_both'>
+		{template="follow" app="core" group="global" params="'forums','forum', $forum->_id, $followerCount"}
+	</div>
+{{endif}}
+
+{{if $forum->club()}}
+	</div>
+{{endif}}

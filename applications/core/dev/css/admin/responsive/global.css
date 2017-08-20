@@ -1,0 +1,96 @@
+/* BOTH */
+@media screen and (max-width: 979px) {
+
+	#acpAppList > li.acpAppList_active > ul,
+	#acpAppList #elHideMenu {
+		display: none;
+	}
+
+	#acpAppList, #acpAppMenu  {
+		width: 70px !important;
+	}
+
+	html[dir="ltr"] #ipsLayout_header {
+		left: 70px;
+	}
+
+	#elAdminNav a {
+		font-size: 20px;
+		color: #fff;
+	}
+
+	html[dir="ltr"] #elAdminControls {
+		margin-left: 7px;
+	}
+	html[dir="rtl"] #elAdminControls {
+		margin-right: 7px;
+	}
+
+	#acpContent {
+		padding: 15px;
+	}
+
+	.acpToolbar {
+		float: none !important;
+		margin-top: 7px;
+	}
+
+		.acpToolbar > ul > li {
+			margin-bottom: 5px;
+		}
+
+		.acpToolbar > ul > li,
+		.acpToolbar .ipsButton_verySmall {
+			width: 100%;
+		}
+
+		.acpToolbar > ul > li:not( .acpToolbar_primary ):not( .acpToolbar_more ) {
+			display: none;
+		}
+
+		.acpToolbar > ul > li.acpToolbar_more .ipsButton_verySmall {
+			margin-bottom: -10px;
+			padding: 0;
+			background: #f5f5f5;
+		}
+
+	#acpPageHeader {
+		padding: 15px;
+	}
+		
+		#acpPageHeader .ipsType_pageTitle {
+			font-size: 22px;
+		}
+
+	#acpPageHeader .acpPageHeader_flex,
+	#acpPageHeader.acpPageHeader_flex {
+		display: block;
+	}
+
+	html[dir] #ipsLayout_header {
+		position: absolute;
+	}
+
+	html[dir] #acpLiveSearchResults {
+		left: 15px;
+		right: 15px;
+		width: auto;
+	}
+
+	html[dir] #acpLiveSearchResults [data-role="searchMenu"] {
+		border: 0;
+	}
+
+	#acpPageHeader .ipsSubNavigation {
+		margin-top: 0;
+	}
+}
+
+/* PHONES */
+@media screen and (max-width: 767px) {
+	html[dir] #ipsLayout_header {
+		position: absolute;
+		left: 0;
+		right: 0;
+	}
+}

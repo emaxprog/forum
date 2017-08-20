@@ -1,0 +1,13 @@
+<ips:template parameters="$member, $pageId, $pageName" />
+<div class='ipsAreaBackground_light ipsPad ipsPhotoPanel ipsPhotoPanel_small ipsClearfix'>
+	<a href="{$member->url()}" class="ipsPos_left">
+		<img src="{$member->photo}" class="ipsUserPhoto ipsUserPhoto_small">
+	</a>
+	<div>
+		<h2 class='ipsType_sectionHead'><strong>{{if $member->member_id === \IPS\Member::loggedIn()->member_id}}{lang="promote_facebook_owned_by_you"}{{else}}{lang="promote_facebook_owned_by_user" sprintf="$member->name"}{{endif}}</strong></h2>
+		<div class='ipsType_normal ipsType_reset'>{{if $member->member_id !== \IPS\Member::loggedIn()->member_id}}{lang="promote_facebook_owned_by_user_blurb" sprintf="$pageId, $pageName"}{{endif}}</div>
+		<div class="ipsPad_top">
+			<a href="{url="app=core&module=promotion&controller=promote&tab=facebook&clear=true"}" data-confirm class="ipsButton ipsButton_light ipsButton_small">{{if $member->member_id === \IPS\Member::loggedIn()->member_id}}{lang="promote_facebook_remove_settings"}{{else}}{lang="promote_facebook_remove_settings_other" sprintf="$member->name"}{{endif}}</a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,22 @@
+<ips:template parameters="$stream, $results, $autoUpdate, $showTimeline=FALSE, $sort='date', $view='expanded'" />
+<div data-role='streamResults' data-controller='core.front.streams.results' data-streamReadType="{$stream->read}" {{if !$autoUpdate}}data-view='{$view}'{{endif}} {{if $autoUpdate && settings.auto_polling_enabled}}data-autoPoll{{endif}} data-streamUrl="{$stream->url()}" {{if isset( \IPS\Request::i()->id )}}data-streamID='{expression="\IPS\Request::i()->id"}'{{endif}}>
+	<div>
+		<ul class="ipsButton_split ipsPos_right ipsClearfix ipsSpacer_bottom ipsSpacer_half">
+			<li>
+				<a href="{$stream->baseUrl->setQueryString( 'view', 'condensed')}" data-action='switchView' data-view='condensed' data-ipsTooltip title="{lang="stream_condensed"}" class="ipsButton ipsButton_veryVerySmall {{if $view == 'condensed'}}ipsButton_primary{{else}}ipsButton_link{{endif}}"><i class="fa fa-list"></i> {lang="stream_results_as_condensed"}</a>
+			</li>
+			<li>
+				<a href="{$stream->baseUrl->setQueryString( 'view', 'expanded')}" data-action='switchView' data-view='expanded' data-ipsTooltip title="{lang="stream_expanded"}" class="ipsButton ipsButton_veryVerySmall {{if $view == 'expanded'}}ipsButton_primary{{else}}ipsButton_link{{endif}}"><i class="fa fa-square"></i> {lang="stream_results_as_expanded"}</a>
+			</li>
+		</ul>
+		<p id='elStreamUpdateMsg' class='{{if !( $autoUpdate && settings.auto_polling_enabled )}}ipsHide{{endif}} ipsType_light ipsPos_right ipsType_small ipsType_reset ipsJS_show ipsResponsive_hidePhone' data-role='updateMessage'><i class='fa fa-refresh'></i> {lang="stream_auto_updates"} &nbsp;&nbsp;&nbsp;&nbsp;</p>
+		<ol class='ipsStream {{if $showTimeline !== FALSE && count( $results )}}ipsStream_withTimeline{{endif}} ipsList_reset' data-role='streamContent'>
+			{template="streamItems" group="streams" app="core" params="$results, $showTimeline, $sort, $view"}
+		</ol>
+		<ol class="ipsList_reset">
+			<li class='ipsType_center ipsJS_show {{if !count( $results )}}ipsHide{{endif}}' data-role="loadMoreContainer">
+				<a href='#' class='ipsButton ipsButton_light ipsButton_small' data-action='loadMore'>{lang="load_more_activity"}</a>
+			</li>
+		</ol>
+	</div>
+</div>

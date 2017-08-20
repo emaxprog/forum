@@ -1,0 +1,7 @@
+<ips:template parameters="$comment, $email" />
+
+{{$item = $comment instanceof \IPS\Content\Item ? $comment : $comment->item();}}{$email->language->addToStack("email_quoted_you_plain", FALSE, array( 'sprintf' => array( $comment->author()->name, $item->indefiniteArticle( $email->language ) ) ) )}
+
+{$email->language->addToStack("go_to_this_x", FALSE, array( 'sprintf' => array( mb_strtolower( $email->language->addToStack( $comment::$title, FALSE ) ) ) ) )}: {$comment->url()}
+
+-- {setting="board_name"}

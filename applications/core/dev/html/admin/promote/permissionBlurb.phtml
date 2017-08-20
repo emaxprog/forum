@@ -1,0 +1,13 @@
+<ips:template parameters="$groups" />
+<div class='ipsAreaBackground_light ipsPad'>
+	<div>
+		<h2 class='ipsType_sectionHead'><strong>{lang="promote_permission_title"}</strong></h2>
+		<div class='ipsType_normal ipsType_reset'>
+			{{if count($groups)}}
+				{lang="promote_permission_desc" htmllist="$groups"}
+			{{else}}
+				{lang="promote_permission_none_desc"}
+			{{endif}}
+		</div>
+	</div>
+</div>

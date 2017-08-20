@@ -1,0 +1,7 @@
+<ips:template parameters="$wizard, $allowCancel=TRUE" />
+<div class="ipsBox">
+	{$wizard|raw}
+	{{if $allowCancel}}
+		<a href="{url="app=core&module=system&controller=settings" seoTemplate="settings"}" class="ipsPos_right ipsButton ipsButton_link">{lang="profile_wizard_cancel"}</a>
+	{{endif}}
+</div>

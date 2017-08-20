@@ -1,0 +1,45 @@
+<ips:template parameters="$member, $email" />
+{$email->language->addToStack("notification__member_follow", FALSE, array( 'sprintf' => array( $member->name ) ) )}
+
+<br />
+<br />
+
+<table width='100%' cellpadding='0' cellspacing='0' border='0'>
+	<tr>
+		<td dir='{dir}' align='center'>
+			<table width='100' cellpadding='15' cellspacing='0' border='0' style='background: #f9f9f9;'>
+				<tr>
+					<td dir='{dir}'>
+						<img src='{$member->get_photo( true, true )}' width='100' height='100' style='border: 1px solid #777777; vertical-align: middle;'>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr style='line-height: 10px'>
+		<td dir='{dir}' height='10'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+	</tr>
+	<tr>
+		<td dir='{dir}' align='center' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 20px; font-weight: bold">{$member->name}</td>
+	</tr>
+	<tr style='line-height: 2px'>
+		<td dir='{dir}' height='2'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+	</tr>
+	<tr>
+		<td dir='{dir}' align='center' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 15px;">{expression="\IPS\Member\Group::load( $member->member_group_id )->formattedName" raw="true"}</td>
+	</tr>
+	<tr style='line-height: 2px'>
+		<td dir='{dir}' height='2'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+	</tr>
+	<tr>
+		<td dir='{dir}' align='center' style="font-family: 'Helvetica Neue', helvetica, sans-serif;">
+			<a href='{$member->url()}' style="color: #ffffff; font-family: 'Helvetica Neue', helvetica, sans-serif; text-decoration: none; font-size: 12px; background: {setting="email_color"}; line-height: 32px; padding: 0 10px; display: inline-block; border-radius: 3px;">{$email->language->addToStack("email_go_to_x_profile", FALSE, array( 'sprintf' => array( $member->name ) ) )}</a>
+		</td>
+	</tr>
+</table>
+<br>
+
+<p style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 13px; color: ">{$email->language->addToStack("email_member_following_tip", FALSE)}</p>
+
+<br /><br />
+<em style='color: #8c8c8c'>&mdash; {setting="board_name"}</em>

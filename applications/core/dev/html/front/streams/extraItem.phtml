@@ -1,0 +1,11 @@
+<ips:template parameters="$time, $image, $html, $view = 'expanded'" />
+<li class='ipsStreamItem ipsStreamItem_{$view} ipsStreamItem_actionBlock ipsAreaBackground_reset ipsPad' data-role="activityItem" data-timestamp='{$time->getTimestamp()}'>
+	<div class='ipsStreamItem_container'>
+		<div class='ipsStreamItem_action ipsType_blendLinks ipsType_light'>
+			{{if isset( $image )}}
+				{$image|raw}
+			{{endif}}
+			{$html|raw} <span class='ipsType_light'>{datetime="$time"}</span>
+		</div>
+	</div>
+</li>

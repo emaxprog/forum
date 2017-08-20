@@ -1,0 +1,93 @@
+<ips:template parameters="$message, $email" />
+{$email->language->addToStack("messenger_notify_title", FALSE, array( 'sprintf' => array( $message->author()->name ) ) )}
+<br /><br />
+
+<a href='{$message->url()}' style="color: #ffffff; font-family: 'Helvetica Neue', helvetica, sans-serif; text-decoration: none; font-size: 12px; background: {setting="email_color"}; line-height: 32px; padding: 0 10px; display: inline-block; border-radius: 3px;">{$email->language->addToStack("messenger_inline_button", FALSE)}</a>
+
+<br />
+<br />
+<em style='color: #8c8c8c'>&mdash; {setting="board_name"}</em>
+
+<br />
+<br />
+<hr style='height: 0px; border-top: 1px solid #f0f0f0;' />
+
+<table width='100%' cellpadding='10' cellspacing='0' border='0'>
+	<tr>
+		<td dir='{dir}'>
+			<strong>{$email->language->addToStack("members_in_convo", FALSE, array( 'pluralize' => array( $message->item()->activeParticipants ) ) )}</strong>
+		</td>
+	</tr>
+	<tr>
+		<td dir='{dir}'>
+			<table width='100%' cellpadding='0' cellspacing='0' border='0' class='responsive_table'>
+				{{$i = 0;}}
+				{{foreach $message->item()->maps() as $map}}
+					{{if $map['map_user_active']}}
+						{{if ( $i % 4 ) == 0}}
+							<tr>
+						{{endif}}
+						<td dir='{dir}' width='200' class='responsive_row'>
+							<table width='100%' cellpadding='0' cellspacing='0' border='0'>
+								<tr>
+									<td dir='{dir}' width='50'>
+										<img src='{member="photo" id="$map['map_user_id']"}' width='40' height='40' style='border: 1px solid #777777; vertical-align: middle;'>
+									</td>
+									<td dir='{dir}'>
+										<strong>{member="name" id="$map['map_user_id']"}</strong><br />
+										{{$mapGroup = \IPS\Member\Group::constructFromData( \IPS\Member::load( $map['map_user_id'] )->group );}}
+										<span style='font-size: 14px'>{expression="$mapGroup->formatName( $email->language->addToStack( 'core_group_' . $mapGroup->g_id ) )" raw="true"}</span>
+									</td>
+								</tr>
+							</table>
+						</td>
+						{{if ( ( $i + 1 ) % 4 ) == 0}}
+							</tr>
+						{{endif}}
+						{{$i++;}}
+					{{endif}}
+				{{endforeach}}
+				{{while ( ( ( $i ) % 4 ) != 0 ):}}
+					<td dir='{dir}'>&nbsp;</td>
+					{{if ( ( $i + 1 ) % 4 ) == 0}}
+						</tr>
+					{{endif}}
+					{{$i++;}}
+				{{endwhile;}}
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br />
+<br />
+
+<table width='100%' cellpadding='15' cellspacing='0' border='0' style='background: #f5f5f5'>
+	<tr>
+		<td dir='{dir}'>
+			<h2 style='margin: 0; font-size: 19px; font-weight: 500'>{$message->item()->title}</h2>
+		</td>
+	</tr>
+</table>
+<br />
+
+<table width='100%' cellpadding='0' cellspacing='0' border='0'>
+	<tr>
+		<td dir='{dir}' width='20' class='hidePhone' style='width: 0; max-height: 0; overflow: hidden; float: left;'>&nbsp;</td>
+		<td dir='{dir}' width='100' valign='top' align='center' class='hidePhone' style='width: 0; max-height: 0; overflow: hidden; float: left;'>
+			<img src='{$message->author()->get_photo( true, true )}' width='100' height='100' style='border: 1px solid #777777; vertical-align: middle;'>
+		</td>
+		<td dir='{dir}' width='20' class='hidePhone' style='width: 0; max-height: 0; overflow: hidden; float: left;'>&nbsp;</td>
+		<td dir='{dir}' valign='top'>
+			<div style='line-height: 1.5'>
+				{$email->parseTextForEmail( $message->post, $email->language )|raw}
+			</div>
+			<br />
+			<hr style='height: 0px; border-top: 1px solid #f0f0f0;' />
+			<br />
+
+			<a href='{$message->url()}' style="color: #ffffff; font-family: 'Helvetica Neue', helvetica, sans-serif; text-decoration: none; font-size: 12px; background: {setting="email_color"}; line-height: 32px; padding: 0 10px; display: inline-block; border-radius: 3px;">{$email->language->addToStack("messenger_inline_button", FALSE)}</a>
+		</td>
+		<td dir='{dir}' width='20' class='hidePhone' style='width: 0; max-height: 0; overflow: hidden; float: left;'>&nbsp;</td>
+	</tr>
+</table>

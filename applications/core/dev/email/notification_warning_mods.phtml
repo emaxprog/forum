@@ -1,0 +1,109 @@
+<ips:template parameters="$warning, $email" />
+
+{{$content = $warning->content();}}
+
+{{if $content && $content instanceof \IPS\Content\Comment}}
+	{{$item = $content->item();}}
+	{$email->language->addToStack("email_mod_warned_comment", FALSE, array( 'sprintf' => array( \IPS\Member::load( $warning->member )->url(), \IPS\Member::load( $warning->member )->name, \IPS\Member::load( $warning->moderator )->name, $item->indefiniteArticle( $email->language ) ) ) )} <a href='{$content->url()->setQueryString( '_warn', $warning->id )}'>{$content->item()->mapped('title')}</a>
+{{elseif $content}}
+	{$email->language->addToStack("email_mod_warned_item", FALSE, array( 'sprintf' => array( \IPS\Member::load( $warning->member )->url(), \IPS\Member::load( $warning->member )->name, \IPS\Member::load( $warning->moderator )->name, $content->indefiniteArticle( $email->language ) ) ) )} <a href='{$content->url()->setQueryString( '_warn', $warning->id )}'>{$content->mapped('title')}</a>
+{{else}}
+	{$email->language->addToStack("email_mod_warned_other", FALSE, array( 'sprintf' => array( \IPS\Member::load( $warning->member )->url(), \IPS\Member::load( $warning->member )->name, \IPS\Member::load( $warning->moderator )->name ) ) )}
+{{endif}}
+
+<br />
+<br />
+<table width='100%' cellpadding='15' cellspacing='0' border='0' style='background: #f9f9f9;'>
+	<tr>
+		<td dir='{dir}'>
+			<table width='100%' cellpadding='0' cellspacing='0' border='0' style='background: #f9f9f9;' class='responsive_table'>
+				{{if $warning->canViewDetails()}}
+					<tr class='responsive_row'>
+						<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;" valign='top'><strong>{$email->language->addToStack("email_warn_reason", FALSE)}:</strong></td>
+						<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">{$email->language->addToStack("core_warn_reason_" . $warning->reason, FALSE)}</td>
+					</tr>	
+				{{endif}}
+				{{if $content}}
+					<tr class='responsive_row'>
+						<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;" valign='top'><strong>{$email->language->addToStack("email_warn_source", FALSE)}:</strong></td>
+						<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+							<a href='{$content->url()->setQueryString( '_warn', $warning->id )}'>{{if $content instanceof \IPS\Content\Comment}}{$content->item()->mapped('title')}{{else}}{$content->mapped('title')}{{endif}}</a>
+						</td>
+					</tr>					
+				{{endif}}
+				{{if $warning->canViewDetails() or $warning->mq or $warning->rpa or $warning->suspend}}				
+					<tr class='responsive_row'>
+						<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;" valign='top'><strong>{$email->language->addToStack("email_warn_penalty", FALSE)}:</strong></td>
+						<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+							<ul style="margin: 0; padding: 0; font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+								{{if $warning->canViewDetails()}}
+									<li>
+										{{if $warning->expire_date}}
+											{{if $warning->expire_date < time()}}
+												{{if $warning->expire_date == -1}}
+													{$email->language->addToStack("warn_action_points_never_expire", FALSE, array( 'sprintf' => array( $warning->points ) ) )}
+												{{else}}
+													{$email->language->addToStack("warn_action_points_expired", FALSE, array( 'sprintf' => array( $warning->points, \IPS\DateTime::ts( $warning->expire_date ) ) ) )}
+												{{endif}}
+											{{else}}
+												{$email->language->addToStack("warn_action_points_expire", FALSE, array( 'sprintf' => array( $warning->points, \IPS\DateTime::ts( $warning->expire_date ) ) ) )}
+											{{endif}}
+										{{else}}
+											{$email->language->addToStack("warn_action_points", FALSE, array( 'sprintf' => array( $warning->points ) ) )}
+										{{endif}}			
+									</li>
+								{{endif}}
+								{{if $warning->mq}}
+									<li>
+										{$email->language->addToStack("moderation_modq", FALSE)} - 
+										{{if $warning->mq == -1}}
+											{$email->language->addToStack("indefinitely", FALSE)}
+										{{else}}
+											{expression="\IPS\DateTime::formatInterval( new \DateInterval( $warning->mq ), 2, $email->language )"}
+										{{endif}}
+									</li>
+								{{endif}}
+								{{if $warning->rpa}}
+									<li>
+										{$email->language->addToStack("moderation_nopost", FALSE)} - 
+										{{if $warning->rpa == -1}}
+											{$email->language->addToStack("indefinitely", FALSE)}
+										{{else}}
+											{expression="\IPS\DateTime::formatInterval( new \DateInterval( $warning->rpa ), 2, $email->language )"}
+										{{endif}}
+									</li>
+								{{endif}}
+								{{if $warning->suspend}}
+									<li>
+										{$email->language->addToStack("moderation_banned", FALSE)} - 
+										{{if $warning->suspend == -1}}
+											{$email->language->addToStack("indefinitely", FALSE)}
+										{{else}}
+											{expression="\IPS\DateTime::formatInterval( new \DateInterval( $warning->suspend ), 2, $email->language )"}
+										{{endif}}
+									</li>
+								{{endif}}
+							</ul>							
+						</td>
+					</tr>
+				{{endif}}
+				{{if $warning->note_member}}
+					<tr class='responsive_row'>
+						<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;" valign='top'><strong>{$email->language->addToStack("email_warn_note_member", FALSE)}:</strong></td>
+						<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">{$email->parseTextForEmail( $warning->note_member, $email->language )|raw}</td>
+					</tr>
+				{{endif}}
+				{{if $warning->note_mods and member.modPermission('mod_see_warn')}}
+					<tr class='responsive_row'>
+						<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;" valign='top'><strong>{$email->language->addToStack("email_warn_note_moderator", FALSE)}:</strong></td>
+						<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">{$email->parseTextForEmail( $warning->note_mods, $email->language )|raw}</td>
+					</tr>
+				{{endif}}
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br /><br />
+<em style='color: #8c8c8c'>&mdash; {setting="board_name"}</em>
+

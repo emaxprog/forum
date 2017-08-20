@@ -1,0 +1,22 @@
+<ips:template parameters="$version, $files" />
+<form action="{url="app=core&module=system&controller=upgrade" csrf="1"}" method="post">
+	<input type="hidden" name="version" value="{$version}">
+	<input type="hidden" name="select_version_submitted" value="1">
+	<input type="hidden" name="skip_md5_check" value="1">
+	<div class="ipsPad">
+		<div class="ipsSpacer_bottom">
+			<h2 class='ipsType_sectionHead'>{lang="download_upgrade_initial_md5_fail_title"}</h2>
+		</div>
+		<div class="ipsSpacer_bottom">
+			<p>{lang="download_upgrade_initial_md5_fail_explain"}</p>
+			<ul>
+				{{foreach $files as $file}}
+					<li>{$file}</li>
+				{{endforeach}}
+			</ul>
+		</div>
+	</div>
+	<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+		<input type="submit" class="ipsButton ipsButton_primary" value="{lang="continue"}">
+	</div>
+</form>

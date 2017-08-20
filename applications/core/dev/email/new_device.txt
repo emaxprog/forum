@@ -1,0 +1,12 @@
+<ips:template parameters="$member, $device, $location, $email" />
+{$email->language->addToStack('new_device_email_intro')}
+
+{$email->language->addToStack('members_device')}: {$device->userAgent()->platform}
+{$email->language->addToStack('device_table_user_agent')}: {$device->userAgent()->browser}
+{{if $device->login_handler and $handlers = \IPS\Login::handlers( TRUE ) and isset( $handlers[ $device->login_handler ] ) and $handler = $handlers[ $device->login_handler ] and method_exists( $handler, 'loginForm' )}}{$email->language->addToStack('device_table_login_handler')}: {$email->language->addToStack( 'login_handler_' . ucfirst( $handler->key ) )}{{endif}}
+{{if $location}}{$email->language->addToStack('device_table_location')}: {$location}
+* {$email->language->addToStack('ip_geolocation_info')}{{endif}}
+
+{$email->language->addToStack('new_device_email_footer')}
+
+{{if settings.device_management}}{$email->language->addToStack("new_device_email_action_1", FALSE)}: {url="app=core&module=system&controller=settings&area=devices" seoTemplate="settings_devices" base="front"}{{else}}{$email->language->addToStack("new_device_email_action_2", FALSE)}: {url="app=core&module=system&controller=settings&do=secureAccount" seoTemplate="settings_secure" base="front"}{{endif}}

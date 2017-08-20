@@ -1,0 +1,3 @@
+<ips:template parameters="$comment, $email" />
+{{$item = $comment->item();}}
+{$email->language->addToStack("x_commented_cms", FALSE, array( 'sprintf' => array( $comment->author()->name, $item::database()->recordWord( 1 ) ) ) )}: {$comment->item()->_title} ({$comment->url()})

@@ -1,0 +1,57 @@
+<ips:template parameters="$endpoints, $name, $value" />
+
+<li class='ipsFieldRow ipsPad_half ipsClearfix'>
+	<div class='ipsFieldRow_title'>
+		{lang="api_permissions_endpoint"}
+	</div>
+	<div class='ipsFieldRow_content' data-controller='core.admin.system.apiPermissions'>
+		<p class='ipsType_reset ipsSpacer_bottom'>
+			{lang="api_permissions_endpoint_desc"}
+		</p>
+
+		{{foreach $endpoints as $app => $sections}}
+			<div class='ipsSpacer_bottom ipsSpacer_double'>
+				<div class='ipsAreaBackground ipsPad cApiPermissions_header'>
+					<h2 class='ipsType_reset ipsType_large'>{lang="__app_{$app}"}</h2>
+					<span data-role="massToggle" class="ipsJS_show">
+						<a href="#" data-action="checkAll">{lang="all"}</a> /  <a href="#" data-action="checkNone">{lang="none"}</a>
+					</span>
+				</div>
+				<ul class='ipsList_reset cApiPermissions'>
+					{{foreach $sections as $sectionID => $sectionEndpoints}}
+						<li class='cApiPermissions_closed'>
+							<h3 class='ipsType_reset ipsCursor_pointer' data-action='toggleSection'>{lang="__api_{$app}_{$sectionID}"}</h3> 
+							<span class='ipsType_light ipsType_small' data-role='endpointOverview'></span>
+							<span data-role="massToggle" class="ipsJS_show">
+								<a href="#" data-action="checkAll">{lang="all"}</a> /  <a href="#" data-action="checkNone">{lang="none"}</a>
+							</span>
+							<ul class='ipsList_reset'>
+								{{foreach $sectionEndpoints as $endpointKey => $endpoint}}
+									<li>
+										<ul class='ipsList_inline'>
+											<li>
+												<span class='ipsCustomInput'>
+													<input type="checkbox" name="{$name}[{$endpointKey}][access]" value="1" {{if isset( $value[ $endpointKey ]['access'] ) and $value[ $endpointKey ]['access']}}checked{{endif}}>
+													<span></span>												
+												</span>
+												<label>{lang="api_permissions_access"}</label>
+											</li>
+											<li>
+												<span class='ipsCustomInput'>
+													<input type="checkbox" name="{$name}[{$endpointKey}][log]" value="1" {{if isset( $value[ $endpointKey ]['log'] ) and $value[ $endpointKey ]['log']}}checked{{endif}}>
+													<span></span>												
+												</span>
+												<label>{lang="api_permissions_log"}</label>
+											</li>
+											<li><strong><code>{expression="\IPS\Api\Controller::parseEndpointForDisplay( $endpoint['title'] )" raw="true"}</code></strong></li>
+										</ul>
+									</li>
+								{{endforeach}}
+							</ul>
+						</li>
+					{{endforeach}}
+				</ul>
+			</div>
+		{{endforeach}}
+	</div>
+</li>

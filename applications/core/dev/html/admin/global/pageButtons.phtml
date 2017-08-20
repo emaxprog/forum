@@ -1,0 +1,68 @@
+<ips:template parameters="$buttons" />
+{{if !empty( $buttons )}}
+	{{usort( $buttons, function ($a, $b ){ if( isset( $a['primary'] ) && $a['primary'] ){ return 1; }else{ return 0;} } );}}
+	{{$hasSecondary = false;}}
+	<ul class="ipsList ipsList_inline" data-controller='core.admin.core.pageActions'>
+		{{foreach $buttons as $action}}
+			<li {{if isset( $action['primary'] ) && $action['primary']}}class='acpToolbar_primary'{{endif}}>
+				{{if !( isset( $action['primary'] ) && $action['primary'] )}}
+					{{$hasSecondary = true;}}
+				{{endif}}
+				<a
+					{{if isset( $action['link'] )}}
+						href='{{if mb_substr( $action['link'], 0, 1 ) === '#' or preg_match( '/^[a-z]{3,5}:\/\/.*$/', $action['link'] )}}{$action['link']}{{else}}{url="{$action['link']}"}{{endif}}'
+					{{else}}
+						href='#'
+					{{endif}}
+					{{if isset( $action['id'] )}}
+						id='{$action['id']}'
+					{{endif}}
+					{{if isset( $action['menu'] )}}
+						data-ipsMenu
+						{{if !isset( $action['id'] )}}
+							id='{{$id = md5( uniqid() );}}{$id}'
+						{{endif}}
+					{{endif}}
+					class='ipsButton ipsButton_verySmall {{if isset( $action['primary'] ) && $action['primary']}}ipsButton_primary{{elseif isset( $action['color'] )}}{$action['color']}{{else}}ipsButton_normal{{endif}} {{if isset( $action['class'] )}}{$action['class']}{{endif}}'
+					{{if isset( $action['target'] )}}target="{$action['target']}"{{endif}}
+					{{if isset( $action['tooltip'] )}}title="{$action['tooltip']}" data-ipsTooltip{{endif}}
+					{{if isset( $action['data'] )}}
+						{{foreach $action['data'] as $k => $v}}
+							data-{$k}="{$v}"
+						{{endforeach}}
+					{{endif}}
+				>
+					<i class='fa fa-{$action['icon']}'></i> &nbsp;&nbsp;<span data-role="title">{lang="$action['title']"}</span>{{if isset( $action['menu'] ) || isset( $action['dropdown'] )}} <i class="fa fa-caret-down"></i>{{endif}}
+				</a>
+				{{if isset( $action['menu'] )}}
+					<div id='{$id}_menu' class='ipsMenu {{if isset( $action['menuClass'] )}}{$action['menuClass']}{{endif}} ipsHide'>
+						<ul>
+							{{foreach $action['menu'] as $item}}
+								{{if isset( $item['hr'] ) and $item['hr']}}
+									<li class='ipsMenu_sep'><hr></li>
+								{{else}}
+									<li class="ipsMenu_item {{if isset( $item['class'] )}}{$item['class']}{{endif}}">
+										<a href="{$item['link']}" {{if isset( $item['target'] )}}target='{$item['target']}'{{endif}} {{if isset( $item['data'] )}}{{foreach $item['data'] as $k => $v}} data-{$k}="{$v}"{{endforeach}}{{endif}}>
+											{{if isset( $item['icon'] )}}
+												<i class='fa fa-{$item['icon']}'></i> &nbsp;&nbsp;
+											{{endif}}
+											<span data-role="title">{lang="$item['title']"}</span>
+										</a>
+									</li>
+								{{endif}}
+							{{endforeach}}
+						</ul>
+					</div>
+				{{endif}}
+			</li>
+		{{endforeach}}
+		{{if $hasSecondary}}
+			<li class='acpToolbar_more ipsResponsive_hideDesktop'>
+				<a href='#' class='ipsButton ipsButton_light ipsButton_verySmall' data-action='expandPageActions'>
+					<span data-role='more'>{lang="more_page_options"} <i class='fa fa-angle-down'></i></span>
+					<span data-role='fewer' class='ipsHide'>{lang="fewer_page_options"} <i class='fa fa-angle-up'></i></span>
+				</a>
+			</li>
+		{{endif}}
+	</ul>
+{{endif}}

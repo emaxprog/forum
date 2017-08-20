@@ -1,0 +1,46 @@
+<ips:template parameters="$item, $approveUrl, $skipUrl, $deleteUrl, $hideUrl" />
+<div class="ipsBox ipsPad ipsClearfix ipsClear" data-ipsSticky>
+	<ul class="ipsToolList ipsToolList_horizontal ipsClearfix ipsPos_right" id="elApprovalToolbar">
+		<li>
+			{{if $approveUrl}}
+				<a href="{$approveUrl}" class="ipsButton ipsButton_medium ipsButton_fullWidth ipsButton_positive" data-action="approvalQueueNext">
+					<i class="fa fa-check"></i> {lang="approve"}
+				</a>
+			{{else}}
+				<a href="#" class="ipsButton ipsButton_medium ipsButton_fullWidth ipsButton_positive ipsButton_disabled" data-action="approvalQueueNext">
+					<i class="fa fa-check"></i> {lang="approve"}
+				</a>
+			{{endif}}
+		</li>
+		{{if $hideUrl !== FALSE}}
+			<li>
+				{{if $hideUrl}}
+					<a href="{$hideUrl}" class="ipsButton ipsButton_medium ipsButton_fullWidth ipsButton_alternate" data-action="approvalQueueNext">
+						<i class="fa fa-low-vision"></i> {lang="hide"}
+					</a>
+				{{else}}
+					<a href="#" class="ipsButton ipsButton_medium ipsButton_fullWidth ipsButton_positive ipsButton_disabled" data-action="approvalQueueNext">
+						<i class="fa fa-low-vision"></i> {lang="hide"}
+					</a>
+				{{endif}}
+			</li>
+		{{endif}}
+		<li>
+			<a href="{$skipUrl}" class="ipsButton ipsButton_medium ipsButton_light ipsType_center ipsButton_fullWidth" data-action="approvalQueueNext">
+				{lang="skip_this_item"}
+			</a>
+		</li>
+		<li>
+			{{if $deleteUrl}}
+				<a href="{$deleteUrl}" class="ipsButton ipsButton_medium ipsButton_fullWidth ipsButton_negative" data-action="approvalQueueNext">
+					<i class="fa fa-times"></i> {lang="delete"}
+				</a>
+			{{else}}
+				<a href="#" class="ipsButton ipsButton_medium ipsButton_fullWidth ipsButton_negative ipsButton_disabled" data-action="approvalQueueNext">
+					<i class="fa fa-times"></i> {lang="delete"}
+				</a>
+			{{endif}}
+		</li>			
+	</ul>
+</div>
+<br>

@@ -1,0 +1,9 @@
+<ips:template parameters="$member, $name, $fromEmail, $message, $email" />
+
+{$email->language->addToStack("email_contact_form", FALSE)}
+
+----
+
+{$email->language->addToStack("email_contact_said", FALSE, array( 'sprintf' => array( $name, $fromEmail ) ) )}
+
+{expression="\IPS\Email::buildPlaintextBody( $message )"}

@@ -1,0 +1,14 @@
+{
+    "Db": {
+        "type": "C",
+        "class": "\\IPS\\Db"
+    },
+    "FrontDispatcher": {
+        "type": "C",
+        "class": "\\IPS\\Dispatcher\\Front"
+    },
+    "FileSystem": {
+        "type": "C",
+        "class": "\\IPS\\File\\FileSystem"
+    }
+}

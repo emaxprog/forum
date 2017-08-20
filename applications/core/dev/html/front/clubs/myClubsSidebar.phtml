@@ -1,0 +1,33 @@
+<ips:template parameters="$clubs, $myClubsActivity=NULL" />
+
+{{if member.member_id and member.group['g_create_clubs']}}
+	<a class="ipsButton ipsButton_medium ipsButton_important ipsButton_fullWidth" href="{url="app=core&module=clubs&controller=directory&do=create" seoTemplate="clubs_list"}" data-ipsDialog data-ipsDialog-title="{lang="create_club"}">{lang="create_club"}</a>
+{{endif}}
+
+<div id='elMyClubs' class="ipsWidget ipsWidget_vertical ipsBox">
+	<h2 class="ipsType_reset ipsWidget_title">{lang="my_clubs"}</h2>
+	{{if count( $clubs )}}
+		{template="clubs" group="widgets" params="$clubs"}
+	{{else}}
+		<section class="ipsWidget_inner ipsPad_half">
+			<p class='ipsType_light ipsType_center ipsPad_half'>
+				{lang="my_clubs_empty"}
+			</p>
+		</section>
+	{{endif}}
+</div>
+
+<div id='elMyClubsActivity' class="ipsWidget ipsWidget_vertical ipsBox">
+	<h2 class="ipsType_reset ipsWidget_title">{lang="clubs_recent_activity"}</h2>
+	{{if !count( $myClubsActivity )}}
+		<p class='ipsType_light ipsType_center ipsPad'>
+			{lang="clubs_no_recent_activity"}
+		</p>
+	{{else}}
+		<ol class="ipsStream ipsList_reset ipsPad">
+			{{foreach $myClubsActivity as $result}}
+				{$result->html()|raw}
+			{{endforeach}}
+		</ol>
+	{{endif}}
+</div>

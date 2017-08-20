@@ -1,0 +1,72 @@
+<ips:template parameters="$featuredClubs, $allClubs, $pagination, $baseUrl, $sortOption, $myClubsActivity, $mapMarkers=NULL" />
+
+{template="pageHeader" group="global" app="core" params="\IPS\Member::loggedIn()->language()->addToStack('club_directory')"}
+
+{{if count( $featuredClubs )}}
+	<div class="ipsBox ipsSpacer_bottom">
+		<h2 class="ipsType_sectionTitle ipsType_reset">{lang="featured_clubs"}</h2>
+		<div class="ipsAreaBackground ipsPad">
+			<ul class='ipsGrid ipsGrid_collapsePhone' data-ipsGrid data-ipsGrid-minItemSize='500' data-ipsGrid-maxItemSize='600' data-ipsGrid-equalHeights='row'>
+				{{foreach $featuredClubs as $club}}
+					<li class='ipsGrid_span6 ipsBox'>{template="clubCard" group="clubs" app="core" params="$club"}</li>
+				{{endforeach}}
+			</ul>
+		</div>
+	</div>
+{{endif}}
+
+{{if $mapMarkers !== NULL && settings.clubs_locations}}
+	<div class='ipsBox ipsSpacer_bottom'>
+		<h2 class='ipsType_sectionTitle ipsType_reset'>{lang="club_find_by_location"}</h2>
+		<div class='ipsPad_half'>
+			<div data-ipsMap data-ipsMap-apiKey="{expression="\IPS\Settings::i()->google_maps_api_key"}" data-ipsMap-markers="{expression="json_encode( $mapMarkers )"}" data-ipsMap-contentUrl="{url="app=core&module=clubs&controller=view&do=mapPopup&id="}" class="ipsMap ipsMap_small ipsJS_show"></div>
+		</div>
+	</div>
+{{endif}}
+
+
+<div class="ipsBox">
+	<h2 class="ipsType_sectionTitle ipsType_reset">{lang="all_clubs"}</h2>
+	{{if count( $allClubs ) or member.member_id or \IPS\Member\Club\CustomField::areFilterableFields()}}
+		<div class="ipsButtonBar ipsPad_half ipsClearfix ipsClear">
+			<ul class="ipsButtonRow ipsPos_right ipsClearfix">
+				{{if count( $allClubs )}}
+					<li>
+						<a href="#elSortByMenu_menu" id="elSortByMenu" data-ipsMenu data-ipsMenu-activeClass="ipsButtonRow_active" data-ipsMenu-selectable="radio">{lang="sort_by"} <i class="fa fa-caret-down"></i></a>
+					</li>
+				{{endif}}
+				{{if member.member_id or \IPS\Member\Club\CustomField::areFilterableFields()}}
+					<li>
+						<a href="{$baseUrl->setQueryString( 'do', 'filters' )}" data-ipsDialog data-ipsDialog-title="{lang="filter"}">{lang="filter"}</a>
+					</li>
+				{{endif}}
+			</ul>
+			{$pagination|raw}
+			<ul class="ipsMenu ipsMenu_auto ipsMenu_withStem ipsMenu_selectable ipsHide" id="elSortByMenu_menu">
+				{{foreach array('last_activity', 'members', 'content', 'created', 'name') as $k}}
+					<li class="ipsMenu_item {{if $k == $sortOption}}ipsMenu_itemChecked{{endif}}" data-ipsMenuValue="{$k}">
+						<a href="{$baseUrl->setQueryString( 'sort', $k )}">{lang="clubs_sort_{$k}"}</a>
+					</li>
+				{{endforeach}}
+			</ul>
+		</div>
+	{{endif}}
+	<div class="ipsAreaBackground ipsPad">
+		{{if count( $allClubs )}}
+			<ul class='ipsGrid ipsGrid_collapsePhone' data-ipsGrid data-ipsGrid-minItemSize='500' data-ipsGrid-maxItemSize='600' data-ipsGrid-equalHeights='row'>
+				{{foreach $allClubs as $club}}
+					<li class='ipsGrid_span6 ipsBox'>{template="clubCard" group="clubs" app="core" params="$club"}</li>
+				{{endforeach}}
+			</ul>
+		{{else}}
+			<div class="ipsAreaBackground ipsPad_half">
+				{lang="all_clubs_empty"}
+			</div>
+		{{endif}}
+	</div>
+	{{if trim( $pagination )}}
+		<div class="ipsButtonBar ipsPad_half ipsClearfix ipsClear">
+			{$pagination|raw}
+		</div>
+	{{endif}}
+</div>

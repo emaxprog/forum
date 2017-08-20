@@ -1,0 +1,198 @@
+<ips:template parameters="$subject, $member, $content, $unsubscribe, $placeholderRecipient=FALSE, $introText='', $email" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{dir}">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>{$subject}</title>
+		<style type="text/css">
+		
+			#outlook a {padding:0;}
+			body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;} 
+			.ExternalClass {width:100%;}
+			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
+			#backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+
+			img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;} 
+			a img {border:none;} 
+			.image_fix {display:block;}
+
+			p {margin: 1em 0;}
+
+			h1 { color: white !important; }
+			h2, h3, h4, h5, h6 {color: #333333 !important;}
+
+			h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+				color: red !important;
+			}
+
+			h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+				color: purple !important;
+			}
+
+			table td {border-collapse: collapse;}
+
+			table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+
+			a {color: #4a8aca;}
+			
+			/* Unhides cells that we set to hide in the HTML in case the client doesn't support style properly */
+			*[class~=hidePhone] {
+			    display : block !important;
+			    width : auto !important;
+			    max-height: inherit !important;
+			    overflow : visible !important;
+			    float : none !important;
+			}
+
+			*[class~=hidePhone][width="30"] {
+				width: 30px !important;
+			}
+
+			*[class~=hidePhone][width="40"] {
+				width: 40px !important;
+			}
+
+			td[class~=hidePhone] {
+				display: table-cell !important;
+			}
+
+			@media only screen and (max-device-width: 480px) {
+				a[href^="tel"], a[href^="sms"] {
+					text-decoration: none;
+					color: blue;
+					pointer-events: none;
+					cursor: default;
+				}
+
+				.mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+					text-decoration: default;
+					color: orange !important;
+					pointer-events: auto;
+					cursor: default;
+				}
+
+				#userPhoto, .hidePhone, *[class~=hidePhone], td[class~=hidePhone] {
+					display: none !important;
+				}
+
+				.responsive_table > tr > td, .responsive_table > tbody > tr > td,
+				.responsive_table > tr, .responsive_table > tbody > tr {
+					display: block;
+					text-align: left;
+				}
+
+				html[dir="rtl"] .responsive_table > tr > td, html[dir="rtl"] .responsive_table > tbody > tr > td,
+				html[dir="rtl"] .responsive_table > tr, html[dir="rtl"] .responsive_table > tbody > tr {
+					text-align: right;
+				}
+
+				.responsive_row {
+					margin-bottom: 10px;
+				}
+
+				.responsive_fullwidth {
+					width: 100% !important;
+				}
+			}
+
+			@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+				a[href^="tel"], a[href^="sms"] {
+					text-decoration: none;
+					color: blue;
+					pointer-events: none;
+					cursor: default;
+				}
+
+				.mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+					text-decoration: default;
+					color: orange !important;
+					pointer-events: auto;
+					cursor: default;
+				}
+			}
+		</style>
+	</head>
+	<body bgcolor="#f1f1f1" style='direction: {dir}'>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#f1f1f1">
+			<tr height='25'>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+			</tr>
+			<tr>
+				<td dir='{dir}' valign="top"><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+				<td dir='{dir}' valign='middle' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 30px; font-weight: 300; color: #262e33; line-height: 48px; padding-left: 10px;">
+					<a href='{setting="base_url"}' style='text-decoration: none; color: #262e33; border: 0;'>
+						{{$imgDims=NULL;}}
+						{{if \IPS\Settings::i()->email_logo}}
+							{{try { $imgDims = \IPS\File::get( 'core_Theme', \IPS\Settings::i()->email_logo )->getImageDimensions(); } catch( \Exception $e ) {} }}
+						{{endif}}
+						{{if $imgDims}}
+							<img src='{file="\IPS\Settings::i()->email_logo" extension="core_Theme"}' alt="{setting="board_name"}" width='{$imgDims[0]}' height='{$imgDims[1]}' />
+						{{else}}
+							{setting="board_name"}
+						{{endif}}
+					</a>
+				</td>
+				<td dir='{dir}' valign="top"><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+			</tr>
+			<tr height='25'>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+			</tr>
+			<tr>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+				<td dir='{dir}' width='800' id='main' bgcolor='#ffffff' style='border-top: 10px solid {setting="email_color"}; line-height: 1.5;'>
+					<table width='100%' cellpadding='20'>
+						<tr>
+							<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 15px; color: #333333; line-height: 21px">
+								{{if $introText}}
+									<h1 style="font-family: 'Helvetica Neue', helvetica, sans-serif; color: {setting="email_color"} !important; font-size: 28px; font-weight: 500 !important;"><center>{$introText}</center></h1>
+									<br>
+								{{endif}}
+								{{if $member->member_id }}
+									<strong style='font-size: 17px'>{$email->language->addToStack("email_greeting_member", FALSE, array( 'sprintf' => array( $member->name ) ) )}</strong>
+									<br />
+								{{elseif $placeholderRecipient}}
+									<strong style='font-size: 17px'>{$email->language->addToStack("email_greeting_member", FALSE, array( 'sprintf' => array( '*|member_name|*' ) ) )}</strong>
+									<br />
+								{{endif}}
+
+								{$content|raw}
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+			</tr>
+			<tr height='25'>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+				<td dir='{dir}'><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+			</tr>
+			{{if $unsubscribe}}
+				{$unsubscribe|raw}
+			{{endif}}
+			{{if \IPS\Settings::i()->privacy_type != "none"}}
+				<tr>
+					<td dir='{dir}' valign="top"><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+					<td dir='{dir}' valign='middle' align='center' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 12px; line-height: 18px; padding-left: 10px;">
+						<a href='{{if \IPS\Settings::i()->privacy_type == "internal"}}{url="app=core&module=system&controller=privacy" seoTemplate="privacy" base="front"}{{else}}{setting="privacy_link"}{{endif}}' style='color: #4a8aca; text-decoration: none;  display: inline-block'>{$email->language->addToStack("privacy_policy_link", FALSE)}</a>
+					</td>
+					<td dir='{dir}' valign="top"><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+				</tr>
+			{{endif}}
+			{{if \IPS\Settings::i()->board_name}}
+				<tr>
+					<td dir='{dir}' valign="top"><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+					<td dir='{dir}' valign='top' width='800' align='center' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 12px; color: #bdbdbd; line-height: 18px; padding-left: 10px;">
+						{setting="board_name"}{{if \IPS\Settings::i()->site_address and \IPS\Settings::i()->site_address != 'null'}}, {address="\IPS\Settings::i()->site_address"}{{endif}}
+					</td>
+					<td dir='{dir}' valign="top"><img src='{setting="base_url"}applications/core/interface/email/spacer.png' width='1' height='1' alt=''></td>
+				</tr>
+			{{endif}}
+		</table>
+	</body>
+</html>

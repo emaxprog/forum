@@ -1,0 +1,4 @@
+<ips:template parameters="$club, $response, $email" />
+{$email->language->addToStack( $response ? "notification__club_response_accepted" : "notification__club_response_declined", FALSE, array( 'sprintf' => array($club->name ) ) )}
+
+{$email->language->addToStack("view_club", FALSE)}: {$club->url()}

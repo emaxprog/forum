@@ -1,0 +1,37 @@
+<ips:template parameters="$content" />
+
+<section id='elSecurityCenter'>
+	<h2 class='ipsType_pageTitle'>{lang="security_recommendations"}</h2>
+	{{if !empty( $content )}}
+	<p class='ipsType_normal ipsType_reset ipsSpacer_bottom'>
+		{lang="follow_sec_recommend"}
+	</p>
+	<br>
+	<ul class='ipsGrid ipsGrid_collapsePhone' data-ipsGrid data-ipsGrid-minItemSize='320' data-ipsGrid-maxItemSize='500' data-ipsGrid-equalHeights='row'>
+		{{foreach $content as $key => $data}}
+			<li class='ipsBox ipsGrid_span4 cSecurity {{if $data['risk'] == 'high'}}cSecurity_negative{{elseif $data['risk'] == 'medium'}}cSecurity_intermediary{{else}}cSecurity_positive{{endif}}'>
+				<span class='ipsBadge ipsBadge_large ipsBadge_{{if $data['risk'] == 'high'}}negative{{elseif $data['risk'] == 'medium'}}intermediary{{else}}positive{{endif}}'>{lang="$data['risk']"}</span> <h3 class='ipsBox_titleBar'>{lang="$data['title']"}</h3>
+				<div class='ipsPad ipsType_richText ipsType_normal'>
+					{{if $data['description']}}
+						<p>
+							{lang="$data['description']"}
+						</p>
+					{{endif}}
+				</div>
+				{{if isset( $data['button'] )}}
+					<div class='cSecurity_button ipsPad'>
+						<hr class='ipsHr'>
+						<a href='{url="{$data['button']['action']}"}' class='ipsButton ipsButton_small ipsButton_fullWidth ipsButton_light'>{$data['button']['title']}</a>
+					</div>
+				{{endif}}
+			</li>
+		{{endforeach}}
+	</ul>
+	{{else}}
+		<div class='ipsAreaBackground_light ipsPad'>
+			<p class='ipsType_medium'>
+				{lang="security_no_recommendations"}
+			</p>
+		</div>
+	{{endif}}
+</section>

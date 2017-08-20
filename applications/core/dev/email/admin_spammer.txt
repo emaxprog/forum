@@ -1,0 +1,13 @@
+<ips:template parameters="$member, $email" />
+{$email->language->addToStack("email_flagged_as_spammer", FALSE)}
+
+======
+{$email->language->addToStack("username", FALSE)}: {$member->name}</a>
+{$email->language->addToStack("email_address", FALSE)}: {$member->email}
+{$email->language->addToStack("members_ip_address", FALSE)}: {$member->ip_address}
+{$email->language->addToStack("members_joined", FALSE)}: {$member->joined}
+
+{$email->language->addToStack("email_view_other_profile", FALSE, array( 'sprintf' => array( $member->name ) ) )}: {$member->url()}
+======
+
+-- {setting="board_name"}

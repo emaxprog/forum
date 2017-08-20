@@ -1,0 +1,554 @@
+/* --- */
+body {
+	background: #fafafa;
+	color: #353c41;
+	position: absolute;
+	width: 100%;
+}
+
+footer {
+	background: none repeat scroll 0 0 #262e33;
+}
+	footer a, #ipsLayout_footer a, #ipsLayout_footer p {
+		color: #eee;
+	}
+
+	#ipsLayout_footer {
+		margin: 0;
+		padding: 20px 0;
+	}
+
+a {
+	color: #3b6c99;
+}
+
+#acpMainLayout {
+	height: 100%;
+	position: relative;
+	z-index: 1500;
+	overflow: hidden;
+}
+
+#acpJumpToContent {
+	position: absolute;
+	top: 2px;
+	color: #fff;
+	font-size: 11px;
+	margin-left: -1000px;
+}
+
+	html[dir="ltr"] #acpJumpToContent {
+		left: 53px;
+	}
+	html[dir="rtl"] #acpJumpToContent {
+		 right: 53px;
+	 }
+
+	html[dir="ltr"] #acpJumpToContent:focus {
+		margin-left: 0;
+	}
+	html[dir="rtl"] #acpJumpToContent:focus {
+		margin-right: 0;
+	}
+
+#acpContent {
+	padding: 30px;
+}
+
+/* APP LIST */
+#acpAppMenu {
+	background: #1C262F;
+	width: 270px !important;
+}
+
+#acpAppList {
+	text-align: center;
+	height: 100%;
+}
+	
+	#acpAppList .acpAppList_icon {
+		font-size: 26px;
+		display: block;
+	}
+
+	#acpAppList > li {
+		width: 70px;
+	}
+
+		#acpAppList > li:not( #elReorderAppMenu ) > a {
+			display: block;
+			color: rgba(255,255,255,0.3);
+			padding: 15px 0;
+			z-index: 2000;
+			position: relative;
+		}
+
+			#acpAppList > li.acpAppList_dragging > ul {
+				display: none !important;
+			}
+
+			#acpAppList > li:not( #elReorderAppMenu ).acpAppList_active > a {
+				color: #fff;
+				background: #2E3D49;
+			}
+
+		#acpAppList > li.acpAppList_active > ul {
+			display: block;
+			opacity: 1;
+		}
+
+		#acpAppList > li > ul {
+			display: none;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 200px;
+			background: #2E3D49;
+			padding: 20px;
+			opacity: 0;
+			display: none;
+			z-index: 1500;
+			overflow: auto;
+			overflow-x: hidden;
+			line-height: 1.8;
+			{prefix="transition" value="0.3s all linear"}
+		}
+		html[dir="ltr"] #acpAppList > li > ul {
+			left: 70px;
+			right: 0;
+			text-align: left;
+		}
+		html[dir="rtl"] #acpAppList > li > ul {
+			right: 70px;
+			left: 0;
+			text-align: right;
+		}
+
+			#acpAppList > li > ul a {
+				color: #ADB7BF;
+				font-size: 12px;
+			}
+
+			#acpAppList > li > ul h3 {
+				font-size: 11px;
+				text-transform: uppercase;
+				font-weight: normal;
+				color: #fff;
+				margin: 0 0 4px 0;
+			}
+
+			#acpAppList > li > ul > li {
+				margin-bottom: 20px;
+			}
+
+			#acpAppList > li > ul .acpModuleMenu_active {
+				font-weight: bold;
+			}
+
+		#acpAppList .acpAppList_header {
+			background: #27333D;
+			font-size: 17px;
+			font-weight: 100;
+			letter-spacing: 1px;
+			color: rgba(255,255,255,0.37);
+			opacity: 1;
+			line-height: 61px;
+			height: 61px;
+			padding: 0 20px;
+			margin: -20px -20px 20px -20px;
+			width: 200px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+#elLogo {
+	height: 61px;
+	line-height: 60px;
+	background: rgba(0,0,0,0.15);
+}
+
+	#elLogo img {
+		width: 30px;
+		height: 30px;
+	}
+
+html[dir="ltr"] #acpAppList .ipsNotificationCount {
+	top: 6px;
+	right: 6px;
+}
+html[dir="rtl"] #acpAppList .ipsNotificationCount {
+	top: 6px;
+	left: 6px;
+}
+
+#acpAppList > li > ul .ipsNotificationCount {
+	position: static;
+	background: #323232;
+}
+
+/* Hide menu stuff */
+#acpAppList #elHideMenu {
+	width: 16px;
+	height: 32px;
+	line-height: 32px;
+	position: fixed;
+	bottom: 0;
+	z-index: 6000;
+	background: #2E3D49;
+	border-radius: 3px 0 0 0;
+}
+
+	html[dir="ltr"] #acpAppList #elHideMenu {
+		left: 54px;
+	}
+	html[dir="rtl"] #acpAppList #elHideMenu {
+		right: 54px;
+	}
+	
+	#acpAppList #elHideMenu a {
+		padding: 0 !important;
+	}
+
+		#acpAppList #elHideMenu a:hover {
+			color: #fff;
+		}
+
+/* Styles for the collapsing admin menu */
+.cAdminHideMenu #acpAppList > li.acpAppList_active > ul,
+body:not( .cAdminHideMenu ) #elHideMenu [data-action='toggleOpen'] {
+	display: none;
+}
+
+.cAdminHideMenu #acpAppList, .cAdminHideMenu #acpAppMenu  {
+	width: 70px !important;
+}
+
+.cAdminHideMenu #acpAppList > li.acpAppList_active:hover > ul {
+	display: block;
+}
+
+.cAdminHideMenu #acpAppList > li:hover > ul {
+	box-shadow: 0px -2px 36px rgba(0,0,0,0.2);
+}
+
+.cAdminHideMenu #elHideMenu [data-action='toggleClose'] {
+	display: none;
+}
+
+#acpMainArea {
+	padding-top: 60px;
+}
+
+/* HEADER BAR */
+#ipsLayout_header {
+	background: #3b6c99;
+	display: flex;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	z-index: 3000;
+	height: 61px;
+}
+html[dir="ltr"] #ipsLayout_header {
+	padding: 10px 0 10px 10px;
+	right: 0;
+	left: 270px;
+}
+	html[dir="ltr"] .cAdminHideMenu #ipsLayout_header {
+		left: 70px;
+	}
+
+html[dir="rtl"] #ipsLayout_header {
+	padding: 10px 10px 10px 0;
+	left: 0;
+	right: 270px;
+}
+	html[dir="rtl"] .cAdminHideMenu #ipsLayout_header {
+		right: 70px;
+	}
+
+#ipsLayout_header .fa-search {
+	color: #fff;
+	font-size: 20px;
+}
+html[dir="ltr"] #ipsLayout_header .fa-search {
+	margin-left: 5px;
+}
+html[dir="rtl"] #ipsLayout_header .fa-search {
+	margin-right: 5px;
+}
+
+#acpSearchKeyword {
+	border: 0;
+	background: rgba(255,255,255,0.1);
+	max-width: 100%;
+	padding: 12px;
+	color: #fff;
+}
+html[dir="ltr"] #acpSearchKeyword {
+	margin-left: 10px;
+}
+html[dir="rtl"] #acpSearchKeyword {
+	margin-right: 10px;
+}
+
+#acpSearchKeyword:hover {
+	background: rgba(255,255,255,0.15);
+}
+
+#acpSearchKeyword:focus {
+	background: #fff;
+	color: #222;
+}
+
+#acpSearchKeyword::-webkit-input-placeholder {
+  color: rgba(255,255,255,0.4);
+}
+#acpSearchKeyword::-moz-placeholder {
+  color: rgba(255,255,255,0.4);
+}
+#acpSearchKeyword:-ms-input-placeholder {
+  color: rgba(255,255,255,0.4);
+}
+#acpSearchKeyword:-moz-placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+#elAdminControls {
+	display: flex;
+	align-items: center;
+	color: #fff;
+	font-size: 13px;
+}
+html[dir="ltr"] #elAdminControls {
+	margin-left: 15px;
+}
+html[dir="rtl"] #elAdminControls {
+	margin-right: 15px;
+}
+	
+	#elAdminControls a {
+		color: rgba(255,255,255,0.6);
+	}
+		#elAdminControls a:hover {
+			color: #fff;
+		}
+
+	#elAdminControls li {
+		white-space: nowrap;
+		line-height: 40px;
+		padding: 0 15px;
+	}
+	html[dir="ltr"] #elAdminControls li {
+		border-left: 1px solid rgba(255,255,255,0.2);
+	}
+	html[dir="rtl"] #elAdminControls li {
+		border-right: 1px solid rgba(255,255,255,0.2);
+	}
+
+	#elAdminControls .fa-home {
+		font-size: 16px;
+	}
+
+	html[dir="ltr"] #elAdminControls .ipsUserPhoto {
+		margin-right: 5px;
+	}
+	html[dir="rtl"] #elAdminControls .ipsUserPhoto {
+		margin-left: 5px;
+	}
+
+/* TITLE AREA */
+#acpPageHeader {
+	background: #fff;
+	border-bottom: 1px solid #E2E6E8;
+	padding: 30px 15px 15px;
+	position: relative;
+}
+	
+	#acpPageHeader:after {
+		content: '';
+		display: block;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 100%;
+		height: 5px;
+		background: -moz-linear-gradient(top,  rgba(132,132,132,0.15) 0%, rgba(255,255,255,0) 100%);
+		background: -webkit-linear-gradient(top,  rgba(132,132,132,0.15) 0%,rgba(255,255,255,0) 100%);
+		background: linear-gradient(to bottom,  rgba(132,132,132,0.15) 0%,rgba(255,255,255,0) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#848484', endColorstr='#00ffffff',GradientType=0 );
+	}
+
+	#acpPageHeader .ipsType_pageTitle {
+		color: #2c2c2c;
+		font-weight: 300;
+		font-size: 28px;
+		min-width: 0;
+	}
+
+	#acpPageHeader .ipsSubNavigation {
+		margin-top: -15px;
+		margin-bottom: 5px;
+	}
+
+.acpPageHeader_flex {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	align-items: flex-end;
+}
+
+/* BREADCRUMB */
+.ipsBreadcrumb > ul > li {
+	font-size: 12px;
+}
+
+/* BUTTONS */
+.acpToolbar .ipsButton_verySmall {
+	line-height: 30px;
+}
+.acpToolbar .ipsButton_normal {
+	background: #fff;
+	border: 1px solid #8d9aa6;
+	color: #8d9aa6;
+}
+	.acpToolbar .ipsButton_normal:active {
+		border: 1px solid #626a73;
+		color: #626a73;
+	}
+
+.acpToolbar .ipsButton_primary {
+	background: #d66723;
+	border: 1px solid #d66723;
+	color: #fff;
+}
+
+	.acpToolbar .ipsButton_primary:active {
+		background: #a13e28;
+	}
+
+html[dir="ltr"] .acpToolbar > ul > li {
+	margin-right: 7px;
+}
+html[dir="rtl"] .acpToolbar > ul > li {
+	margin-left: 7px;
+}
+
+#acpAppList #elReorderAppMenu {
+	position: fixed;
+	bottom: 0;
+	z-index: 5000;
+}
+	
+	html[dir="ltr"] #acpAppList #elReorderAppMenu {
+		padding: 7px 23px 7px 7px;
+	}
+	html[dir="rtl"] #acpAppList #elReorderAppMenu {
+		padding: 7px 7px 7px 23px;
+	}
+
+	#acpAppList #elReorderAppMenu a {
+		color: rgba(255,255,255,0.4);
+		opacity: 0.5;
+	}
+
+	#acpAppList #elReorderAppMenu a[data-action="reorder"]:hover,
+	#acpAppList #elReorderAppMenu a[data-action="saveOrder"] {
+		opacity: 1;
+		color: #fff;
+	}
+
+	#acpAppList #elReorderAppMenu a[data-action="saveOrder"] {
+		line-height: 23px;
+	}
+
+	#acpAppList > li > a > span[data-role='reorder'] {		
+		position: absolute;
+		top: 50%;
+		margin-top: -20px;
+	}
+	html[dir="ltr"] #acpAppList > li > a > span[data-role='reorder'] {
+		left: 5px;
+	}
+	html[dir="rtl"] #acpAppList > li > a > span[data-role='reorder'] {
+		left: auto;
+		right: 5px;
+	}
+
+	#acpAppList > li > ul > li span[data-role="reorder"] {
+		display: inline-block;
+		width: 18px;
+		height: 18px;
+		line-height: 18px;
+		font-size: 10px;
+	}
+	html[dir="ltr"] #acpAppList > li > ul > li span[data-role="reorder"] {
+		margin-right: 5px;
+	}
+	html[dir="rtl"] #acpAppList > li > ul > li span[data-role="reorder"] {
+		margin-left: 5px;
+	}
+
+#acpAppList span[data-role="reorder"] {
+	background: #f5f5f5;
+	color: #000;
+	font-size: 11px;
+	width: 22px;
+	height: 22px;
+	line-height: 22px;
+	border-radius: 22px;
+	text-align: center;
+	display: block;
+	cursor: move;
+}
+
+/* Hover fallbacks for non-js */
+.ipsJS_none #acpAppList:hover > li:not( #elReorderAppMenu ) > a {
+	background: transparent;
+}
+
+.ipsJS_none #acpAppList > li:not( #elReorderAppMenu ):hover > a {
+	color: #fff;
+	background: #394248;
+}
+
+.ipsJS_none #acpAppList:hover > li > ul {
+	display: none;
+}
+
+.ipsJS_none #acpAppList > li:hover > a + ul {
+	display: block;
+	opacity: 1;
+}
+
+/* MISC */
+.cACPkeywords {
+	line-height: 16px;
+	height: 16px;
+	padding: 0 9px;
+}
+
+/* Mobile menu */
+#elUserNav_mobile a {
+	font-size: 11px;
+	color: #fff;
+	text-align: center;
+}
+
+#elUserNav_mobile .fa {
+	font-size: 34px;
+	display: block;
+	margin-bottom: 5px;
+}
+
+.cMobileNav_utilities {
+	background: #000;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+	.cMobileNav_utilities a {
+		color: #fff;
+	}

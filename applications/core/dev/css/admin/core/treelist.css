@@ -1,0 +1,54 @@
+.ipsTreeList, .ipsTreeList ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+	.ipsTreeList a {
+		color: #333;
+		padding: 7px 0;
+		font-size: 14px;
+		display: block;
+		position: relative;
+	}
+
+	html[dir="ltr"] .ipsTreeList li a { padding-left: 15px;	}
+	html[dir="ltr"] .ipsTreeList li li a { padding-left: 30px; }
+	html[dir="ltr"] .ipsTreeList li li li a { padding-left: 45px; }
+	html[dir="ltr"] .ipsTreeList li li li li a { padding-left: 60px; }
+	html[dir="rtl"] .ipsTreeList li a { padding-right: 15px; }
+	html[dir="rtl"] .ipsTreeList li li a { padding-right: 30px; }
+	html[dir="rtl"] .ipsTreeList li li li a { padding-right: 45px; }
+	html[dir="rtl"] .ipsTreeList li li li li a { padding-right: 60px; }
+
+	.ipsTreeList_inactiveBranch > ul {
+		display: none;
+	}
+
+	.ipsTreeList_inactiveBranch > a:before,
+	.ipsTreeList_activeBranch > a:before {
+		font-family: 'FontAwesome';
+		font-size: 14px;
+		line-height: 6px;
+	}
+
+		html[dir="ltr"] .ipsTreeList_inactiveBranch > a:before,
+		html[dir="ltr"] .ipsTreeList_activeBranch > a:before {
+			margin-right: 7px;
+		}
+		html[dir="rtl"] .ipsTreeList_inactiveBranch > a:before,
+		html[dir="rtl"] .ipsTreeList_activeBranch > a:before {
+			margin-right: 7px;
+		}
+
+		.ipsTreeList_inactiveBranch > a:before {
+			content: '\f0da';
+		}
+		.ipsTreeList_activeBranch > a:before {
+			content: '\f0d7';
+		}
+
+	.ipsTreeList_activeNode > a {
+		background: #2E3D49;
+		color: #fff;
+	}

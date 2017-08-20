@@ -1,0 +1,33 @@
+<ips:template parameters="$apps, $plugins, $theme, $logins" />
+
+<div class="ipsAreaBackground_light ipsPad">
+	{{if count( $apps )}}
+		<p class='ipsType_normal'>{lang="recovery_apps_disabled"}</p>
+		<ul>
+		{{foreach $apps as $app}}
+			<li>{$app->_title}</li>
+		{{endforeach}}
+		</ul>
+	{{endif}}
+	{{if count( $plugins )}}
+		<p class='ipsType_normal'>{lang="recovery_plugins_disabled"}</p>
+		<ul>
+		{{foreach $plugins as $plugin}}
+			<li>{$plugin->_title}</li>
+		{{endforeach}}
+		</ul>
+	{{endif}}
+	{{if $theme}}
+		<p class='ipsType_normal'>{lang="recovery_theme_restored"}</p>
+	{{endif}}
+	{{if count( $logins )}}
+		<p class='ipsType_normal'>{lang="recovery_logins_disabled"}</p>
+		<ul>
+		{{foreach $logins as $login}}
+			<li>{$login->_title}</li>
+		{{endforeach}}
+		</ul>
+	{{endif}}
+	<p>{lang="recovery_end_blurb"}</p>
+	<pre>define( 'RECOVERY_MODE', TRUE );</pre>
+</div>

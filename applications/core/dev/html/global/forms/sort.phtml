@@ -1,0 +1,20 @@
+<ips:template parameters="$name, $value" />
+<div class="ipsField_stack" data-ipsStack data-ipsStack-sortable data-ipsStack-fieldName="$name">
+	<ul class="ipsList_reset" data-role="stack">
+	{{$i = 0;}}
+	{{foreach $value as $id => $val}}
+		{{$i++;}}
+		<li class='ipsField_stackItem' data-role="stackItem">
+			<input type="hidden" name="{$name}[{$id}]" value="{$val}">
+			<div class="ipsCursor_drag" data-action='stackDrag'>
+				<span class="ipsField_stackDrag ipsDrag ipsJS_show">
+					<i class='fa fa-bars ipsDrag_dragHandle'></i>
+				</span>
+				<div data-ipsStack-wrapper class="ipsPad ipsPad_half">
+					{$val}
+				</div>
+			</div>
+		</li>
+	{{endforeach}}
+	</ul>
+</div>

@@ -1,0 +1,22 @@
+<ips:template parameters="$form" />
+<!DOCTYPE html>
+<html lang="{expression="\IPS\Member::loggedIn()->language()->bcp47()"}" dir="{{if member.language()->isrtl}}rtl{{else}}ltr{{endif}}">
+	<head>
+		<meta charset="utf-8">
+		<title>{lang="login"}</title>
+		{template="includeCSS" app="core" group="global" location="global" params=""}
+		{template="includeJS" app="core" group="global" location="global" params=""}
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	</head>
+	<body class='ipsApp ipsApp_admin' id='elLogin' data-controller="core.admin.core.app">
+		<div id='elLogin_box' data-controller="core.admin.system.login" class='elLogin_single'>
+			<div data-role="loginForms">
+				<div class='cAcpLoginBox'>
+					<div id='elTabContent'>
+						{$form|raw}
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

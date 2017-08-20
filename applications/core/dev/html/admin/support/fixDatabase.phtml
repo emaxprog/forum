@@ -1,0 +1,24 @@
+<ips:template parameters="$queries, $errors" />
+<div class="ipsPad">
+	{{if $errors === NULL}}
+		{lang="database_changes_to_make"}
+	{{else}}
+		<div class="ipsMessage ipsMessage_warning">{lang="database_changes_to_make_errors"}</div>
+	{{endif}}
+	{{foreach $queries as $i => $query}}
+		<pre class="prettyprint lang-sql cSupportQuery">{$query}</pre>
+		{{if $errors !== NULL and isset( $errors[ $i ] )}}
+			<span class='ipsType_warning'>{$errors[ $i ]}</span>
+		{{endif}}
+	{{endforeach}}
+</div>
+<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+	{{if $errors === NULL}}
+		<form action="{url="app=core&module=support&controller=support&do=databasefail&run=1"}" method="post" style="display:inline">
+			<input type="submit" class="ipsButton ipsButton_primary" value="{lang="database_changes_run"}">
+		</form>
+	{{endif}}
+	<form action="{url="app=core&module=support&controller=support&do=databasefail"}" method="post" style="display:inline">
+		<input type="submit" name="run" class="ipsButton ipsButton_alternate" value="{lang="support_check_again"}">
+	</form>
+</div>

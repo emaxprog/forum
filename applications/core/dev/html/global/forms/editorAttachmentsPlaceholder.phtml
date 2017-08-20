@@ -1,0 +1,29 @@
+<ips:template parameters="$name, $editor, $noUploaderError=NULL" />
+	<div data-ipsEditor-toolList class="ipsAreaBackground_light ipsClearfix">
+		<div data-role='attachmentArea'>
+			<div class="ipsComposeArea_dropZone ipsComposeArea_dropZoneSmall ipsClearfix ipsClearfix" id='elEditorDrop_{$name}'>
+				{{if $noUploaderError}}
+					<i class='fa fa-paperclip'></i>
+				{{endif}}
+				<div>
+					<ul class='ipsList_inline ipsClearfix'>
+						{{if $noUploaderError}}
+							<li>
+								{lang="$noUploaderError"}
+								<a href="{url="app=core&module=system&controller=attachments" seoTemplate="attachments"}">{lang="manage_attachments"}</a>
+							</li>
+						{{endif}}
+						<li class='ipsPos_right'>
+							<a href='#' class='ipsButton ipsButton_light ipsButton_verySmall' data-ipsMenu id='elEditorAttach_media{expression="md5($name)"}'>{lang="editor_attach_other"} <i class='fa fa-caret-down'></i></a>
+							<ul class='ipsMenu ipsMenu_auto ipsHide' id='elEditorAttach_media{expression="md5($name)"}_menu'>
+								<li class='ipsMenu_item'><a href='#' data-ipsDialog data-ipsDialog-fixed data-ipsDialog-forceReload data-ipsDialog-title='{lang="editor_insert_existing_file"}' data-ipsDialog-url="{url="app=core&module=system&controller=editor&do=myMedia&postKey={$editor}&editorId={$name}" csrf="1"}">{lang="editor_insert_existing_file"}</a></li>
+                                {{if \IPS\Settings::i()->allow_remote_images}}
+                                    <li class='ipsMenu_item'><a href='#' data-ipsDialog data-ipsDialog-forceReload data-ipsDialog-title='{lang="editor_insert_from_url"}' data-ipsDialog-url="{url="app=core&module=system&controller=editor&do=link&image=1&postKey={$editor}&editorId={$name}" csrf="1"}">{lang="editor_insert_from_url"}</a></li>
+                                {{endif}}
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>		
+		</div>
+	</div>

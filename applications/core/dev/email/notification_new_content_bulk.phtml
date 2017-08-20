@@ -1,0 +1,9 @@
+<ips:template parameters="$container, $member, $contentClass, $email" />
+{{if $member->member_id}}
+{$email->language->addToStack("email_new_content_bulk", FALSE, array( 'sprintf' => array( $member->url(), $member->name, $email->language->addToStack( $contentClass::$title . '_pl_lc', FALSE ) ) ) )} <a href='{$container->url()}'>{$container->_title}</a>
+{{else}}
+{$email->language->addToStack("email_new_content_bulk_guest", FALSE, array( 'sprintf' => array( $member->name, $email->language->addToStack( $contentClass::$title . '_pl_lc', FALSE ) ) ) )} <a href='{$container->url()}'>{$container->_title}</a>
+{{endif}}
+
+<br /><br />
+<em style='color: #8c8c8c'>&mdash; {setting="board_name"}</em>

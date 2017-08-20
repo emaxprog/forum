@@ -1,0 +1,26 @@
+<ips:template parameters="$removedData, $includeInsecure" />
+<div class="ipsPad ipsType_center">
+	<a href="{url="app=core&module=members&controller=members&do=export&download=1"}" class="ipsButton ipsButton_primary ipsButton_large"><i class="fa fa-cloud-download"></i> {lang="members_export"}</a>
+</div>
+{{if $includeInsecure}}
+	<p class="ipsMessage ipsMessage_warning">{lang="member_export_security"}</p>
+{{elseif !empty( $removedData )}}
+	<div class="ipsMessage ipsMessage_warning">
+		<div class="ipsSpacer_bottom">{lang="member_export_security_intro"}</div>
+		<table class="ipsTable ipsAreaBackground_reset">
+			<tr>
+				<th>{lang="member_export_security_member"}</th>
+				<th>{lang="member_export_security_column"}</th>
+				<th>{lang="member_export_security_value"}</th>
+			</tr>
+			{{foreach $removedData as $memberId => $data}}
+				<tr>
+					<td>{template="userLink" group="global" params="\IPS\Member::load( $memberId )"}</td>
+					<td>{lang="$data[0]"}</td>
+					<td>{expression="base64_decode( $data[1] )"}</td>
+				</tr>
+			{{endforeach}}
+		</table>
+		<div class="ipsSpacer_top">{lang="member_export_security_footer"}</div>
+	</div>
+{{endif}}

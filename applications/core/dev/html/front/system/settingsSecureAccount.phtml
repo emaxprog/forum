@@ -1,0 +1,47 @@
+<ips:template parameters="$canChangePassword, $canConfigureMfa, $hasConfiguredMfa, $services" />
+{template="pageHeader" group="global" params="\IPS\Member::loggedIn()->language()->addToStack('secure_account'), \IPS\Member::loggedIn()->language()->addToStack('secure_account_blurb')"}
+{{if $canChangePassword}}
+	<div class="ipsBox ipsSpacer_bottom">
+		<h2 class="ipsType_sectionTitle ipsType_reset">{lang="change_password"}</h2>
+		<div class="ipsPad ipsType_normal">
+			<p class="ipsType_reset">
+				{lang="secure_account_change_password"}
+			</p>
+			<div class="ipsSpacer_top">
+				<a href="{url="app=core&module=system&controller=settings&area=password" seoTemplate="settings_password"}" target="_blank" class="ipsButton ipsButton_primary ipsButton_small">{lang="change_password"}</a>
+			</div>
+		</div>
+	</div>
+{{endif}}
+{{if $canConfigureMfa}}
+	<div class="ipsBox ipsSpacer_bottom">
+		<h2 class="ipsType_sectionTitle ipsType_reset">{lang="mfa_settings_title"}</h2>
+		<div class="ipsPad ipsType_normal">
+			<p class="ipsType_reset">
+				{{if $hasConfiguredMfa}}
+					{lang="secure_account_mfa_revise"}
+				{{else}}
+					{lang="secure_account_mfa_setup"}
+				{{endif}}
+			</p>
+			<div class="ipsSpacer_top">
+				<a href="{url="app=core&module=system&controller=settings&area=mfa" seoTemplate="settings_mfa"}" target="_blank" class="ipsButton ipsButton_primary ipsButton_small">{lang="mfa_settings_title"}</a>
+			</div>
+		</div>
+	</div>
+{{endif}}
+{{if count( $services )}}
+	<div class="ipsBox ipsSpacer_bottom">
+		<h2 class="ipsType_sectionTitle ipsType_reset">{lang="secure_account_login_title"}</h2>
+		<div class="ipsPad ipsType_normal">
+			<p class="ipsType_reset">
+				{lang="secure_account_login_info"}
+			</p>
+			<ul class="ipsList ipsList">
+				{{foreach $services as $k => $class}}
+					<li><a href='{url="app=core&module=system&controller=settings&area=profilesync&service={$k}" seoTemplate="settings_{$k}"}' target='_blank'>{lang="profilesync__{$k}"}</li>
+				{{endforeach}}
+			</ul>
+		</div>
+	</div>
+{{endif}}

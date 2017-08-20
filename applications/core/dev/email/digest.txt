@@ -1,0 +1,4 @@
+<ips:template parameters="$member, $frequency, $email" />
+{$email->language->addToStack("digest_$frequency", FALSE)}
+
+<%digest%>

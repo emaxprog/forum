@@ -1,0 +1,30 @@
+.ipsMemberCard {
+	background: #fff;
+	border: 1px solid #d9d9d9;
+	text-align: center;
+	padding: 10px;
+	margin-top: 10px;
+	position: relative;
+}
+
+.ipsMemberCard .ipsMemberCard_photo {
+	margin-top: -28px;
+}
+
+.ipsMemberCard .ipsType_sectionHead {
+	display: block;
+	margin-top: 3px;
+	font-size: 18px;
+}
+
+.ipsMemberCard_controls.ipsButton {
+	color: inherit;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	line-height: 22px;
+}
+
+ul.ipsGrid.ipsMemberCard_buttons li {
+	margin-bottom: 0;
+}

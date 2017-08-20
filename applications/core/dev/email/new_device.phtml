@@ -1,0 +1,103 @@
+<ips:template parameters="$member, $device, $location, $email" />
+<br />
+{$email->language->addToStack('new_device_email_intro')}
+<br />
+<br />
+<table width='100%' cellpadding='15' cellspacing='0' border='0' style='background: #f9f9f9;'>
+	<tr>
+		<td dir='{dir}'>
+			<table width='100%' cellpadding='0' cellspacing='0' border='0' style='background: #f9f9f9;' class='responsive_table'>
+				<tr class='responsive_row' height="35">
+					<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;"><strong>{$email->language->addToStack('members_device')}</strong></td>
+					<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f9f9f9">
+							<tr>
+								<td dir='{dir}' width="40" valign="top" class='hidePhone' style='width: 0; max-height: 0; overflow: hidden; float: left;'>
+									{{if $device->userAgent()->platform === 'Macintosh'}}
+										<img src="{resource="logos/devices/mac.png" location="interface" app="core"}" width="30" height="30" alt="{$device->userAgent()->platform}" style='border: 0; vertical-align: middle;'>
+									{{elseif $device->userAgent()->platform === 'Android' or $device->userAgent()->platform === 'Windows Phone'}}
+										<img src="{resource="logos/devices/android.png" location="interface" app="core"}" width="30" height="30" alt="{$device->userAgent()->platform}" style='border: 0; vertical-align: middle;'>
+									{{elseif $device->userAgent()->platform === 'iPad'}}
+										<img src="{resource="logos/devices/ipad.png" location="interface" app="core"}" width="30" height="30" alt="{$device->userAgent()->platform}" style='border: 0; vertical-align: middle;'>
+									{{elseif $device->userAgent()->platform === 'iPhone'}}
+										<img src="{resource="logos/devices/iphone.png" location="interface" app="core"}" width="30" height="30" alt="{$device->userAgent()->platform}" style='border: 0; vertical-align: middle;'>
+									{{else}}
+										<img src="{resource="logos/devices/pc.png" location="interface" app="core"}" width="30" height="30" alt="{$device->userAgent()->platform}" style='border: 0; vertical-align: middle;'>
+									{{endif}}
+								</td>
+								<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+									{$device->userAgent()->platform}
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr class='responsive_row' height="35">
+					<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;"><strong>{$email->language->addToStack('device_table_user_agent')}</strong></td>
+					<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f9f9f9">
+							<tr>
+								{{if in_array( $device->userAgent()->browser, array( 'Android Browser', 'AppleWebKit', 'Camino', 'Chrome', 'Edge', 'Firefox', 'IEMobile', 'Midori', 'MSIE', 'Opera', 'Puffin', 'Safari', 'SamsungBrowser', 'Silk', 'UCBrowser', 'Vivaldi' ) )}}
+									<td dir='{dir}' width="40" valign="top" class='hidePhone' style='width: 0; max-height: 0; overflow: hidden; float: left;'>
+										&nbsp;<img src="{resource="logos/browsers/{expression="str_replace( ' ', '', $device->userAgent()->browser )"}.png" location="interface" app="core"}" width="20" height="20" alt="{$device->userAgent()->browser}" style='border: 0; vertical-align: middle;'>
+									</td>
+								{{endif}}
+								<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+									{$device->userAgent()->browser}
+								</td>
+							</tr>
+						</table>
+					</td>
+					</td>
+				</tr>
+				{{if $device->login_handler and $handlers = \IPS\Login::handlers( TRUE ) and isset( $handlers[ $device->login_handler ] ) and $handler = $handlers[ $device->login_handler ] and method_exists( $handler, 'loginForm' )}}
+					<tr class='responsive_row' height="35">
+						<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;"><strong>{$email->language->addToStack('device_table_login_handler')}</strong></td>
+						<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+							<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f9f9f9">
+								<tr>
+									{{if $handler::$logo}}
+										<td dir='{dir}' width="40" valign="top" class='hidePhone' style='width: 0; max-height: 0; overflow: hidden; float: left;'>
+											&nbsp;<img src="{resource="logos/login/{$handler::$logo}.png" location="interface" app="core"}" width="20" height="20" alt="{$device->userAgent()->browser}" style='border: 0; vertical-align: middle;'>
+										</td>
+									{{endif}}
+									<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+										{$email->language->addToStack( 'login_handler_' . ucfirst( $handler->key ) )}
+									</td>
+								</tr>
+							</table>
+						</td>
+						</td>
+					</tr>
+				{{endif}}
+				{{if $location}}
+					<tr class='responsive_row' height="35">
+						<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;"><strong>{$email->language->addToStack('device_table_location')}</strong></td>
+						<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+							{$location}
+						</td>
+					</tr>
+				{{endif}}
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 10px;">
+			* {$email->language->addToStack('ip_geolocation_info')}
+		</td>
+	</tr>
+</table>
+<br />
+{$email->language->addToStack('new_device_email_footer')}
+<br /><br />
+<table width='100%' cellpadding='15' cellspacing='0' border='0' style='background: #f9f9f9;'>
+	<tr>
+		<td dir='{dir}' align='center'>
+			{{if settings.device_management}}
+				<a href='{url="app=core&module=system&controller=settings&area=devices" seoTemplate="settings_devices" base="front"}' style="color: #ffffff; font-family: 'Helvetica Neue', helvetica, sans-serif; text-decoration: none; font-size: 14px; background: {setting="email_color"}; line-height: 32px; padding: 0 10px; display: inline-block; border-radius: 3px;">{$email->language->addToStack("new_device_email_action_1", FALSE)}</a>
+			{{else}}
+				<a href='{url="app=core&module=system&controller=settings&do=secureAccount" seoTemplate="settings_secure" base="front"}' style="color: #ffffff; font-family: 'Helvetica Neue', helvetica, sans-serif; text-decoration: none; font-size: 14px; background: {setting="email_color"}; line-height: 32px; padding: 0 10px; display: inline-block; border-radius: 3px;">{$email->language->addToStack("new_device_email_action_2", FALSE)}</a>
+			{{endif}}
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,40 @@
+<ips:template parameters="$log" />
+<div class="ipsSpacer_bottom">
+	<div class='ipsColumns ipsColumns_collapsePhone'>
+		<div class='ipsColumn ipsColumn_fixed ipsColumn_narrow ipsPos_center'>
+			<span class='ipsUserPhoto ipsUserPhoto_large ipsPos_left'>
+				<img src='{member="photo" id="$log->member_id"}' alt=''>
+			</span>
+		</div>
+		<div class='ipsColumn ipsColumn_fluid'>
+			<div class='ipsPos_left ipsSpacer_top ipsSpacer_half'>
+				<h1 class='ipsType_reset ipsSpacer_half ipsSpacer_bottom'>
+					{{if $log->member_id}}
+						<a href="{url="app=core&module=members&controller=members&do=edit&id="}{$log->member_id}" data-ipsTooltip title='{lang="triggered_by" sprintf="\IPS\Member::load($log->member_id)->name"}'>{member="name" id="$log->member_id"}</a>
+					{{else}}
+						{lang="triggered_guest"}
+					{{endif}}
+				</h1>
+				<span>{expression="\IPS\Member\Group::load( \IPS\Member::load( $log->member_id )->member_group_id )->formattedName" raw="true"}</span>
+			</div>
+			<div class='ipsPos_left ipsSpacer_top'>
+				<div class='ipsContained ipsType_break'>
+					<div class='ipsTruncate ipsTruncate_line'>
+						{lang="triggered_at"} {{if $log->url}}<a href='{$log->url}' target='_blank' title='{$log->url}'>{$log->url}</a>{{else}}<em>{lang="log_missing_data"}</em>{{endif}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ipsSpacer_bottom">
+	{{if $log->exception_class}}
+		<code>{$log->exception_class}::{$log->exception_code}</code><br>
+		<br>
+	{{endif}}
+	<textarea rows="15" style="font-family: monospace;">{$log->message}</textarea>
+</div>
+<div class="ipsSpacer_bottom">
+	<h3 class="ipsType_minorHeading">{lang="log_backtrace"}</h3>
+	<textarea rows="8" style="font-family: monospace;">{$log->backtrace}</textarea>
+</div>

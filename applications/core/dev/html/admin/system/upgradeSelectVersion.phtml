@@ -1,0 +1,46 @@
+<ips:template parameters="$id, $action, $elements, $hiddenValues, $actionButtons, $uploadField, $class='', $attributes=array(), $sidebar, $form=NULL" />
+{{foreach $elements as $collection}}
+	{{foreach $collection as $input}}
+		{{foreach $input->options['options'] as $longVersion => $humanVersion}}
+			<form accept-charset='utf-8' action="{$action}" method="post">
+				<input type="hidden" name="{$id}_submitted" value="1">
+				{{foreach $hiddenValues as $k => $v}}
+					{{if is_array($v)}}
+						{{foreach $v as $_k => $_v}}
+							<input type="hidden" name="{$k}[{$_k}]" value="{$_v}">
+						{{endforeach}}
+					{{else}}
+						<input type="hidden" name="{$k}" value="{$v}">
+					{{endif}}
+				{{endforeach}}
+				<input type="hidden" name="version" value="{$longVersion}">
+				<div class="ipsAreaBackground_reset ipsPad">
+					{{if $humanVersion === \IPS\Application::load('core')->version}}
+						<h2 class='ipsType_sectionHead'>{lang="upgrade_check_patches"}</h2>
+						{{if $input->options['_details'][ $longVersion ]['releasenotes']}}
+							<ul>
+								{{foreach $input->options['_details'][ $longVersion ]['changes'] as $issue}}
+									<li>{$issue}</li>
+								{{endforeach}}
+							</ul>
+						{{endif}}
+					{{else}}
+						<h2 class='ipsType_sectionHead'>{lang="dashboard_version_info" sprintf="$humanVersion"}</h2>
+						{{if $input->options['_details'][ $longVersion ]['security']}}
+							<p><strong class="ipsType_warning">{lang="this_is_a_security_update"}</strong></p>
+						{{endif}}
+						{{if $input->options['_details'][ $longVersion ]['releasenotes']}}
+							<div>{$input->options['_details'][ $longVersion ]['releasenotes']|raw}</div>
+						{{endif}}
+					{{endif}}
+				</div>
+				<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+					<input type="submit" class="ipsButton ipsButton_primary" value="{lang="continue"}">
+					{{if $input->options['_details'][ $longVersion ]['updateurl']}}
+						<a href='{$input->options['_details'][ $longVersion ]['updateurl']}' target="_blank" class='ipsButton ipsButton_alternate ipsButton_small'>{lang="dashboard_version_moreinfo"}</a>
+					{{endif}}
+				</div>
+			</form>
+		{{endforeach}}
+	{{endforeach}}
+{{endforeach}}

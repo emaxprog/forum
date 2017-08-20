@@ -1,0 +1,18 @@
+<ips:template parameters="$message" />
+<div id='acpWarnings'>
+	<div class='ipsAreaBackground_light ipsPad'>
+		<div>
+			<h2 class='ipsType_sectionHead'><strong>{lang="promote_twitter_setup_post"}</strong></h2>
+			{{if $message}}
+			<div class="ipsMessage ipsMessage_error">{$message}</div>
+			{{endif}}
+			<div class='ipsType_normal ipsType_reset'>
+				{lang="promote_twitter_setup_post_desc"}
+				<ul class='ipsToolList ipsToolList_horizontal ipsAlert_buttonRow ipsClear ipsClearfix'>
+					<li class="ipsPos_left"><a href="{url="app=core&module=promotion&controller=promote&tab=twitter"}" class="ipsButton ipsButton_secondary"><i class="fa fa-refresh"></i> &nbsp; {lang="promote_reload_page"}</a></li>
+					<li class="ipsPos_left"><a href="{url="app=core&module=promotion&controller=promote&tab=twitter&clear=true"}" class="ipsButton ipsButton_secondary">{lang="promote_twitter_remove_settings"}</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

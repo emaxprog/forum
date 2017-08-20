@@ -1,0 +1,22 @@
+<ips:template parameters="$item, $id" />
+{{$children = $item->children();}}
+
+<ul class='ipsList_inline ipsPos_right cMenuManager_tools'>
+	<li class='ipsJS_hide'>
+		<a href='{url="app=core&module=applications&controller=menu&do=form&id={$id}"}' data-ipsTooltip title='{lang="edit_menu_item"}' data-action='editItem'>
+			{lang="edit"}
+		</a>
+	</li>
+	{{if $item instanceof \IPS\core\extensions\core\FrontNavigation\Menu}}
+		<li>
+			<a href='#' data-action='editDropdown' data-ipsTooltip title='{lang="menu_manager_dropdown_edit"}' class='ipsType_blendLinks'>
+				<i class='fa fa-server'></i> <i class='fa fa-caret-right'></i>
+			</a>
+		</li>
+	{{endif}}
+	<li>
+		<a href='{url="app=core&module=applications&controller=menu&do=remove&id={$id}"}' data-action='removeItem' data-ipsTooltip title='{lang="menu_manager_dropdown_delete"}' class='ipsType_blendLinks'>
+			<i class='fa fa-times'></i></i>
+		</a>
+	</li>
+</ul>

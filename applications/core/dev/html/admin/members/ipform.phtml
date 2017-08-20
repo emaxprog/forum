@@ -1,0 +1,19 @@
+<ips:template parameters="$ip, $members" />
+
+<div class=''>
+	<div class='ipsBox'>
+		<h1 class='ipsBox_titleBar'>{lang="ipaddress_table_header"}</h1>
+		<div>
+			{$ip|raw}
+		</div>
+	</div>
+</div>
+
+<div class='ipsSpacer_top'>
+	<div class='ipsBox'>
+		<h1 class='ipsBox_titleBar'>{lang="memberip_table_header"}</h1>
+		<div>
+			{$members|raw}
+		</div>
+	</div>
+</div>

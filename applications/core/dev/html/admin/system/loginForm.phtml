@@ -1,0 +1,30 @@
+<ips:template parameters="$id, $action, $tabs, $hiddenValues, $actionButtons, $uploadField" />
+<form accept-charset='utf-8' action="{$action}" method="post" {{if $uploadField}}enctype="multipart/form-data"{{endif}}>
+	<input type="hidden" name="{$id}_submitted" value="1">
+	{{foreach $hiddenValues as $k => $v}}
+		<input type="hidden" name="{$k}" value="{$v}">
+	{{endforeach}}
+	{{if $uploadField}}
+		<input type="hidden" name="MAX_FILE_SIZE" value="{$uploadField}">
+		<input type="hidden" name="plupload" value="{expression="md5( uniqid() )"}">
+	{{endif}}
+	<ul class='ipsForm ipsForm_vertical ipsPad'>
+		{{foreach $tabs as $elements}}
+			{{foreach $elements as $element}}
+				<li class='ipsFieldRow ipsFieldRow_primary ipsFieldRow_fullWidth'>
+					<div class='ipsFieldRow_content'>
+						{$element->html()|raw}
+						{{if $element->error}}
+							<p class='ipsType_reset ipsSpacer_top ipsSpacer_half ipsType_negative'>{lang="$element->error"}</p>
+						{{endif}}
+					</div>
+				</li>
+			{{endforeach}}
+		{{endforeach}}
+	</ul>
+	
+	<div class='ipsFieldRow_fullWidth ipsPad'>
+		<button type='submit' class='ipsButton ipsButton_primary ipsButton_medium'><i class='fa fa-lock'></i> {lang="login_admin"}</button>
+	</div>
+	
+</form>

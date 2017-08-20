@@ -1,0 +1,29 @@
+<ips:template parameters="$error, $deltaDownloadUrl" />
+<div class="ipsPad">
+	<div class="ipsSpacer_bottom">
+		<h2 class='ipsType_sectionHead'>{lang="download_upgrade_error"}</h2>
+	</div>
+	<div class="ipsSpacer_bottom">
+		{{if $error == 'ftp'}}
+			<p>{lang="delta_upgrade_manual_ftp"}</p>
+		{{elseif $error == 'unexpected_response'}}
+			<p>{lang="delta_upgrade_fail_server"}</p>
+		{{elseif $error == 'exception'}}
+			<p>{lang="delta_upgrade_fail_client"}</p>
+		{{else}}
+			<p>{lang="delta_upgrade_manual"}</p>
+		{{endif}}
+		<div class="ipsType_center">
+			{{if $deltaDownloadUrl}}
+				<a href="{$deltaDownloadUrl}" class="ipsButton ipsButton_important ipsButton_large"><i class="fa fa-cloud-download"></i> {lang="delta_upgrade_download"}</a>
+				<p><a href="{url="client_area" ips="true"}" target="_blank">{lang="delta_upgrade_download_full"}</a></p>
+			{{else}}
+				<a href="{url="client_area" ips="true"}" class="ipsButton ipsButton_important ipsButton_large" target="_blank">{lang="delta_upgrade_go_to_clientarea"}</a>
+			{{endif}}
+		</div>
+		<p>{lang="delta_upgrade_manual_footer"}</p>
+	</div>
+</div>
+<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+	<a href="{url="app=core&module=system&controller=upgrade&check=1"}" class="ipsButton ipsButton_primary">{lang="continue"}</a>
+</div>

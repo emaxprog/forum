@@ -1,0 +1,7 @@
+<ips:template parameters="$dateRange, $element" />
+<input name="{$element->name}[2]" value='range' type='radio' id='{$element->name}[3]_radio' data-control="toggle" data-toggles=""{{if !$element->value[1]}} checked{{endif}}> 
+{$dateRange->html()|raw}
+<br>
+<input name="{$element->name}[2]" value='days' type='radio' id='{$element->name}[3]_radio'{{if $element->value[1]}} checked{{endif}}> 
+{lang="or_more_than"}
+{template="number" location="global" app="core" group="forms" params="$element->name . '[1]', $element->value[1], $element->required, NULL, FALSE, NULL, NULL, NULL, 0, NULL, FALSE, \IPS\Member::loggedIn()->language()->addToStack( 'days_ago' ), array(), TRUE, array(), $element->name . '_number'"}

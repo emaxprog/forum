@@ -1,0 +1,13 @@
+.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_page a,
+.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_next a,
+.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_prev a,
+.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_first a,
+.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_last a {
+	border-radius: 3px;
+	background: #fff;
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.04);
+}
+
+.ipsPagination .ipsPagination_page.ipsPagination_active a {
+	background: #3b6c99;
+}

@@ -1,0 +1,7 @@
+<ips:template parameters="$checked" />
+{{foreach output.globalSearchMenuOptions() as $type => $name}}
+	<li class='ipsMenu_item {{if $checked == $type}}ipsMenu_itemChecked{{endif}}' data-ipsMenuValue='{$type}'>
+		<a href='#'>{lang="$name"}</a>
+	</li>
+{{endforeach}}
+<li class='ipsMenu_sep'><hr></li>

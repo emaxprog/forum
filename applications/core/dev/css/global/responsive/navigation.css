@@ -1,0 +1,12 @@
+/* BOTH */
+@media screen and (max-width: 979px) {
+
+	.ipsApp_front .ipsBreadcrumb {
+		display: none;
+	}
+
+	/* Only apply to front because we don't want this in the menu manager acp preview */
+	.ipsApp_front .ipsNavBar_primary {
+		padding: 0;
+	}
+}

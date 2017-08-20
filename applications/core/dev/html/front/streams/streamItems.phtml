@@ -1,0 +1,24 @@
+<ips:template parameters="$results, $showTimeSeparators=FALSE, $sort='date', $view='expanded'" />
+{{$currentSeparator = NULL;}}
+{{if count( $results )}}
+	{{foreach $results as $result}}
+		{{if $showTimeSeparators}}
+			{{if $currentSeparator != 'earlier'}}
+				{{$separator = $result->streamSeparator( $sort == 'date' );}}
+				{{if $currentSeparator != $separator}}
+					<li class='ipsStreamItem_time' data-timeType='{$separator}'>{lang="$separator"}</li>
+					{{$currentSeparator = $separator;}}
+				{{endif}}
+			{{endif}}
+		{{endif}}
+		{$result->html( $view, $sort != 'date', TRUE )|raw}
+	{{endforeach}}
+{{else}}
+	{{if ! ( \IPS\Request::i()->isAjax() and isset( \IPS\Request::i()->before ) )}}
+	<li class='ipsType_center ipsPad' data-role="streamNoResultsMessage">
+		<p class='ipsType_reset ipsType_light ipsType_normal'>
+			{lang="stream_no_results"}
+		</p>
+	</li>
+	{{endif}}
+{{endif}}

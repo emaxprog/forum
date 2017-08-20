@@ -1,0 +1,63 @@
+<ips:template parameters="$sets" />
+<form accept-charset='utf-8' action="{url="app=core&module=editor&controller=emoticons&do=edit"}" method="post" data-controller="core.admin.customization.emoticons" id="emoticonsManagement">
+	<ul class='ipsList_reset' data-role="setList">
+		{{foreach $sets as $setKey => $emoticons}}
+			<li data-emoticonSet="{$setKey}">
+				<div class='ipsClearfix'>
+					<ul class='ipsList_inline ipsPos_right ipsType_medium ipsSpacer_top ipsSpacer_half'>
+						<li>
+							<a href="{url="app=core&module=editor&controller=emoticons&do=editTitle&key=$setKey"}" data-ipsDialog data-ipsDialog-size='narrow' data-ipsDialog-title="{lang="emoticons_edit_groupname"}" title="{lang="emoticons_edit_groupname"}" class='ipsType_blendLinks'><i class='fa fa-pencil'></i> {lang="emoticons_edit_groupname"}</a>
+						</li>
+						{{if \IPS\Member::loggedIn()->hasAcpRestriction( 'core', 'editor', 'emoticons_delete' )}}
+							<li>
+								<a href="{url="app=core&module=editor&controller=emoticons&do=deleteSet&key=$setKey"}" data-confirm data-confirmsubmessage="{lang="emoticons_delete_set_confirm"}" title="{lang="emoticons_delete_set"}" class='ipsType_negative'><i class='fa fa-times-circle'></i> {lang="emoticons_delete_set"}</a>
+							</li>
+						{{endif}}
+					</ul>
+					<h2 class='ipsType_pageTitle ipsPos_left'>
+						{lang="$setKey"}
+					</h2>
+				</div>
+				<hr class='ipsHr ipsSpacer_both ipsSpacer_half ipsClear'>
+				<ul class='ipsList_reset ipsGrid ipsGrid_collapsePhone ipsSpacer_both' data-role="emoticonsList" data-emoticonGroup="{$setKey}" data-ipsGrid data-ipsGrid-equalHeights='all' data-ipsGrid-minItemSize='175' data-ipsGrid-maxItemSize='300'>
+					{{foreach $emoticons as $emo}}
+						<li id="emo_{$emo['id']}" data-emoticonID='{$emo['id']}' class='ipsGrid_span3'>
+							<div class='ipsBox cEmoticons_box'>
+								<div class='ipsPad_half' data-role='dragHandle'>
+									{{if \IPS\Member::loggedIn()->hasAcpRestriction( 'core', 'editor', 'emoticons_delete' )}}
+										<a href='{url="app=core&module=editor&controller=emoticons&do=delete&id="}{$emo['id']}' data-delete data-delete-warning="{lang="emoticons_delete_confirm"}" data-deleterow="#emo_{$emo['id']}">&times;</a>
+									{{endif}}
+									{{try{}}
+										{{if $emo['image_2x']}}
+											<img src="{file="$emo['image']" extension="core_Emoticons"}" srcset="{file="$emo['image_2x']" extension="core_Emoticons"} 2x" alt='' class='ipsImage' {{if $emo['width'] AND $emo['width']}} width='{$emo['width']}' height='{$emo['height']}'{{endif}}>
+										{{else}}
+											<img src="{file="$emo['image']" extension="core_Emoticons"}" alt='' class='ipsImage'>
+										{{endif}}
+									{{} catch( \Exception $ex ){}}
+										{lang="emoticon_invalid" sprintf="$emo['image']"}
+									{{ } }}
+								</div>						
+								<div class='cEmoticons_input ipsAreaBackground_light ipsPad_half'>
+									{{if $emo['image_2x']}}
+										<span class='cEmoticons_hd ipsType_small ipsType_light' title='{lang="emoticon_hd"}' data-ipsTooltip><i class='fa fa-check'></i> HD</span>
+									{{endif}}
+									<input type="hidden" name="emo[{$emo['id']}][set]" value="{$setKey}" data-emoticon-id="{$emo['id']}">
+									<input value="{$emo['typed']}" name="emo[{$emo['id']}][name]" data-role="emoticonTyped">
+									<noscript>
+										<br>
+										<input type="number" value="{$emo['emo_position']}" name="emo[{$emo['id']}][order]">
+									</noscript>
+								</div>
+							</div>
+						</li>
+					{{endforeach}}
+				</ul>
+			</li>
+		{{endforeach}}
+	</ul>
+	{{if \IPS\Member::loggedIn()->hasAcpRestriction( 'core', 'editor', 'emoticons_edit' )}}
+		<div class="ipsBox ipsClear ipsClearfix ipsPad ipsType_center">		
+			<button class='ipsButton ipsButton_primary'>{lang="save"}</button>
+		</div>
+	{{endif}}
+</form>

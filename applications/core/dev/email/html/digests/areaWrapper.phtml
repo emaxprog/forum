@@ -1,0 +1,18 @@
+<ips:template parameters="$output, $app, $area, $max, $count, $email" />
+<!-- Add item counts and link to remaining items on site -->
+<table width='100%' cellpadding='15' cellspacing='0' border='0' style='background: #f5f5f5'>
+	<tr>
+		<td dir='{dir}'>
+			{{$langKey = "digest_area_{$app}_{$area}";}}
+			<h2 style='font-family: "Helvetica Neue", helvetica, sans-serif; margin: 0; font-size: 18px; font-weight: 500'>{$email->language->addToStack( $langKey, FALSE)}</h2>
+		</td>
+		<td dir='{dir}' width='30%' align='right' style='font-family: "Helvetica Neue", helvetica, sans-serif; color: #8c8c8c; font-size: 12px'>
+			{$email->language->addToStack("digest_showing_x", FALSE, array( 'pluralize' => array( $count ) ) )} (<a href='{url="app=core&module=system&controller=followed&type={$app}_{$area}" seoTemplate="followed_content" base="front"}' style='text-decoration: none'>{$email->language->addToStack("digest_see_all", FALSE)}</a>)
+		</td>
+	</tr>
+</table>
+
+<table width='100%' cellpadding='15' cellspacing='0' border='0'>
+	{$output|raw}
+</table>
+<br /><br />

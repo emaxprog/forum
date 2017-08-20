@@ -1,0 +1,126 @@
+.editMemberPhoto {
+	margin: 15px auto;
+	width: 65%;
+	text-align: right;
+}
+html[dir="rtl"] .editMemberPhoto {
+	text-align: left;
+}
+
+.editMemberPhoto .ipsControlStrip {
+	float: right;
+	opacity: 1;
+	position: relative;
+	bottom: 22px;
+}
+html[dir="rtl"] .editMemberPhoto .ipsControlStrip {
+	float: left;
+}
+
+.memberSidebarInfo {
+	margin: 15px;
+	padding: 10px;
+	border: 1px solid #B3C2D2;
+}
+
+.memberSidebarInfo dt {
+	float:left; 
+	width: 60%;
+	font-weight: bold;
+}
+html[dir="rtl"] .memberSidebarInfo dt {
+	float: right;
+}
+
+#elEditMemberHeader {
+	position: relative;
+}
+
+	#elEditMemberHeader .ipsDataItem_generic {
+		padding: 4px 0;
+	}
+
+#elEditPhoto {
+	position: absolute;
+	top: 80px;
+}
+html[dir="ltr"] #elEditPhoto {
+	left: 25px;
+}
+html[dir="rtl"] #elEditPhoto {
+	right: 25px;
+}
+
+.cIPInfo_map {
+	padding-top: 0;
+	padding-left: 0;
+}
+
+.cIPInfo_value {
+	font-size: 34px;
+}
+
+#acpPageHeader.cMemberEditHeader {
+	padding-top: 15px;
+}
+
+#acpPageHeader.cMemberEditHeader hr.ipsHr {
+	margin-bottom: 0;
+}
+
+#acpPageHeader.cMemberEditHeader .acpToolbar,
+#acpPageHeader.cMemberEditHeader .cMemberEditHeader_info {
+	margin-top: 15px;
+}
+
+.cMemberEditHeader .ipsType_minorHeading {
+	line-height: 1;
+}
+
+html[dir="ltr"] .cMemberEditHeader .ipsPhotoPanel.ipsPhotoPanel_tiny > div {
+	margin-left: 38px;
+}
+
+.cMemberEditHeader .ipsBadge_icon.ipsBadge_small {
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+	line-height: 30px;
+	font-size: 13px;
+	background: {theme="text_light"};
+	vertical-align: middle;
+}
+
+/* PHONES */
+@media screen and (max-width: 767px) {
+	.cMemberEditHeader .ipsPhotoPanel_medium img {
+		width: 55px;
+		height: 55px;
+		border-radius: 55px;
+	}
+
+	html[dir="ltr"] .cMemberEditHeader .ipsPhotoPanel.ipsPhotoPanel_medium > div {
+		margin-left: 70px;
+	}
+
+	#elEditPhoto {
+		top: 65px;
+	}
+
+	html[dir="ltr"] #elEditPhoto {
+		left: 15px;
+	}
+	html[dir="rtl"] #elEditPhoto {
+		right: 15px;
+	}
+
+	.cMemberEditHeader_quotas {
+		margin-top: 15px;
+	}
+
+	.cMemberEditHeader_quotas,
+	.cMemberEditHeader_quotas .ipsAttachment_progress {
+		width: 100%;
+		text-align: left;
+	}
+}

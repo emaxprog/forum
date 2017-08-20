@@ -1,0 +1,40 @@
+<ips:template parameters="$item, $url" />
+
+{{$image = NULL;}}
+<div data-embedInfo-maxSize='500' class='ipsRichEmbed'>
+	{template="embedHeader" group="embed" app="core" params="$item, \IPS\Member::loggedIn()->language()->addToStack( 'x_created_cms_in_embed', FALSE, array( 'sprintf' => array( $item->author()->name, $item->indefiniteArticle(), $item->container()->_title ) ) ), $item->mapped('date'), $url"}
+	{{if $item->record_image}}
+		{{$image = \IPS\File::get( "cms_Records", $item->record_image );}}
+	{{elseif count( $item->contentImages() )}}
+		{{$attachType = key( $item->contentImages()[0] );}}
+		{{$image = \IPS\File::get( $attachType, $item->contentImages()[0][ $attachType ] );}}
+	{{endif}}
+
+	{{if $image}}
+		<div class='ipsRichEmbed_masthead ipsRichEmbed_mastheadBg ipsType_center'>
+			<a href='{$url}' style='background-image: url( "{expression="str_replace( array( '(', ')' ), array( '\(', '\)' ), $image->url )"}" )'>
+				<img src='{$image->url}' class='ipsHide' alt=''>
+			</a>
+		</div>
+	{{endif}}
+	<div class='ipsPad'>
+		<h3 class='ipsRichEmbed_itemTitle ipsTruncate ipsTruncate_line ipsType_blendLinks'>
+			<a href='{$url}' title="{$item->mapped('title')}">{$item->mapped('title')}</a>
+		</h3>
+		<div class='ipsType_richText ipsType_medium ipsSpacer_top ipsSpacer_half' data-truncate='3'>
+			{$item->truncated(TRUE)|raw}
+		</div>
+
+		{{if count( $item->customFieldsForDisplay('listing') )}}
+			<div class='ipsSpacer_top ipsSpacer_half ipsClearfix'>
+				{{foreach $item->customFieldsForDisplay('listing') as $fieldId => $fieldValue}}
+					{{if $fieldValue}}
+						{$fieldValue|raw}
+					{{endif}}
+				{{endforeach}}
+			</div>
+		{{endif}}
+
+		{template="embedItemStats" group="embed" app="core" params="$item"}
+	</div>
+</div>

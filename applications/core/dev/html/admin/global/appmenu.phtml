@@ -1,0 +1,60 @@
+<ips:template parameters="$menu, $currentTab" />
+<ul id='acpAppList' class='ipsList_reset' data-controller='core.admin.core.nav'>
+	<li id='elLogo'>
+		<img src='{resource="logo.png" app="core" location="admin"}' alt=''>
+	</li>
+	{{foreach $menu['tabs'] as $tab => $items}}
+		<li class='{{if $tab === $currentTab}}acpAppList_active{{endif}}' data-tab="tab_{$tab}">
+			<a href='{url="$menu['defaults'][$tab]"}'>
+				{{$totalBadge = 0;}}
+				{{foreach $items as $appAndModule => $item}}
+					{{foreach $item as $key => $url}}
+						{{$badgeNumber = NULL; try { $badgeNumber = \IPS\Application::load( mb_substr( $appAndModule, 0, mb_strpos( $appAndModule, '_' ) ) )->acpMenuNumber( $url ); } catch( \Exception $ex ){ } }}
+						{{if $badgeNumber}}
+							{{$totalBadge += $badgeNumber;}}
+						{{endif}}
+					{{endforeach}}
+				{{endforeach}}
+				<span class='acpAppList_icon'>
+					<i class='fa fa-{lang="menutab__{$tab}_icon"}'></i>
+				</span>
+				{{if $totalBadge > 0}}
+					<span class='ipsNotificationCount'>{$totalBadge}</span>
+				{{endif}}
+			</a>
+			<ul class='ipsList_reset ipsScrollbar ipsScrollbar_light'>
+				<li class='acpAppList_header'>{lang="menutab__{$tab}"}</li>
+				{{foreach $items as $appAndModule => $item}}
+						<li data-menuKey='{$appAndModule}'>
+							<h3>{lang="menu__{$appAndModule}"}</h3>
+							<ul class='ipsList_reset'>
+								{{foreach $item as $key => $url}}
+									<li>
+										{{$badgeNumber = NULL; try { $badgeNumber = \IPS\Application::load( mb_substr( $appAndModule, 0, mb_strpos( $appAndModule, '_' ) ) )->acpMenuNumber( $url ); } catch( \Exception $ex ){ } }}
+										{{if $badgeNumber}}
+											<a href='{url="$url"}'>
+												{lang="menu__{$appAndModule}_{$key}"}
+												<span class='ipsNotificationCount'>{$badgeNumber}</span>
+											</a>
+										{{else}}
+											<a href='{url="$url"}'>{lang="menu__{$appAndModule}_{$key}"}</a>
+										{{endif}}
+									</li>
+								{{endforeach}}
+							</ul>
+						</li>
+				{{endforeach}}
+			</ul>
+		</li>
+	{{endforeach}}
+	<li id='elHideMenu' class='ipsJS_show'>
+		<a href='#'>
+			<i class='fa fa-angle-left' data-action='toggleClose'></i>
+			<i class='fa fa-angle-right' data-action='toggleOpen'></i>
+		</a>
+	</li>
+	<li id='elReorderAppMenu'>
+		<a href='#' data-action='reorder' title='{lang="reorder_menu"}' data-ipsTooltip><i class='fa fa-bars'></i></a>
+		<a href='#' data-action='saveOrder' title='{lang="save_reorder_menu"}' data-ipsTooltip class='ipsButton ipsButton_important ipsButton_narrow ipsButton_verySmall ipsButton_fullWidth ipsHide'><i class='fa fa-check'></i></a>
+	</li>
+</ul>

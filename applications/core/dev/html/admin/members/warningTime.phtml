@@ -1,0 +1,12 @@
+<ips:template parameters="$name, $value, $prefixLang='after', $unlimitedLang='never'" />
+{lang="$prefixLang"}
+<input type="number" name="{$name}[0]" {{if $value[0] != -1}}value="{$value[0]}"{{endif}} min="0" class="ipsField_short">
+<select name="{$name}[1]">
+	<option value="h" {{if $value[1] == 'h'}}selected="selected"{{endif}}>{lang="hours"}</option>
+	<option value="d" {{if $value[1] == 'd'}}selected="selected"{{endif}}>{lang="days"}</option>
+</select>
+&nbsp; {lang="or"} &nbsp;
+<span class='ipsCustomInput'>
+	<input type="checkbox" data-control="unlimited" id='el{$name}_unlimited' {{if $value[0] == -1}}checked="checked"{{endif}} name="{$name}[3]">
+	<span></span>
+</span> <label for='el{$name}_unlimited' class='ipsField_unlimited'>{lang="$unlimitedLang"}</label>

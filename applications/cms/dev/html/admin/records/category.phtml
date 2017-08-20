@@ -1,0 +1,6 @@
+<ips:template parameters="$category" />
+{{if $parent = $category->parent()}}
+	{{$databaseId = \IPS\Request::i()->database_id;}}
+	<a href="#" data-ipsHover-timeout="0.1" data-ipsHover-target="{url="app=cms&module=databases&controller=records&do=categoryTree&id={$category->_id}&database_id={$databaseId}"}" data-ipsHover class="ipsType_light">{$parent->_title}</a> <i class="ipsType_light fa fa-angle-right"></i>
+{{endif}}
+{$category->_title}

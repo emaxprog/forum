@@ -1,0 +1,138 @@
+<ips:template parameters="$member, $canSeeIps" />
+
+<div id='acpPageHeader' class='cMemberEditHeader'>
+	<div class='acpPageHeader_flex'>
+		<div class='ipsPhotoPanel ipsPhotoPanel_medium'>
+			{template="userPhoto" group="global" app="core" params="$member, 'medium'"}
+			<div>
+				<h1 class='ipsType_pageTitle'><a href='{$member->url()}'>{$member->name}</a></h1>
+				<p class='ipsType_reset ipsType_sectionHead'>{$member->email} 
+					{{if \IPS\Application::appIsEnabled( 'nexus' )}}
+						&nbsp;&nbsp;<a href='{url="app=nexus&module=customers&controller=view&id={$member->member_id}"}' class='ipsButton ipsButton_link ipsButton_veryVerySmall'>{lang="view_customer_data"} <i class='fa fa-angle-right'></i></a>
+					{{endif}}
+				</p>
+
+				<p class='ipsType_reset ipsType_normal ipsSpacer_top ipsSpacer_half'>
+					<span class='ipsType_light'>{lang="member_joined" htmlsprintf="$member->joined->localeDate()"}</span>
+
+					{{if $banned = $member->isBanned() }}
+						&nbsp;&nbsp;
+						{{if isset( \IPS\Output::i()->sidebar['actions']['ban'] )}}
+							<a href='{expression="\IPS\Output::i()->sidebar['actions']['ban']['link']"}' class='ipsType_negative' data-ipsDialog data-ipsDialog-title='{lang="adjust_ban"}'>
+						{{else}}
+							<span class='ipsType_negative'>
+						{{endif}}
+								<i class='fa fa-warning'></i>&nbsp;
+								{{if $banned instanceOf \IPS\DateTime}}{lang="suspended"} {{else}}{lang="banned"}{{endif}}
+								{{if $banned instanceOf \IPS\DateTime}} {$banned->localeDate()} {{else}}{lang="permanently"} {{endif}}
+						{{if isset( \IPS\Output::i()->sidebar['actions']['ban'] )}}
+							</a>
+						{{else}}
+							</span>
+						{{endif}}
+					{{endif}}
+					
+					{{if $member->members_bitoptions['validating']}}
+						<span>
+							<i class="fa fa-warning"></i> <span class="ipsType_light ipsType_small">{$member->validatingDescription()}</span>
+						</span>
+					{{endif}}
+				</p>
+			</div>
+		</div>
+		<div>
+			<ul class='ipsList_reset ipsType_right cMemberEditHeader_quotas'>
+				{{if $member->canAccessModule( \IPS\Application\Module::get( 'core', 'messaging', 'front' ) ) AND $member->group['g_max_messages'] > 0}}
+					{{$count = \IPS\Db::i()->select( 'count(*)', 'core_message_topic_user_map', array( 'map_user_id=? AND map_user_active=1', $member->member_id ) )->first();}}
+					{{$percent = floor( 100 / $member->group['g_max_messages'] * $count );}}
+					<li class='ipsSpacer_bottom' data-ipsTooltip title="{lang="messenger_quota" sprintf="$member->group['g_max_messages']" pluralize="$count"}">
+						<p class='ipsType_reset ipsType_light'>{lang="messenger_quota_short" sprintf="$percent"}</p>
+						<span class="ipsAttachment_progress"><span data-role='quotaWidth' style='width: {expression="$percent > 100 ? 100 : $percent"}%'></span></span>
+					</li>
+				{{endif}}
+
+				{{if $member->group['g_attach_max'] > 0}}
+					{{$inUse = \IPS\Db::i()->select( 'SUM(attach_filesize)', 'core_attachments', array( 'attach_member_id=?', $member->member_id ) )->first();}}
+					{{$percent = floor( 100 / ( $member->group['g_attach_max'] * 1024 ) * $inUse );}}
+					<li data-ipsTooltip title="{lang="attachment_quota" sprintf="\IPS\Output\Plugin\Filesize::humanReadableFilesize( $inUse ), \IPS\Output\Plugin\Filesize::humanReadableFilesize( $member->group['g_attach_max'] * 1024 )"}">
+						<p class='ipsType_reset ipsType_light'>{lang="attachment_quota_short" sprintf="$percent"}</p>
+						<span class="ipsAttachment_progress"><span style='width: {expression="$percent > 100 ? 100 : $percent"}%'></span></span>
+					</li>
+				{{endif}}
+			</ul>
+		</div>
+	</div>
+	{{if ( \IPS\Member::loggedIn()->hasAcpRestriction( 'core', 'members', 'member_photo' ) and ( \IPS\Member::loggedIn()->hasAcpRestriction( 'core', 'members', 'member_photo_admin' ) or !$member->isAdmin() ) )}}
+		<ul class="ipsControlStrip ipsType_noBreak ipsList_reset ipsPos_left" id='elEditPhoto'>
+			<li class='ipsControlStrip_button'>
+				<a href="{url="app=core&module=members&controller=members&do=photo&id={$member->member_id}"}" data-ipsDialog data-ipsDialog-title='{lang="edit"}' title="{lang="edit"}" data-ipsTooltip><i class='ipsControlStrip_icon fa fa-pencil'></i></a>
+			</li>
+			{{if $member->pp_photo_type === 'custom'}}
+				<li class='ipsControlStrip_button'>
+					<a href="{url="app=core&module=members&controller=members&do=photoResize&id={$member->member_id}"}" data-ipsDialog data-ipsDialog-title='{lang="member_photo_resize"}' title="{lang="member_photo_resize"}" data-ipsTooltip><i class='ipsControlStrip_icon fa fa-arrows-alt'></i></a>
+				</li>
+			{{endif}}
+		</ul>
+	{{endif}}
+	{{if isset(\IPS\Output::i()->sidebar['actions']) || $member->isBanned()}}
+		<hr class='ipsHr'>
+		<div class='acpPageHeader_flex'>
+			<ul class='ipsList_inline ipsType_normal ipsType_blendLinks cMemberEditHeader_info'>
+				{{if count( $member->connectedProfileSyncServices())}}
+					<li class='ipsPhotoPanel ipsPhotoPanel_tiny'>
+						<span class='ipsBadge ipsBadge_small ipsBadge_icon ipsBadge_positive ipsPos_left'><i class='fa fa-exchange'></i></span>
+						<div>
+							<h3 class='ipsType_minorHeading'>{lang="members_connectedTo"}</h3>
+							{{foreach $member->connectedProfileSyncServices() as $service}}
+								<i class="fa fa-{$service}"></i>
+							{{endforeach}}
+						</div>
+					</li>
+				{{endif}}
+				{{$lastUsedDevice = $member->lastUsedDevice();}}
+				{{$lastUsedIp = $member->lastUsedIp();}}
+				<li class='ipsPhotoPanel ipsPhotoPanel_tiny'>
+					<span class='ipsBadge ipsBadge_small ipsBadge_icon ipsBadge_positive ipsPos_left'><i class='fa fa-desktop'></i></span>
+					<div>
+						<h3 class='ipsType_minorHeading'>{lang="members_device"}</h3>
+						{{if $lastUsedDevice}}
+							{{if $canSeeIps}}
+								<a href="{url="app=core&module=members&controller=devices&do=device&key={$lastUsedDevice->device_key}&member={$member->member_id}"}">{$lastUsedDevice->userAgent()->platform}</a>
+								{{$deviceCount = $member->deviceCount();}}
+								{{if $deviceCount > 1}}
+									<a href="{url="app=core&module=members&controller=devices&do=member&id={$member->member_id}"}" class="ipsType_light">({lang="and_x_others" pluralize="$deviceCount-1"})</a>
+								{{endif}}
+								<i class='fa fa-angle-right'></i>
+							{{else}}
+								{$lastUsedDevice->userAgent()}	
+							{{endif}}
+						{{else}}
+							<em class="ipsType_light">{lang="unknown"}</em>
+						{{endif}}
+					</div>
+				</li>
+				<li class='ipsPhotoPanel ipsPhotoPanel_tiny'>
+					<span class='ipsBadge ipsBadge_small ipsBadge_icon ipsBadge_positive ipsPos_left'><i class='fa fa-globe'></i></span>
+					<div>
+						<h3 class='ipsType_minorHeading'>{lang="members_ip_address"}</h3>
+						{{if $canSeeIps}}
+							<a href="{url="app=core&module=members&controller=ip&ip={$lastUsedIp}"}">{$lastUsedIp}</a>
+							{{$ipAddresses = $member->ipAddresses();}}
+							{{if count( $ipAddresses ) > 1}}
+								<a href="{url="app=core&module=members&controller=members&do=ip&id={$member->member_id}"}" class="ipsType_light">({lang="and_x_others" pluralize="count( $ipAddresses ) - 1"})</a>
+							{{endif}}
+							<i class='fa fa-angle-right'></i>
+						{{else}}
+							{$lastUsedIp}
+						{{endif}}
+					</div>
+				</li>
+
+				<!---->
+			</ul>
+			<div class='acpToolbar ipsPos_right ipsClearfix'>
+				{template="pageButtons" app="core" group="global" location="admin" params="\IPS\Output::i()->sidebar['actions']"}
+			</div>
+		</div>
+	{{endif}}
+</div>

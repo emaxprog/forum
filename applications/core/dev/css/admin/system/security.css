@@ -1,0 +1,38 @@
+ul.ipsGrid > li.cSecurity {
+	margin-bottom: 30px;
+	position: relative;
+	padding-bottom: 65px;
+}
+
+	ul.ipsGrid > li.cSecurity .ipsBadge {
+		position: absolute;
+		top: -16px;
+		padding: 0 15px;
+	}
+	html[dir="ltr"] ul.ipsGrid > li.cSecurity .ipsBadge {
+		right: 15px;
+	}
+	html[dir="rtl"] ul.ipsGrid > li.cSecurity .ipsBadge {
+		left: 15px;
+	}
+
+.cSecurity .ipsBox_title {
+	font-weight: 500;
+}
+
+.cSecurity .cSecurity_button {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.cSecurity_negative {
+	border-top: 10px solid #c75050;
+}
+.cSecurity_intermediary {
+	border-top: 10px solid #f09348;
+}
+.cSecurity_positive {
+	border-top: 10px solid #599451;
+}

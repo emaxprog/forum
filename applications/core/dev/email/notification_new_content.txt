@@ -1,0 +1,7 @@
+<ips:template parameters="$content, $email" />
+
+{$email->language->addToStack("email_new_content_plain", FALSE, array( 'sprintf' => array( $content->author()->name, $content->indefiniteArticle( $email->language ) ) ) )} {$content->mapped('title')}
+
+{$email->language->addToStack("go_to_this_x", FALSE, array( 'sprintf' => array( mb_strtolower( $email->language->addToStack( $content::$title, FALSE ) ) ) ) )}: {$content->url()}
+
+-- {setting="board_name"}

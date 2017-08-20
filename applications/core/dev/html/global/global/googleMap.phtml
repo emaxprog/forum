@@ -1,0 +1,10 @@
+<ips:template parameters="$linkUrl, $imageUrl, $lat=NULL, $long=NULL" />
+{{if $lat and $long}}
+	<span itemscope itemtype='http://schema.org/GeoCoordinates'>
+		<meta itemprop='latitude' content='{$lat}'>
+		<meta itemprop='longitude' content='{$long}'>
+		<a href='{$linkUrl}' target='_blank' itemprop='url' rel='noopener'><img src='{$imageUrl}' alt='' class='ipsImage'></a>
+	</span>
+{{else}}
+	<a href='{$linkUrl}' target='_blank' itemprop='url' rel='noopener'><img src='{$imageUrl}' alt='' class='ipsImage'></a>
+{{endif}}

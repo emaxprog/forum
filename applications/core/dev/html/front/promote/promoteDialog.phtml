@@ -1,0 +1,30 @@
+<ips:template parameters="$title, $form, $existing, $object" />
+<div id='elPromoteDialog' class='ipsPad'>
+	{{if $title && !\IPS\Request::i()->isAjax()}}
+	<h1 class="ipsType_pageTitle">{$title}</h1>
+	{{endif}}
+	{{if $existing}}
+		{{if $existing->sent}}
+			{{$latest = $existing->sentDateTime()->html();}}
+			<div class="ipsMessage ipsMessage_info">
+				<h4 class="ipsMessage_title">{lang="promote_dialog_sent"}</h4>
+				<div>{lang="promote_dialog_sent_desc" htmlsprintf="$latest"}</div>
+			</div>
+		{{else}}
+			{{$latest = $existing->scheduledDateTime()->html();}}
+			<div class="ipsMessage ipsMessage_info">
+				<h4 class="ipsMessage_title">{lang="promote_dialog_used"}</h4>
+				<div>{lang="promote_dialog_used_desc" htmlsprintf="$latest"}</div>
+			</div>
+		{{endif}}
+	{{endif}}
+	{{if $groups = \IPS\Core\Promote::objectCannotViewGroups( $object )}}
+	<div class="ipsMessage ipsMessage_warning">
+		<h4 class="ipsMessage_title">{lang="promote_dialog_not_all_view"}</h4>
+		<div>{lang="promote_dialog_not_all_view_desc" list="$groups"}</div>
+	</div>
+	{{endif}}
+	<div class="ipsPad_top">
+		{$form|raw}
+	</div>
+</div>

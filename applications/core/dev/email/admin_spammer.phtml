@@ -1,0 +1,37 @@
+<ips:template parameters="$member, $email" />
+
+{$email->language->addToStack("email_flagged_as_spammer", FALSE)}
+<br />
+<br />
+<table width="100%" cellpadding="15" cellspacing="0" border="0" bgcolor="#f9f9f9" style='color: #5b5b5b; font-size: 13px'>
+	<tr>
+		<td dir='{dir}' width="80" valign="top" class='hidePhone' style='width: 0; max-height: 0; overflow: hidden; float: left;'>
+			<img src='{$member->get_photo( true, true )}' width='80' height='80' style='border: 1px solid #d7d7d7; vertical-align: middle;'>
+		</td>
+		<td dir='{dir}'>
+			<table width="100%" cellpadding="0" cellspacing="0" border="0" class='responsive_table'>
+				<tr class='responsive_row'>
+					<td dir='{dir}' width="115" style="font-family: 'Helvetica Neue', helvetica, sans-serif;"><strong>{$email->language->addToStack("username", FALSE)}:</strong>&nbsp;&nbsp;</td>
+					<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif;">{$member->name}</td>
+				</tr>
+				<tr class='responsive_row'>
+					<td dir='{dir}' width="115" style="font-family: 'Helvetica Neue', helvetica, sans-serif;"><strong>{$email->language->addToStack("email_address", FALSE)}:</strong>&nbsp;&nbsp;</td>
+					<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif;">{$member->email}</td>
+				</tr>
+				<tr class='responsive_row'>
+					<td dir='{dir}' width="115" style="font-family: 'Helvetica Neue', helvetica, sans-serif;"><strong>{$email->language->addToStack("members_ip_address", FALSE)}:</strong>&nbsp;&nbsp;</td>
+					<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif;">{$member->ip_address}</td>
+				</tr>
+				<tr class='responsive_row'>
+					<td dir='{dir}' width="115" style="font-family: 'Helvetica Neue', helvetica, sans-serif;"><strong>{$email->language->addToStack("members_joined", FALSE)}:</strong>&nbsp;&nbsp;</td>
+					<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif;">{$member->joined}</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br />
+<a href='{$member->url()}' style="color: #fff; font-family: 'Helvetica Neue', helvetica, sans-serif; text-decoration: none; font-size: 12px; background: {setting="email_color"}; line-height: 32px; padding: 0 10px; display: inline-block; border-radius: 3px;">{$email->language->addToStack("email_view_other_profile", FALSE, array( 'sprintf' => array( $member->name ) ) )}</a>
+
+<br /><br />
+<em style='color: #8c8c8c'>&mdash; {setting="board_name"}</em>

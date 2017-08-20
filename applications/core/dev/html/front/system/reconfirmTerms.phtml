@@ -1,0 +1,37 @@
+<ips:template parameters="$terms, $privacy, $form" />
+<div class="ipsType_large ipsSpacer_bottom">
+	{{if $terms and $privacy}}
+		{lang="reconfirm_terms_and_policy_blurb"}
+	{{elseif $terms}}
+		{lang="reconfirm_terms_blurb"}
+	{{else}}
+		{lang="reconfirm_privacy_blurb"}
+	{{endif}}
+</div>
+
+{{if $terms}}
+	<div class="ipsSpacer_bottom">
+		<h2 class="ipsType_sectionHead">{lang="reg_terms"}</h2>
+		<div class='ipsType_normal ipsType_richText ipsPad'>
+			{lang="reg_rules_value"}
+		</div>
+	</div>
+{{endif}}
+
+{{if $privacy}}
+	<div class="ipsSpacer_bottom">
+		<h2 class="ipsType_sectionHead">{lang="privacy"}</h2>
+		<div class='ipsType_normal ipsType_richText ipsPad'>
+			{{if \IPS\Settings::i()->privacy_type == 'external'}}
+				<a href='{setting="privacy_link"}' rel='external'>{lang="view_privacy_policy"}</a>
+			{{else}}
+				{lang="privacy_text_value"}
+			{{endif}}
+			{{if \IPS\Settings::i()->site_address and \IPS\Settings::i()->site_address != "null"}}
+				<p>{setting="board_name"}, {address="\IPS\Settings::i()->site_address"}</p>
+			{{endif}}
+		</div>
+	</div>
+{{endif}}
+
+{$form|raw}

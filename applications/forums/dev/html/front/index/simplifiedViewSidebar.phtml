@@ -1,0 +1,31 @@
+<ips:template parameters="$forumIds, $parentIds" />
+<div data-controller="forums.front.forum.flow" class='ipsBox cForumMiniList_wrapper' id='elFluidFormFilters'>
+	<div class='ipsSideMenu'>
+		{{if count( \IPS\forums\Forum::roots() ) === 1}}
+			<ul class='ipsSideMenu_list cForumMiniList cForumMiniList_singleRoot'>
+				{{foreach \IPS\forums\Forum::roots() as $category}}
+					{template="simplifiedViewSidebar_children" app="forums" location="front" group="index" params="$forumIds, $parentIds, $category, 0"}
+				{{endforeach}}
+			</ul>
+		{{else}}
+			<ul class='ipsSideMenu_list cForumMiniList cForumMiniList_multiRoot'>
+				{{foreach \IPS\forums\Forum::roots() as $category}}
+					{{if $category->hasChildren()}}
+						<li class="{{if in_array( $category->_id, $parentIds )}}cForumMiniList_categorySelected{{endif}}">
+							<a href="{$category->url()}" data-parent-id="{$category->_id}" data-node-id="{$category->_id}" class='{{if in_array( $category->_id, $parentIds )}}cForumMiniList_selected{{endif}} ipsSideMenu_item ipsTruncate ipsTruncate_line'>{$category->_title}</a>
+							{{if $category->hasChildren()}}
+								<ul class='ipsSideMenu_list cForumMiniList'>
+									{template="simplifiedViewSidebar_children" app="forums" location="front" group="index" params="$forumIds, $parentIds, $category, 0"}
+								</ul>
+							{{endif}}
+						</li>
+					{{endif}}
+				{{endforeach}}
+			</ul>
+		{{endif}}
+	</div>
+	<div class='ipsResponsive_hideDesktop ipsResponsive_block'>
+		<hr class='ipsHr'>
+		<a href='#' class='ipsButton ipsButton_fullWidth ipsButton_primary ipsButton_medium' data-action='dialogClose'>{lang="done_forum_filtering"}</a>
+	</div>
+</div>

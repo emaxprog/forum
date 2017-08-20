@@ -1,0 +1,26 @@
+<ips:template parameters="$version, $releaseNotes, $security, $email" />
+
+{$email->language->addToStack("dashboard_version_info", FALSE, array( 'sprintf' => $version ))}
+<br />
+<br />
+{{if $security}}
+	<table width='100%' cellpadding='15' cellspacing='0' border='0' style='background: #b52b38; color: #fff;'>
+		<tr>
+			<td dir='{dir}'>
+				{$email->language->addToStack('this_is_a_security_update')}
+			</td>
+		</tr>
+	</table>
+	<br />
+{{endif}}
+
+<table width='100%' cellpadding='10' cellspacing='0' border='0'>
+	<tr>
+		<td dir='{dir}' valign='top' style='background: #f9f9f9;'>
+			{$releaseNotes|raw}
+		</td>
+	</tr>
+</table>
+<br /><br />
+
+<a href='{url="&app=core&module=system&controller=upgrade" base="admin"}' style="color: #fff; font-family: 'Helvetica Neue', helvetica, sans-serif; text-decoration: none; font-size: 12px; background: {setting="email_color"}; line-height: 32px; padding: 0 10px; display: inline-block; border-radius: 3px;">{$email->language->addToStack("upgrade_now")}</a>

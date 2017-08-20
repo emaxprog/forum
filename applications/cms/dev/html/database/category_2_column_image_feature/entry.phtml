@@ -1,0 +1,20 @@
+<ips:template parameters="$record, $database, $id" />
+<li class='ipsGrid_span6'>
+	<article class='cCmsCategoryFeaturedEntry {{if $record->hidden()}}ipsModerated{{endif}} cms2ColImageFeature ipsBox ipsPad'>
+		{{if $record->record_image}}
+			<div class="cCmsRecord_image">
+				<a href="{$record->url()}" title="{lang="read_more_about" sprintf="$record->_title"}"><img class="ipsImage" src="{file="$record->_record_image_thumb" extension="cms_Records"}"></a>
+			</div>
+		{{endif}}
+		{{if $record->prefix()}}
+			{template="prefix" group="global" app="core" params="$record->prefix( TRUE ), $record->prefix()"}
+		{{endif}}
+		<h2 class='ipsType_pageTitle'>
+			<div class='ipsType_break ipsContained'>
+				<a href="{$record->url()}" title="{lang="read_more_about" sprintf="$record->_title"}" class='ipsTruncate ipsTruncate_line'>
+					{$record->_title}
+				</a>
+			</div>
+		</h2>
+	</article>
+</li>

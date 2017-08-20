@@ -1,0 +1,147 @@
+/* Tab bars... bars of tabs, see? */
+.ipsTabs {
+	background: {theme="tab_background"};
+	padding: 10px 10px 0 10px;
+	margin: 0;
+	list-style: none;
+}
+	
+	/* action='expandTabs' is used to open tab menus on responsive views. We hide by default */
+	.ipsTabs [data-action='expandTabs'] {
+		display: none !important;
+	}
+
+	.ipsTabs [role="tablist"] {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+		/* On stretched tabs, we set the ul to table so that cells share the available space */
+		.ipsTabs.ipsTabs_stretch [role="tablist"] {
+			display: table;
+			table-layout: fixed;
+			width: 100%;
+		}
+
+			.ipsTabs.ipsTabs_stretch [role="tablist"] > li {
+				display: table-cell;
+			}
+
+	.ipsTabs_small {
+		padding: 4px 4px 0 4px;
+	}
+
+.ipsTabs_item {
+	display: block;
+	float: left;
+	white-space: nowrap;
+	line-height: 38px;
+	font-size: 14px;
+	color: #fff;
+	background: rgba(255,255,255,0.1);
+	padding: 0 20px;
+	text-overflow: ellipsis;
+	max-width: 100%;
+	overflow: hidden;
+	margin-right: 2px;
+}
+html[dir="rtl"] .ipsTabs_item {
+	float: right;
+	margin-left: 2px;
+}
+
+	.ipsTabs_item.ipsTabs_itemDisabled {
+		opacity: 0.5;
+		font-style: italic;
+		pointer-events: none;
+		color: rgba(255,255,255,0.6);
+	}
+	
+	.ipsTabs.ipsTabs_stretch .ipsTabs_item {
+		float: none;
+	}
+
+		.ipsTabs.ipsTabs_stretch.ipsTabs_small .ipsTabs_item {
+			padding: 0 10px;
+			text-align: center;
+		}
+
+	html[dir="ltr"] .ipsTabs [role="tablist"] > li:last-child .ipsTabs_item {
+		margin-right: 0;
+	}
+	html[dir="rtl"] .ipsTabs [role="tablist"] > li:last-child .ipsTabs_item {
+		margin-left: 0;
+	}
+
+	.ipsTabs.ipsTabs_small .ipsTabs_item {
+		font-size: 12px;
+		line-height: 30px;
+		margin: 0;
+	}
+
+	.ipsTabs_activeItem {
+		background: #fff;
+		color: #333;
+		font-weight: bold;
+	}
+
+	.ipsTabs_activeItem:hover {
+		color: #333;
+	}
+
+	.ipsTabs_item:not( .ipsTabs_activeItem ):hover {
+		background: rgba(255,255,255,0.2);
+		color: #fff;
+	}
+
+	.ipsTabs_withIcons .ipsTabs_item {
+		text-align: center;
+		padding: 8px 15px;
+		line-height: 24px;
+		min-width: 125px;
+	}
+
+		.ipsTabs_withIcons .ipsTabs_item i {
+			font-size: 20px;
+			display: block;
+			margin: 0 auto;
+			text-align: center;
+		}
+
+.ipsTabs_dummyItem {
+	background: #4e5b62;
+	color: #fff;
+}
+
+.ipsTabs_panel {
+	height: 100%;
+	background: #fff;
+}
+
+/* 'Contained' tabs with a border */
+.ipsTabs_panels.ipsTabs_contained {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #e8e8e8;
+	border-top: 0;
+}
+
+	.ipsTabs_panels.ipsTabs_contained .ipsTabs_panel {
+		padding: 15px;
+	}
+
+		.ipsTabs_panels.ipsTabs_contained .ipsTabs_panel .ipsTabs_pullOut {
+			margin: -15px;
+		}
+
+.ipsTabs.ipsTabs_contained {
+	padding: 0;
+	border-width: 1px 1px 0px 1px;
+	border-style: solid;
+	border-color: #ededed #e8e8e8 transparent #ededed;
+}
+
+.ipsTabs_loadingContent {
+	min-height: 150px;
+}

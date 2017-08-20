@@ -1,0 +1,23 @@
+<ips:template parameters="$title, $message, $code, $extra" />
+<div class='ipsMessage ipsMessage_error'>
+	<span class="ipsMessage_code">{$code}</span>
+	{$message|raw}
+</div>
+
+{{if $extra}}
+	<div class="ipsSpacer_top">
+		<h3 class="ipsType_minorHeading">{lang="error_technical_details"}</h3>
+		<textarea rows="13" style="font-family: monospace;">{$extra}</textarea>
+		<p class="ipsType_small ipsType_light">
+			{lang="error_technical_details_desc"}
+			{{if member.hasAcpRestriction( 'core', 'support', 'system_logs_view' )}}
+				{lang="error_technical_details_logs"}
+			{{endif}}
+		</p>
+	</div>
+{{endif}}
+{{if member.hasAcpRestriction( 'core', 'support', 'get_support' )}}
+	<div class="ipsType_center ipsSpacer_top">
+		<a href='{url="app=core&module=support&controller=support" base="admin"}' title='{lang="get_support"}'>{lang="get_support"}</a>
+	</div>
+{{endif}}

@@ -1,0 +1,7 @@
+<ips:template parameters="$comment, $email" />
+
+{{$item = $comment->item();}}{$email->language->addToStack("email_new_review_plain", FALSE, array( 'sprintf' => array( $comment->author()->name, $item->indefiniteArticle( $email->language ) ) ) )} {$comment->item()->mapped('title')}
+
+{$email->language->addToStack("go_to_this_review", FALSE, array( 'sprintf' => array( mb_strtolower( $email->language->addToStack( $comment::$title, FALSE ) ) ) ) )}: {$comment->url('find')}
+
+-- {setting="board_name"}

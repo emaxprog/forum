@@ -1,0 +1,201 @@
+<ips:template parameters="$club, $container=NULL, $position='full'" />
+
+{{\IPS\Output::i()->cssFiles = array_merge( \IPS\Output::i()->cssFiles, \IPS\Theme::i()->css( 'styles/clubs.css', 'core', 'front' ) );}}
+{{if theme.responsive}}
+	{{\IPS\Output::i()->cssFiles = array_merge( \IPS\Output::i()->cssFiles, \IPS\Theme::i()->css( 'styles/clubs_responsive.css', 'core', 'front' ) );}}
+{{endif}}
+
+{{$memberStatus = $club->memberStatus( \IPS\Member::loggedIn() );}}
+
+{{if $position == 'full'}}
+	<!-- FULL CLUB HEADER -->
+	<div id="elClubHeader" class='cClubHeader ipsSpacer_bottom ipsSpacer_double'>
+		{$club->coverPhoto(TRUE, 'full')|raw}
+		<div id='elClubControls' class='ipsClearfix'>
+			<ul class='ipsButton_split ipsPos_right'>
+				{{if $club->isLeader() || ( $club->owner and $club->owner == \IPS\Member::loggedIn() ) or member.modPermission('can_access_all_clubs')}}
+					<li>
+						<a class="ipsButton ipsButton_verySmall ipsButton_light" href="#" id='elClubFeatures' data-ipsMenu>{lang="club_manage"} <i class='fa fa-caret-down'></i></a>
+					</li>
+				{{endif}}
+				{{if $club->type !== \IPS\Member\Club::TYPE_PUBLIC}}
+					{{if $memberStatus === \IPS\Member\Club::STATUS_BANNED}}
+						<li>
+							<span class="ipsButton ipsButton_verySmall ipsButton_link ipsButton_disabled" data-ipsTooltip title="{lang="club_banned_desc_short"}"><i class='fa fa-times'></i> {lang="club_banned_title"}</span>
+						</li>
+					{{elseif in_array( $memberStatus, array( \IPS\Member\Club::STATUS_MEMBER, \IPS\Member\Club::STATUS_MODERATOR, \IPS\Member\Club::STATUS_LEADER ) ) and ( !$club->owner or $club->owner != \IPS\Member::loggedIn() )}}
+						<li>
+							<a class="ipsButton ipsButton_verySmall ipsButton_light" href="{$club->url()->setQueryString('do', 'leave')->csrf()}" data-confirm>{lang="club_leave"}</a>
+						</li>
+					{{elseif $club->canJoin()}}
+						<li>
+							<a class="ipsButton ipsButton_verySmall ipsButton_light" href="{$club->url()->setQueryString('do', 'join')->csrf()}">{lang="club_join"}</a>
+						</li>
+					{{elseif !$club->canRead()}}
+						{{if $memberStatus === \IPS\Member\Club::STATUS_REQUESTED}}
+							<li>
+								<span class="ipsButton ipsButton_verySmall ipsButton_link ipsButton_disabled" data-ipsTooltip title="{lang="club_requested_desc_short"}"><i class='fa fa-clock-o'></i> {lang="club_requested_title"}</span>
+							</li>
+						{{elseif $memberStatus === \IPS\Member\Club::STATUS_DECLINED}}
+							<li>
+								<span class="ipsButton ipsButton_verySmall ipsButton_link ipsButton_disabled" data-ipsTooltip title="{lang="club_denied_desc_short"}"><i class='fa fa-times'></i> {lang="club_denied_title"}</span>
+							</li>
+						{{endif}}
+					{{endif}}
+				{{endif}}
+			</ul>
+
+			<div class='ipsTabs ipsClearfix ipsJS_show' id='tabs_club' data-ipsTabBar data-ipsTabBar-disableNav>
+				<a href='#tabs_club' data-action='expandTabs'><i class='fa fa-caret-down'></i></a>
+				<ul role='tablist'>
+					{{if $club->type !== \IPS\Member\Club::TYPE_CLOSED || $club->canRead()}}
+						<li>
+							<a href='{$club->url()}' class="ipsTabs_item {{if request.module == 'clubs' && request.do != 'members'}} ipsTabs_activeItem{{endif}}" role="tab">
+								{lang="club_home"}
+							</a>
+						</li>
+						{{if $club->type !== \IPS\Member\Club::TYPE_PUBLIC}}
+							<li>
+								<a href='{$club->url()->setQueryString('do', 'members')}' class="ipsTabs_item {{if request.module == 'clubs' && request.do == 'members'}} ipsTabs_activeItem{{endif}}" role="tab">
+									{lang="club_members"}
+								</a>
+							</li>
+						{{endif}}
+						{{if $club->canRead()}}
+							{{foreach $club->nodes() as $nodeID => $node}}
+								<li>
+									<a href='{$node['url']}' class="ipsTabs_item {{if $container and get_class( $container ) === $node['node_class'] and $container->_id == $node['node_id']}}ipsTabs_activeItem{{endif}}" role="tab">
+										{$node['name']}
+									</a>
+								</li>
+							{{endforeach}}
+						{{endif}}
+					{{endif}}
+				</ul>
+			</div>
+		</div>
+		{template="clubIcon" group="clubs" app="core" params="$club, 'medium', 'ipsResponsive_showPhone ipsResponsive_inlineBlock'"}
+	</div>
+
+{{else}}
+	
+	<!-- SIDEBAR CLUB HEADER -->
+	<div id="elClubHeader_small" class='cClubHeader ipsBox'>
+		{$club->coverPhoto(TRUE, 'sidebar')|raw}
+		<div class='ipsPad'>
+			<p class='ipsType_minorHeading ipsType_center ipsType_reset'>{lang="club_currently_viewing"}</p>
+			<h1 class='ipsType_pageTitle ipsTruncate ipsTruncate_line ipsType_center'>
+				{{if settings.clubs_require_approval and !$club->approved}}
+					<span class="ipsBadge ipsBadge_small ipsBadge_icon ipsBadge_warning" data-ipsTooltip title='{lang="club_unapproved"}'><i class='fa fa-eye-slash'></i></span>
+				{{elseif $club->featured}}
+					<span class="ipsBadge ipsBadge_small ipsBadge_icon ipsBadge_positive" data-ipsTooltip title='{lang="featured"}'><i class='fa fa-star'></i></span>
+				{{endif}}
+				<a href='{$club->url()}'>{$club->name}</a>
+			</h1>
+			<p class='ipsType_reset ipsType_medium ipsType_center'>
+				{lang="club_{$club->type}"}
+				&nbsp;&middot;&nbsp;
+				{lang="club_members_count" pluralize="$club->members"}
+
+				{{if $club->isLeader() and $club->type === $club::TYPE_CLOSED and $pendingMembers = $club->members( array( $club::STATUS_REQUESTED ), NULL, NULL, 4 )}}
+					<br>
+					<a href='{$club->url()->setQueryString('do', 'members')->setQueryString('filter', 'requested')->setQueryString('filter', 'requested')}' class='ipsType_issue'><i class='fa fa-info-circle'></i> &nbsp;{lang="club_pending_members" pluralize="$pendingMembers"}</span>
+				{{endif}}
+			</p>
+
+			{{if $club->type !== \IPS\Member\Club::TYPE_PUBLIC && $club->canJoin()}}
+				<hr class='ipsHr ipsHr_small'>
+				<a class="ipsButton ipsButton_verySmall ipsButton_primary ipsButton_fullWidth" href="{$club->url()->setQueryString('do', 'join')->csrf()}">{lang="club_join"}</a>
+			{{endif}}
+
+			{{if $club->isLeader() || ( $club->owner and $club->owner == \IPS\Member::loggedIn() ) or member.modPermission('can_access_all_clubs')}}
+				<hr class='ipsHr ipsHr_small'>
+				<a class="ipsButton ipsButton_verySmall ipsButton_light ipsButton_fullWidth" href="#" id='elClubFeatures' data-ipsMenu>{lang="club_manage"} <i class='fa fa-caret-down'></i></a>
+			{{endif}}
+
+			<hr class='ipsHr ipsHr_small'>
+
+			<div class='ipsSideMenu ipsAreaBackground_reset'>
+				<ul class='ipsSideMenu_list'>
+					<li>
+						<a href="{$club->url()}" class='ipsSideMenu_item'>{lang="club_home"}</a>
+					</li>
+					{{if $club->type !== \IPS\Member\Club::TYPE_PUBLIC}}
+						<li>
+							<a href='{$club->url()->setQueryString('do', 'members')}' class="ipsSideMenu_item {{if request.module == 'clubs' && request.do == 'members'}} ipsSideMenu_itemActive{{endif}}">
+								{lang="club_members"}
+							</a>
+						</li>
+					{{endif}}
+					{{if $club->canRead()}}
+						{{foreach $club->nodes() as $nodeID => $node}}
+							<li>
+								<a href='{$node['url']}' class="ipsSideMenu_item {{if $container and get_class( $container ) === $node['node_class'] and $container->_id == $node['node_id']}}ipsSideMenu_itemActive{{endif}}" role="tab">
+									{$node['name']}
+								</a>
+							</li>
+						{{endforeach}}
+					{{endif}}
+				</ul>
+			</div>
+
+			{{if $club->type !== $club::TYPE_PUBLIC && in_array( $memberStatus, array( \IPS\Member\Club::STATUS_MEMBER, \IPS\Member\Club::STATUS_MODERATOR, \IPS\Member\Club::STATUS_LEADER ) ) and ( !$club->owner or $club->owner != \IPS\Member::loggedIn() )}}
+				<hr class='ipsHr ipsHr_small'>
+				<p class='ipsType_reset ipsType_right ipsType_small ipsType_blendLinks ipsType_light'>
+					<a href="{$club->url()->setQueryString('do', 'leave')->csrf()}" data-confirm>{lang="club_leave"}</a>
+				</p>
+			{{elseif !$club->canRead()}}
+				{{if $memberStatus === \IPS\Member\Club::STATUS_REQUESTED}}
+					<li>
+						<span class="ipsButton ipsButton_verySmall ipsButton_link ipsButton_disabled" data-ipsTooltip title="{lang="club_requested_desc_short"}"><i class='fa fa-clock-o'></i> {lang="club_requested_title"}</span>
+					</li>
+				{{elseif $memberStatus === \IPS\Member\Club::STATUS_DECLINED}}
+					<li>
+						<span class="ipsButton ipsButton_verySmall ipsButton_link ipsButton_disabled" data-ipsTooltip title="{lang="club_denied_desc_short"}"><i class='fa fa-times'></i> {lang="club_denied_title"}</span>
+					</li>
+				{{endif}}
+			{{endif}}
+		</div>
+	</div>
+{{endif}}
+
+{{if $club->isLeader() || ( $club->owner and $club->owner == \IPS\Member::loggedIn() ) or member.modPermission('can_access_all_clubs')}}
+	<ul class='ipsMenu ipsMenu_auto ipsHide' id='elClubFeatures_menu'>
+		{{if !settings.clubs_require_approval or $club->approved}}
+			{{if $club->isLeader() and $nodeTypes = \IPS\Member\Club::availableNodeTypes( \IPS\Member::loggedIn() )}}
+				<li class='ipsMenu_title'>{lang="club_create_node"}</li>
+				{{foreach $nodeTypes as $nodeType}}
+					<li class="ipsMenu_item" ><a href="{$club->url()->setQueryString( array( 'do' => 'nodeForm', 'type' => $nodeType ) )}" data-ipsDialog data-ipsDialog-title="{lang="club_create_node"}">{lang="{$nodeType::clubFrontTitle()}"}</a></li>
+				{{endforeach}}
+			{{endif}}
+			{{if ( $club->owner and $club->owner == \IPS\Member::loggedIn() ) or member.modPermission('can_access_all_clubs') or member.modPermission('can_manage_featured_clubs')}}
+				<li class='ipsMenu_sep'><hr class='ipsHr'></li>
+			{{endif}}
+		{{endif}}
+		{{if ( $club->owner and $club->owner == \IPS\Member::loggedIn() ) or member.modPermission('can_access_all_clubs')}}
+			<li class='ipsMenu_item'>
+				<a href="{$club->url()->setQueryString('do', 'edit')}" data-ipsDialog data-ipsDialog-title="{lang="club_edit_settings"}">{lang="club_edit_settings"}</a>
+			</li>
+		{{endif}}
+		{{if member.modPermission('can_manage_featured_clubs')}}
+			<li class='ipsMenu_item'>
+				{{if $club->featured}}
+					<a href="{$club->url()->setQueryString('do', 'unfeature')->csrf()}" data-confirm>{lang="club_unfeature"}</a>
+				{{else}}
+					<a href="{$club->url()->setQueryString('do', 'feature')->csrf()}" data-confirm>{lang="club_feature"}</a>
+				{{endif}}
+			</li>
+		{{endif}}
+		{{if $club->canInvite()}}
+			<li class='ipsMenu_item'>
+				<a href="{$club->url()->setQueryString( 'do', 'invite' )}" data-ipsDialog data-ipsDialog-size='narrow' data-ipsDialog-title="{lang="club_invite_members"}">{lang="club_invite_members"}</a>
+			</li>
+		{{endif}}
+		{{if $container and $club->isLeader()}}
+			<li class='ipsMenu_sep'><hr class='ipsHr'></li>
+			<li class='ipsMenu_item'>
+				<a href="{$club->url()->setQueryString( array( 'do' => 'nodeForm', 'type' => get_class( $container ), 'node' => $container->_id ) )}" data-ipsDialog data-ipsDialog-title="{$container->_title}">{lang="clubs_edit_this_container" sprintf="\IPS\Member::loggedIn()->language()->addToStack( $container::$nodeTitle . '_sg' )"}</a>
+			</li>
+		{{endif}}
+	</ul>
+{{endif}}

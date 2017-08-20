@@ -1,0 +1,32 @@
+<ips:template parameters="$history" />
+<div class='ipsPad'>
+	{{if $history === NULL}}
+		{lang="promote_history_none"}
+	{{else}}
+		<div class="ipsColumns ipsColumns_collapsePhone">
+		<section class="ipsColumn ipsColumn_fluid">
+		<div class="ipsBox ipsPad ipsSpacer_bottom">
+			<ol class="ipsStream ipsStream_withTimeline ipsList_reset ipsSpacer_top">
+			{{foreach $history as $date => $keys}}
+				<li class="ipsStreamItem_time">{datetime="$date"}</li>
+				{{foreach $keys as $service => $time}}
+					{{$promoter = \IPS\core\Promote::getPromoter( $service );}}
+					{{$formattedDate = \IPS\DateTime::ts( $date );}}
+					<li class="ipsStreamItem ipsStreamItem_contentBlock ipsStreamItem_expanded ipsAreaBackground_reset ipsPad" data-role="activityItem" data-timestamp="{$date}">
+						<div class="ipsStreamItem_container ipsClearfix">
+							<div class="ipsStreamItem_header">
+								<span class="ipsStreamItem_contentType" data-ipstooltip="" _title="{$service}"><i class="fa fa-{$promoter::$icon}"></i></span>
+								<div>
+									{lang="promote_history_response_text" sprintf="$promoter->getName(), $formattedDate"}
+								</div>
+							</div>
+						</div>
+					</li>
+				{{endforeach}}
+			{{endforeach}}
+			<li class="ipsStreamItem_terminator">&nbsp;</li>
+			</ol>
+		</div>
+	</section>
+	{{endif}}
+</div>

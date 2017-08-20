@@ -1,0 +1,30 @@
+<ips:template parameters="$message, $item, $id" />
+{{$member = \IPS\Member::load( $message['added_by'] );}}
+{{$class = get_class( $item );}}
+<div class='cContentMessage {{if isset( $message['color'] ) && $message['color'] !== 'none'}}cContentMessage_color ipsMessage ipsMessage_{$message['color']}{{else}}ipsBox{{endif}} ipsPhotoPanel ipsPhotoPanel_tiny ipsPad ipsSpacer_both'>
+	{template="userPhoto" group="global" app="core" params="$member, 'tiny'"}
+	<div>
+		{{if $item->canOnMessage( 'edit' ) || $item->canOnMessage( 'delete' )}}
+			<ul class='ipsList_inline ipsList_noSpacing ipsPos_right ipsSpacer_bottom'>
+				{{if $item->canOnMessage( 'edit' )}}
+					<li>
+						<a class='ipsButton ipsButton_link ipsButton_veryVerySmall' href='{$item->url()->csrf()->setQueryString( array( 'do' => 'messageForm', 'meta_id' => $id ) )}' data-ipsDialog data-ipsDialog-title='{lang="edit"}'>{lang="edit"}</a>
+					</li>
+				{{endif}}
+				{{if $item->canOnMessage( 'delete' )}}
+					<li>
+						<a class='ipsButton ipsButton_link ipsButton_veryVerySmall' href='{$item->url()->csrf()->setQueryString( array( 'do' => 'messageDelete', 'meta_id' => $id ) )}' data-confirm>{lang="delete"}</a>
+					</li>
+				{{endif}}
+			</ul>
+		{{endif}}
+		<div class='ipsType_richText ipsType_normal'>
+			{$message['message']|raw}
+		</div>
+		{{if $member->member_id}}
+			<p class='ipsType_reset ipsSpacer_top ipsSpacer_half'>
+				<em class='cContentMessage_author ipsType_light'>{lang="content_item_message" sprintf="$member->name"}</em>
+			</p>
+		{{endif}}
+	</div>
+</div>

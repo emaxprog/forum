@@ -1,0 +1,16 @@
+<ips:template parameters="$object" />
+{{$class = get_class($object);}}
+{{$column = $class::$databaseColumnId;}}
+{{$id = $object->$column;}}
+{{if $services = \IPS\core\Promote::promoteServices() and $object->canPromoteToSocialMedia() and ( $object instanceof \IPS\Content or $object instanceof \IPS\Node\Model )}}
+	{{$promote = \IPS\core\Promote::loadByClassAndId( $class, $id, TRUE );}}
+	<div class="ipsPromote ipsButton {{if $promote and $promote->id}}ipsButton_light{{else}}ipsButton_veryLight{{endif}} ipsButton_verySmall ipsButton_link">
+		{{foreach $services as $service}}
+		<div class="ipsPromote_icon ipsSocial_{$service->_key}">
+			<i class="fa fa-{$service::$icon}"></i>
+		</div>
+		{{endforeach}}
+		{template="promoteLink" app="core" group="global" params="$object, $promote"}
+	</div>
+{{endif}}
+

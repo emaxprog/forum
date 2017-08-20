@@ -1,0 +1,49 @@
+<ips:template parameters="$warning, $email" />
+
+{{$content = $warning->content();}}
+{{if $content && $content instanceof \IPS\Content\Comment}}
+	{{$item = $content->item();}}
+	{$email->language->addToStack("email_warned_comment", FALSE, array( 'sprintf' => array( \IPS\Member::load( $warning->moderator )->name, $item->indefiniteArticle( $email->language ) ) ) )} {$content->item()->mapped('title')}
+{{elseif $content}}
+	{$email->language->addToStack("email_warned_item", FALSE, array( 'sprintf' => array( \IPS\Member::load( $warning->moderator )->name, $content->indefiniteArticle( $email->language ) ) ) )} {$content->mapped('title')}
+{{else}}
+	{$email->language->addToStack("email_warned_other", FALSE, array( 'sprintf' => array( \IPS\Member::load( $warning->moderator )->name ) ) )}
+{{endif}}
+
+=====
+{{if $warning->canViewDetails()}}{$email->language->addToStack("email_warn_reason", FALSE)}:{$email->language->addToStack("core_warn_reason_" . $warning->reason, FALSE)}{{endif}}
+{{if $content}}{$email->language->addToStack("email_warn_source", FALSE)}: {{if $content instanceof \IPS\Content\Comment}}{$content->item()->mapped('title')}{{else}}{$content->mapped('title')}{{endif}}{{endif}}
+{{if $warning->canViewDetails() or $warning->mq or $warning->rpa or $warning->suspend}}{$email->language->addToStack("email_warn_penalty", FALSE)}:
+	{{if $warning->canViewDetails()}}
+		{{if $warning->expire_date}}
+			{{if $warning->expire_date < time()}}
+				{{if $warning->expire_date == -1}}
+					{$email->language->addToStack("warn_action_points_never_expire", FALSE, array( 'sprintf' => array( $warning->points ) ) )}
+				{{else}}
+					{$email->language->addToStack("warn_action_points_expired", FALSE, array( 'sprintf' => array( $warning->points, \IPS\DateTime::ts( $warning->expire_date ) ) ) )}
+				{{endif}}
+			{{else}}
+				{$email->language->addToStack("warn_action_points_expire", FALSE, array( 'sprintf' => array( $warning->points, \IPS\DateTime::ts( $warning->expire_date ) ) ) )}
+			{{endif}}
+		{{else}}
+			{$email->language->addToStack("warn_action_points", FALSE, array( 'sprintf' => array( $warning->points ) ) )}
+		{{endif}}			
+	{{endif}}
+	{{if $warning->mq}}
+		{$email->language->addToStack("moderation_modq", FALSE)} - {{if $warning->mq == -1}}{$email->language->addToStack("indefinitely", FALSE)}{{else}}{expression="\IPS\DateTime::formatInterval( new \DateInterval( $warning->mq ), 2, $email->language )"}{{endif}}
+	{{endif}}
+	{{if $warning->rpa}}
+		{$email->language->addToStack("moderation_nopost", FALSE)} - {{if $warning->rpa == -1}}{$email->language->addToStack("indefinitely", FALSE)}{{else}}{expression="\IPS\DateTime::formatInterval( new \DateInterval( $warning->rpa ), 2, $email->language )"}{{endif}}
+	{{endif}}
+	{{if $warning->suspend}}
+		{$email->language->addToStack("moderation_banned", FALSE)} - {{if $warning->suspend == -1}}{$email->language->addToStack("indefinitely", FALSE)}{{else}}{expression="\IPS\DateTime::formatInterval( new \DateInterval( $warning->suspend ), 2, $email->language )"}{{endif}}
+	{{endif}}
+{{endif}}
+=====
+
+{{if \IPS\Settings::i()->warnings_acknowledge && !$warning->acknowledged && $warning->canAcknowledge(\IPS\Member::load($warning->member))}}
+	**{$email->language->addToStack("email_warn_acknowledge", FALSE)}**
+	{$email->language->addToStack("email_warn_acknowledge_button", FALSE)}: {$warning->url()}
+{{endif}}
+
+-- {setting="board_name"}

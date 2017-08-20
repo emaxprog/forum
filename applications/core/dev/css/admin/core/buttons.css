@@ -1,0 +1,81 @@
+.ipsToolList {
+	margin-bottom: 15px;
+}
+
+.ipsApp .ipsButton_primary {
+	background: #283237;
+}
+
+.ipsApp .ipsButton_important {
+	background: #d66723;
+}
+
+.ipsApp .ipsButton_normal {
+	background: #d66723;
+}
+
+.ipsApp .ipsButton_alternate {
+	background: #d66723;
+	text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+}
+
+html[dir="ltr"] .ipsButtonBar.ipsPos_left .ipsButtonRow,
+html[dir="ltr"] .ipsButtonBar .ipsButtonRow:not( .ipsPos_right ) {
+	margin-left: 0;
+}
+html[dir="rtl"] .ipsButtonBar.ipsPos_left .ipsButtonRow,
+html[dir="rtl"] .ipsButtonBar .ipsButtonRow:not( .ipsPos_right ) {
+	margin-right: 0;
+}
+
+.ipsButtonRow {
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.04);
+	border: 1px solid rgba(0,0,0,0.05);
+}
+
+.ipsButtonRow li > a, 
+.ipsButtonRow li > button,
+.ipsButtonRow li > span {
+	background: #fff;
+	color: #414141;
+}
+
+/* Reset some of the button row inside button bar styles */
+.ipsButtonBar .ipsButtonRow {
+	box-shadow: none;
+}
+
+.ipsButtonBar .ipsButtonRow li > a, 
+.ipsButtonBar .ipsButtonRow li > button, 
+.ipsButtonBar .ipsButtonRow li > span {
+	background: #fff;
+	color: #000;
+	font-weight: 500;
+	border-right: 1px solid rgba(0,0,0,0.1);
+	line-height: 30px;
+}
+
+.ipsButtonRow li > a.ipsButtonRow_active, 
+.ipsButtonRow li > button.ipsButtonRow_active {
+	background: #2E3D49;
+	color: #fff;
+}
+
+html[dir="ltr"] .ipsButtonRow li:last-child > a, 
+html[dir="ltr"] .ipsButtonRow li:last-child > button, 
+html[dir="ltr"] .ipsButtonRow li:last-child > span {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+html[dir="ltr"] .ipsButtonRow li:first-child > a, 
+html[dir="ltr"] .ipsButtonRow li:first-child > button, 
+html[dir="ltr"] .ipsButtonRow li:first-child > span {
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-right: 0;
+}
+
+.ipsButtonBar {
+	background: #2E3D49;
+}

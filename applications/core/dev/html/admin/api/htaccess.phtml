@@ -1,0 +1,13 @@
+<ips:template parameters="$error, $url" />
+{{if $error}}
+	<p class="ipsMessage ipsMessage_error">{lang="api_instructions_error" sprintf="(string)$url"}</p>
+{{endif}}
+{lang="api_instructions_intro"}
+<ol>
+	<li>{lang="api_instructions_1"}</li>
+	<li>{lang="api_instructions_2" sprintf="\IPS\ROOT_PATH"}</li>
+	<li>{lang="api_instructions_3"}</li>
+</ol>
+<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+	<a href="{url="app=core&module=applications&controller=api&tab=apiLogs&recheck=1"}" class="ipsButton ipsButton_primary">{lang="continue"}</a>
+</div>

@@ -1,0 +1,10 @@
+<ips:template parameters="$one, $two, $type='css'" />
+{{$id = md5(uniqid());}}
+<div class="ipsGrid">
+	<div class="ipsGrid_span6">
+		<textarea name="editor_one" id="{$id}_one" data-type="{$type}" data-role="editor">{$one}</textarea>
+	</div>
+	<div class="ipsGrid_span6">
+		<textarea name="editor_two" id="{$id}_two" data-type="{$type}" data-role="editor">{$two}</textarea>
+	</div>
+</div>

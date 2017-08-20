@@ -1,0 +1,9 @@
+<ips:template parameters="$member, $fields, $email" />
+
+{$email->language->addToStack("email_registration_notify", FALSE, array( 'sprintf' => array( \IPS\Settings::i()->board_name ) ) )}
+
+{{if \IPS\Settings::i()->reg_auth_type == 'admin' or \IPS\Settings::i()->reg_auth_type == 'admin_user'}}**{$email->language->addToStack("email_admin_approval_msg", FALSE)}**{{endif}}
+
+{$email->language->addToStack("go_to_this_user", FALSE, array( 'sprintf' => array( $member->name ) ) )}: {setting="base_url"}
+
+-- {setting="board_name"}

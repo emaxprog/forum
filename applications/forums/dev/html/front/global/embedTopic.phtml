@@ -1,0 +1,24 @@
+<ips:template parameters="$item, $url" />
+
+<div data-embedInfo-maxSize='500' class='ipsRichEmbed'>
+	{template="embedHeader" group="embed" app="core" params="$item, \IPS\Member::loggedIn()->language()->addToStack( 'x_created_topic_in', FALSE, array( 'sprintf' => array( $item->author()->name, $item->container()->_title ) ) ), $item->mapped('date'), $url"}
+	{{if count( $item->contentImages() )}}
+		{{$attachType = key( $item->contentImages()[0] );}}
+		{{$firstPhoto = \IPS\File::get( $attachType, $item->contentImages()[0][ $attachType ] );}}
+		<div class='ipsRichEmbed_masthead ipsRichEmbed_mastheadBg ipsType_center'>
+			<a href='{$url}' style='background-image: url( "{expression="str_replace( array( '(', ')' ), array( '\(', '\)' ), $firstPhoto->url )"}" )'>
+				<img src='{$firstPhoto->url}' class='ipsHide' alt=''>
+			</a>
+		</div>
+	{{endif}}
+	<div class='ipsPad'>
+		<h3 class='ipsRichEmbed_itemTitle ipsTruncate ipsTruncate_line ipsType_blendLinks'>
+			<a href='{$url}' title="{$item->mapped('title')}">{$item->mapped('title')}</a>
+		</h3>
+		<div class='ipsType_richText ipsType_medium ipsSpacer_top ipsSpacer_half' data-truncate='3'>
+			{$item->truncated(TRUE)|raw}
+		</div>
+
+		{template="embedItemStats" group="embed" app="core" params="$item"}
+	</div>
+</div>

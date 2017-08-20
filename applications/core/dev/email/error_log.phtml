@@ -1,0 +1,41 @@
+<ips:template parameters="$code, $message, $email" />
+
+{expression="$email->language->addToStack( 'email_error_log', FALSE, array( 'sprintf' => array( \IPS\Settings::i()->board_name ) ) )"}
+<br />
+<br />
+
+<table width='100%' cellpadding='15' cellspacing='0' border='0' style='background: #f9f9f9;'>
+	<tr>
+		<td dir='{dir}'>
+			<table width='100%' cellpadding='0' cellspacing='0' border='0' style='background: #f9f9f9;'>
+				<tr>
+					<td dir='{dir}' style="font-family: monaco, 'courier new', courier, monospace; font-size: 18px; font-weight: bold;">
+						#{$code}
+					</td>
+				</tr>
+				<tr style='line-height: 10px'>
+					<td dir='{dir}' height='10'><img src="{setting="base_url"}applications/core/interface/email/spacer.png" alt='' width="1" height="1" /></td>
+				</tr>
+				<tr>
+					<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">
+						{$message}
+					</td>
+				</tr>
+				<tr style='line-height: 10px'>
+					<td dir='{dir}' height='10'><img src="{setting="base_url"}applications/core/interface/email/spacer.png" alt='' width="1" height="1" /></td>
+				</tr>
+				<tr>
+					<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px; color: #8d8d8d;">
+						{$email->language->addToStack("email_error_user", FALSE)}: {member="name"} ({expression="\IPS\Request::i()->ipAddress()"})<br />
+						{$email->language->addToStack("email_error_date_app", FALSE, array( 'sprintf' => array( \IPS\DateTime::ts(time())->localeDate(), \IPS\Dispatcher::i()->application->_title ) ) )}
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br />
+{$email->language->addToStack("email_error_log_info", FALSE)}
+<br /><br />
+<em style='color: #8c8c8c'>&mdash; {setting="board_name"}</em>

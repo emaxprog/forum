@@ -1,0 +1,2 @@
+<ips:template parameters="$member, $email" />
+{$email->language->addToStack("unsubscribe_blurb", FALSE)} {$email->language->addToStack( 'unsubscribe', FALSE )}: {{if $member instanceof \IPS\Member}}{url="app=core&module=system&controller=unsubscribe&email=" seoTemplate="unsubscribe" base="front"}{$member->email}&key={expression="md5( $member->email . ':' . $member->members_pass_hash )"}{{else}}*|unsubscribe_url|*{{endif}}

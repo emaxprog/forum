@@ -1,0 +1,14 @@
+<ips:template parameters="$title, $content" />
+<div data-controller='core.admin.members.moderatorPermissions'>
+	<div class="ipsClearfix">
+		<div class="ipsJS_show ipsSpacer_bottom ipsSpacer_half">
+			<ul class="ipsList_inline ipsList_noSpacing">
+				<li><a href="#" class="ipsButton ipsButton_veryLight ipsButton_verySmall" data-role="checkAll">{lang="check_all"}</a></li>
+				<li><a href="#" class="ipsButton ipsButton_veryLight ipsButton_verySmall" data-role="uncheckAll">{lang="uncheck_all"}</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class='ipsBox'>
+		{$content|raw}
+	</div>
+</div>

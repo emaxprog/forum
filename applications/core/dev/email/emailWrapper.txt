@@ -1,0 +1,11 @@
+<ips:template parameters="$subject, $member, $content, $unsubscribe, $placeholderRecipient=FALSE, $introText='', $email" />
+
+{{if $member->member_id }}{$email->language->addToStack("email_greeting_member", FALSE, array( 'sprintf' => array( $member->name ) ) )}{{elseif $placeholderRecipient}}{$email->language->addToStack("email_greeting_member", FALSE, array( 'sprintf' => array( '*|member_name|*' ) ) )}{{endif}}
+{$content|raw}
+
+-----
+{{if $unsubscribe}}{$unsubscribe}{{endif}}
+
+{{if \IPS\Settings::i()->privacy_type != "none"}}{{if \IPS\Settings::i()->privacy_type == "internal"}}{url="app=core&module=system&controller=privacy" seoTemplate="privacy" base="front" plain="true"}{{else}}{setting="privacy_link"}){{endif}}{{endif}}
+
+{setting="board_name"}{{if \IPS\Settings::i()->site_address and \IPS\Settings::i()->site_address != 'null'}}, {address="\IPS\Settings::i()->site_address"}{{endif}}

@@ -1,0 +1,14 @@
+<ips:template parameters="$url, $itemLang, $number, $destination" />
+<div class="ipsPad ipsAreaBackground_reset">
+	<p class="ipsType_reset ipsSpacer_bottom">
+		{{if $destination}}
+			{lang="node_mass_content_move_blurb" sprintf="$number, $itemLang, $destination->_title"}
+		{{else}}
+			{lang="node_mass_content_delete_blurb" sprintf="$number, $itemLang"}
+		{{endif}}
+	</p>
+	<p class="ipsType_reset ipsSpacer_bottom">{lang="node_mass_content_blurb_2"}</p>
+</div>
+<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+	<a class="ipsButton ipsButton_primary" {{if $number}}href="{$url->setQueryString( 'confirm', 1 )}"{{else}}disabled{{endif}}>{lang="node_mass_content_confirm"}</a>
+</div>

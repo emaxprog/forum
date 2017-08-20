@@ -1,0 +1,7 @@
+.cNotificationBox .ipsPhotoPanel {
+	padding: 10px 15px;
+}
+
+	.cNotificationBox .ipsPhotoPanel > .fa {
+		font-size: 24px;
+	}

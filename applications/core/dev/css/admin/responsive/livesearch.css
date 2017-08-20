@@ -1,0 +1,14 @@
+/* PHONES */
+@media screen and (max-width: 767px) {
+	.cAcpSearch_areas,
+	.cAcpSearch_results {
+		position: static;
+	}
+
+	.cAcpSearch_areas {
+		width: auto;
+	}
+	.cAcpSearch_results {
+		width: auto;
+	}
+}

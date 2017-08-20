@@ -1,0 +1,30 @@
+.ipsTable th {
+	background: #fafafa;
+	font-size: 13px;
+	font-weight: 500;
+	border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+html[dir="ltr"] .ipsTable th {
+	padding: 11px 20px 11px 10px;
+}
+html[dir="rtl"] .ipsTable th {
+	padding: 11px 10px 11px 20px;
+}
+
+.ipsTable_sortable.ipsTable_sortableActive {
+	background: #3b6c99;
+}
+
+.ipsTable.ipsMatrix thead th {
+	background: #2E3D49;
+}
+html[dir="ltr"] .ipsTable.ipsMatrix thead th {
+	padding-left: 15px;
+}
+html[dir="rtl"] .ipsTable.ipsMatrix thead th {
+	padding-right: 15px;
+}
+
+.ipsTable td {
+	border-bottom-color: #ebebeb;
+}

@@ -1,0 +1,3 @@
+<ips:template parameters="$key, $member, $email" />
+*|unsubscribe_blurb|*
+{$email->language->addToStack("unsubscribe_blurb", FALSE)} {$email->language->addToStack( 'unfollow', FALSE )} ( *|unfollow_link|* ) {$email->language->addToStack( 'or', FALSE )} {$email->language->addToStack( 'adjust_notification_prefs', FALSE )} ( {url="app=core&module=system&controller=notifications&do=options&type={$key}" base="front" seoTemplate="notifications_options"} )

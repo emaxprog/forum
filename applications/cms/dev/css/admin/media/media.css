@@ -1,0 +1,138 @@
+.cMedia_manager {
+	margin: -30px;
+}
+
+.cMedia_managerToolbar {
+	background: #c1c1c7;
+	height: 66px;
+	padding-top: 15px;
+}
+
+.cMedia_manager > .ipsColumns > .ipsColumn {
+	padding: 0;
+	background: #fff;
+}
+html[dir="ltr"] .cMedia_manager > .ipsColumns > .ipsColumn_wide {
+	border-right: 4px solid #c1c1c7;
+}
+html[dir="rtl"] .cMedia_manager > .ipsColumns > .ipsColumn_wide {
+	border-left: 4px solid #c1c1c7;
+}
+
+.cMedia_manager > .ipsColumns > .ipsColumn_wide .cMedia_managerToolbar {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+html[dir="ltr"] .cMedia_manager > .ipsColumns > .ipsColumn_fluid .cMedia_managerToolbar {
+	padding-right: 15px;
+}
+html[dir="rtl"] .cMedia_manager > .ipsColumns > .ipsColumn_fluid .cMedia_managerToolbar {
+	padding-left: 15px;
+}
+
+/* TABS */
+#elMedia_sidebarTabs {
+	padding: 0;
+}
+
+	#elMedia_sidebarTabs .ipsTabs_item {
+		border: 0 !important;
+		text-align: center;
+		margin: 0;
+	}
+
+	#elMedia_sidebarTabs .ipsTabs_activeItem {
+		background: #fff;
+		color: #000;
+	}
+
+#elMedia_sidebar {
+	overflow: auto;
+}
+
+#elMedia_fileList,
+#elMedia_searchResults {
+	overflow: auto;
+}
+
+#elMedia_searchField {
+	color: #333;
+	line-height: 34px;
+	padding: 0 7px;
+}
+
+.cMedia_item {
+	padding: 15px 0 0;
+	text-align: center;
+	{prefix="transition" value="transform 0.1s ease-in-out"}
+}
+
+	.cMedia_item:hover {
+		{prefix="transform" value="scale(1.05)"}
+	}
+
+.cMedia_filename {
+	line-height: 22px;
+	border-radius: 22px;
+	padding: 0 10px;
+}
+
+.cMedia_item > div {
+	width: 100%;
+	height: 112px;
+	text-align: center;
+	margin: 0 auto;
+	padding: 5px;
+	margin-bottom: 7px;
+	line-height: 100px;
+	border: 1px solid transparent;
+}
+
+.cMedia_itemImage > div > img,
+.cMedia_item > div > .ipsNoThumb {
+	max-width: 100%;
+	max-height: 100px;
+}
+
+.cMedia_itemSelected > div {
+	background: rgba( 84, 144, 192, 0.2 );
+	border: 1px solid rgba( 84, 144, 192, 0.5 );
+	box-shadow: 0px 0px 10px rgba( 84, 144, 192, 0.2 );
+}
+
+.cMedia_itemSelected .cMedia_filename {
+	background: #417ba3;
+	color: #fff;
+}
+
+.cMedia_itemDisabled,
+.cMedia_treeDisabled {
+	opacity: 0.3;
+	pointer-events: none;
+}
+
+/* Sidebar */
+.cMedia_preview img,
+.cMedia_preview .ipsNoThumb {
+	max-width: 100%;
+	max-height: 200px;
+	margin: 0 auto;
+}
+
+.cMedia_preview img {
+	cursor: zoom-in;
+}
+
+/* ----- */
+.ipsMedia_preview {
+	text-align: center;
+}
+
+	.ipsMedia_preview img {
+		max-width: 100%;
+	}
+
+.ipsMedia_key input[type=text] {
+	max-width: none;
+}

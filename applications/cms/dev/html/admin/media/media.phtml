@@ -1,0 +1,98 @@
+<ips:template parameters="$tree" />
+
+{{$rootButtons = call_user_func( $tree->getRootButtons );}}
+
+<div data-controller='cms.admin.media.main' class='cMedia_manager'>
+	<div class='ipsColumns ipsColumns_collapsePhone'>
+		<div class='ipsColumn ipsColumn_wide'>
+			<div class='cMedia_managerToolbar'>
+				{{if $rootButtons['add_folder']}}
+					<a href='{$rootButtons['add_folder']['link']}' data-ipsDialog data-ipsDialog-title='{lang="cms_add_media_folder"}' class='ipsButton ipsButton_light ipsButton_small ipsButton_fullWidth' data-role='folderButton'><i class='fa fa-plus'></i> {lang="cms_add_media_folder"}</a>
+				{{endif}}
+			</div>
+			<div class="ipsTabs ipsTabs_stretch ipsClearfix acpFormTabBar" id="elMedia_sidebarTabs" data-ipsTabBar data-ipsTabBar-contentarea="#elMedia_sidebar" data-ipstabbar-updateurl="false">
+				<a href="#elMedia_sidebarTabs" data-action="expandTabs"><i class="fa fa-caret-down"></i></a>
+				<ul role='tablist'>
+					<li>
+						<a href="#" class="ipsTabs_item ipsTabs_activeItem" data-type="templates" id="elTab_folders" aria-selected="true">{lang="media_folders"}</a>
+					</li>
+					<li>
+						<a href="#" class="ipsTabs_item ipsTabs_itemDisabled" id='elTab_overview' data-type="css">{lang="media_file_overview"}</a>
+					</li>
+				</ul>
+			</div>
+			<div id='elMedia_sidebar' class='ipsAreaBackground_reset ipsScrollbar'>
+				<div id='ipsTabs_elMedia_sidebarTabs_elTab_folders_panel' class='ipsTabs_panel'>
+					{{$roots = call_user_func( $tree->getRoots );}}
+					<ul class='ipsTreeList' data-role='folderList'>
+						<li class='ipsTreeList_activeBranch ipsTreeList_activeNode' data-role="mediaFolder" data-folderID='0' data-loaded='true'>
+							<a href='{$tree->url->setQueryString( array('root' => 0 ) )}'>{lang="media_root_folder"}</a>
+							<ul>
+								{{foreach $roots as $id => $row}}
+									{template="folderRow" group="media" app="cms" params="$tree->url, $row"}
+								{{endforeach}}
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div id='ipsTabs_elMedia_sidebarTabs_elTab_overview_panel' class='ipsTabs_panel ipsPad' data-role='mediaSidebar'>
+					<div data-role='itemInformation'>
+						<div class='ipsAreaBackground_light cMedia_preview ipsType_center' data-role='itemPreview'></div>
+
+						<div class='ipsSpacer_top'>
+							<strong class='ipsType_minorHeading'>{lang="media_tag_title"}</strong>
+							<input type='text' class='ipsField_fullWidth' value='' data-role='itemTag'>
+							<p class='ipsType_small ipsType_light'>{lang="media_tag_desc"}</p>
+						</div>
+						<hr class='ipsHr'>
+
+						<ul class='ipsList_reset ipsSpacer_top'>
+							<li class='ipsSpacer_bottom ipsSpacer_half'>
+								<h3 class='ipsType_minorHeading'>{lang="media_filename"}</h3>
+								<p class='ipsType_reset ipsType_medium ipsType_break' data-role='itemFilename'></p>
+							</li>
+							<li class='ipsSpacer_bottom ipsSpacer_half'>
+								<h3 class='ipsType_minorHeading'>{lang="media_uploaded"}</h3>
+								<p class='ipsType_reset ipsType_medium' data-role='itemUploaded'></p>
+							</li>
+							<li class='ipsSpacer_bottom ipsSpacer_half'>
+								<h3 class='ipsType_minorHeading'>{lang="media_size"}</h3>
+								<p class='ipsType_reset ipsType_medium' data-role='itemFilesize'></p>
+							</li>
+							<li class='ipsSpacer_bottom ipsSpacer_half' data-role='itemDimensionsRow'>
+								<h3 class='ipsType_minorHeading'>{lang="media_dims"}</h3>
+								<p class='ipsType_reset ipsType_medium' data-role='itemDimensions'></p>
+							</li>
+						</ul>
+					</div>
+					<div data-role='multipleItems'>
+						<div class='ipsPad ipsType_large ipsType_light ipsType_center ipsSpacer_top ipsSpacer_double' data-role='multipleItemsMessage'></div>
+					</div>
+				</div>
+			</div>			
+		</div>
+		<div class='ipsColumn ipsColumn_fluid'>
+			<div class='cMedia_managerToolbar'>
+				<ul class='ipsToolList ipsToolList_horizontal'>
+					{{if $rootButtons['add_page']}}
+						<li class='ipsPos_left'><a href='{url="app=cms&module=pages&controller=media&do=upload"}' data-ipsDialog data-ipsDialog-forceReload data-ipsDialog-remoteSubmit data-ipsDialog-title='{lang="cms_add_media"}' class='ipsButton ipsButton_normal ipsButton_small ipsButton_fullWidth' data-role='uploadButton'><i class='fa fa-cloud-upload'></i> &nbsp;{lang="cms_add_media"}</a></li>
+					{{endif}}
+					<li class='ipsPos_left ipsHide' data-action='deleteFolder'><a href='{url="app=cms&module=pages&controller=media&do=delete"}' data-ipsDialog data-ipsDialog-forceReload data-ipsDialog-remoteVerify="false" data-ipsDialog-title='{lang="delete"}' class='ipsButton ipsButton_negative ipsButton_small ipsButton_fullWidth'><i class='fa fa-times'></i> {lang="cms_delete_folder_media"}</a></li>
+					<li class='ipsPos_left ipsHide' data-action='deleteSelected'><a href='#' class='ipsButton ipsButton_negative ipsButton_small ipsButton_fullWidth'><i class='fa fa-times'></i> {lang="cms_delete_selected_media"}</a></li>
+					<li class='ipsResponsive_showPhone ipsResponsive_block'><hr class='ipsHr'></li>
+					<li class='ipsPos_right'>
+						<input type='search' class='' data-role='mediaSearch' id='elMedia_searchField' placeholder='{lang="cms_search_media"}'>
+					</li>
+				</ul>
+			</div>
+			<div class='ipsPad ipsAreaBackground_reset ipsScrollbar' data-role="fileListing" id='elMedia_fileList' data-showing='root'>
+				<ul class='ipsGrid' data-ipsGrid data-ipsGrid-minItemSize='100' data-ipsGrid-maxItemSize='200'>
+					{{foreach $roots as $id => $data}}
+						{template="fileListing" group="media" app="cms" params="$tree->url, $data"}
+					{{endforeach}}
+				</ul>
+			</div>
+			<div class='ipsPad ipsAreaBackground_reset ipsScrollbar ipsHide' data-role="searchResults" id='elMedia_searchResults'></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,68 @@
+<ips:template parameters="$menu, $currentTab" />
+<div id='elMobileDrawer' class='ipsDrawer ipsHide'>
+	<div class='ipsDrawer_menu'>
+		<div class='ipsDrawer_content'>
+			<ul id='elUserNav_mobile' class='ipsList_inline signed_in ipsClearfix'>
+				<li><a href='../'><i class='fa fa-home'></i> {lang="site"}</a></li>
+				<li><a href='{url="app=core&module=members&controller=members&do=adminDetails"}'> <i class='fa fa-pencil'></i>&nbsp; {lang="my_details"}</a></li>
+				<li><a href='{url="app=core&module=system&controller=login&do=logout"}'><i class='fa fa-power-off'></i> {lang="sign_out"}</a></li>
+			</ul>
+			<ul class='ipsDrawer_list'>
+				{{foreach $menu['tabs'] as $tab => $items}}
+					<li class='ipsDrawer_itemParent'>
+						<h4 class='ipsDrawer_title'>
+							<span class='acpAppList_icon'><i class='fa fa-{lang="menutab__{$tab}_icon"}'></i></span>
+							<span class='acpAppList_app'>{lang="menutab__{$tab}"}</span>
+						</h4>
+						<ul class='ipsDrawer_list'>
+							<li data-action="back"><a href='#'>{lang="mobile_menu_back"}</a></li>
+							{{foreach $items as $appAndModule => $item}}
+								<li class='ipsDrawer_listTitle'>
+									{lang="menu__{$appAndModule}"}
+								</li>
+								{{foreach $item as $key => $url}}
+									<li>
+										<a href='{url="$url"}'>{lang="menu__{$appAndModule}_{$key}"}</a>
+									</li>
+								{{endforeach}}
+							{{endforeach}}
+						</ul>
+					</li>
+				{{endforeach}}
+			</ul>
+		</div>
+		
+		{{$languages = \IPS\Lang::getEnabledLanguages();}}
+		{{if count( \IPS\Theme::themes() ) > 1 || count( $languages ) > 1}}
+			<ul class='ipsList_inline ipsType_center ipsPad_half cMobileNav_utilities'>
+				{{if count( \IPS\Theme::themes() ) > 1}}
+					<li><a href='#' data-ipsMenu id='elNavThemeMob'>{lang="skin"} <i class='fa fa-angle-up'></i></a></li>
+				{{endif}}
+				{{if count( $languages ) > 1}}
+					<li><a href='#' data-ipsMenu id='elNavLangMob'>{lang="language"} <i class='fa fa-angle-up'></i></a></li>
+				{{endif}}
+			</ul>
+		{{endif}}
+
+		{{if count( $languages ) > 1}}
+			<ul id='elNavLangMob_menu' class='ipsMenu ipsMenu_selectable ipsHide'>
+			{{foreach $languages as $id => $lang }}
+				<li class='ipsMenu_item{{if \IPS\Member::loggedIn()->acp_language == $id || ( $lang->default && \IPS\Member::loggedIn()->acp_language === 0 )}} ipsMenu_itemChecked{{endif}}'>
+					<a href='{url="app=core&module=system&controller=language&id=$id" csrf="true"}'>{{if $lang->get__icon()}}<i class='{$lang->get__icon()}'></i> {{endif}}{$lang->title} {{if $lang->default}}{lang="default"}{{endif}}</a>
+				</li>
+			{{endforeach}}
+			</ul>
+		{{endif}}
+		{{if count( \IPS\Theme::themes() ) > 1}}
+			<ul id='elNavThemeMob_menu' class='ipsMenu ipsMenu_selectable ipsHide'>
+			{{foreach \IPS\Theme::themes() as $id => $set }}
+				{{if $set->canAccess()}}
+					<li class='ipsMenu_item{{if \IPS\Member::loggedIn()->acp_skin == $id || ($set->is_acp_default && \IPS\Member::loggedIn()->acp_skin === 0 )}} ipsMenu_itemChecked{{endif}}'>
+						<a href='{url="app=core&module=system&controller=theme&id=$id" csrf="true"}'>{lang="$set->_title"} {{if $set->is_acp_default}}{lang="default"}{{endif}}</a>
+					</li>
+				{{endif}}
+			{{endforeach}}
+			</ul>
+		{{endif}}
+	</div>
+</div>

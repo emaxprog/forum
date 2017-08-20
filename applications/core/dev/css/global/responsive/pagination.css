@@ -1,0 +1,154 @@
+/* BOTH */
+@media screen and (max-width: 979px) {
+	.ipsPagination.ipsPagination_mini a {
+		padding: 0 15px;
+	}
+}
+
+/* PHONES */
+@media screen and (max-width: 767px) {
+
+	/* Responsive pagination... */		
+	/* Step 1: Hide all the page numbers */
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_page:not( .ipsPagination_active ) {
+		display: none;
+	}
+
+	/* Step 2: Make the pagination a table and the buttons cells */
+	.ipsPagination {
+		display: table;
+		width: 100%;
+		padding: 0;
+		font-weight: bold;
+		margin-bottom: 15px;
+		position: relative;
+	}
+
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_first,
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_last,
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_prev,
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_next,
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_active {
+		display: table-cell;
+		text-align: center;
+		width: 1%;
+		z-index: 2000;
+		position: relative;
+	}
+
+	/* Step 3: make the first/last buttons small, the next/prev a bit wider */
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_first,
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_last {
+		max-width: 24px;
+	}
+
+	.ipsPagination .ipsPagination_next,
+	.ipsPagination .ipsPagination_prev {
+		min-width: 60px;
+	}
+
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_active {
+		width: 100%;
+	}
+
+	/* Step 4: Style the actual buttons */
+	.ipsPagination .ipsPagination_first a,
+	.ipsPagination .ipsPagination_last a,
+	.ipsPagination .ipsPagination_prev a,
+	.ipsPagination .ipsPagination_page a,
+	.ipsPagination .ipsPagination_next a {
+		margin: 0 3px 0 0;
+		display: block;
+		padding: 2px 10px;
+	}
+		.ipsPagination_mini .ipsPagination_first a,
+		.ipsPagination_mini .ipsPagination_last a,
+		.ipsPagination_mini .ipsPagination_prev a,
+		.ipsPagination_mini .ipsPagination_page a,
+		.ipsPagination_mini .ipsPagination_next a {
+			margin-right: 0;
+		}
+		
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_last a {
+		margin-right: 0;
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+
+	.ipsPagination:not( .ipsPagination_mini ) .ipsPagination_first a {
+		padding-left: 6px;
+	}
+
+	.ipsPagination .ipsPagination_prev a .fa,
+	.ipsPagination .ipsPagination_next a .fa {
+		opacity: 1;
+	}
+
+	/* Step 5: Do some trickery with the page jump so it serves as our counter */
+	/* We also hide the active page button - we only need it present for the space it provides but we don't want to see it */
+	.ipsPagination .ipsPagination_active {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.ipsPagination .ipsPagination_pageJump {
+		display: block;
+		margin: 0 !important;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		line-height: 30px;
+		text-align: center;
+		z-index: 1000;
+	}
+
+	.ipsPagination .ipsPagination_pageJump .fa {
+		display: none;
+	}
+
+	/* Step 6: Style the 'inactive' buttons that we don't show on desktop */
+	.ipsPagination > li.ipsPagination_inactive {
+		display: table-cell;
+		opacity: 0.35;
+		pointer-events: none;
+	}
+	/* End */
+
+	.ipsPagination_mini .ipsPagination_page {
+		display: inline-block;
+	}
+
+	html[dir="ltr"] .ipsPager_next a {
+		padding-right: 35px;
+	}
+	html[dir="rtl"] .ipsPager_next a {
+		padding-left: 35px;
+	}
+
+	html[dir="ltr"] .ipsPager_prev a {
+		padding-left: 35px;
+	}
+	html[dir="rtl"] .ipsPager_prev a {
+		padding-right: 35px;
+	}
+	
+	.ipsPager a:after {
+		font-size: 32px;
+	}
+
+	/* Mini pagination */
+	.ipsPagination.ipsPagination_mini {
+		display: block !important;
+		margin: 5px 0 -15px !important;
+		opacity: 1 !important;
+	}
+
+	/* Pager */
+	.ipsPager .ipsPager_next a, 
+	.ipsPager .ipsPager_prev a {
+		display: block;
+		max-width: 100%;
+	}
+}

@@ -1,0 +1,93 @@
+<ips:template parameters="$table, $headers, $rows" />
+{{if count( $rows )}} 
+	{{foreach $rows as $item}}
+		{{$sent = $item->sent ? true : false;}}
+		<!--{$item->id}-->
+		<li class='ipsDataItem {{if $item->scheduled > time()}}ipsDataItem_unread{{endif}} {{if $item->failed}}ipsDataItem_error{{endif}} ipsClearfix' itemprop="itemListElement">
+			<div class='ipsDataItem_icon'>
+				{template="userPhoto" app="core" group="global" params="$item->author(), 'tiny'"}
+			</div>
+			<div class="ipsDataItem_generic ipsDataItem_size3 ipsPos_top">
+				<div class="ipsType_light ipsType_center ipsType_large ipsSpacer_top ipsSpacer_half">
+					{{foreach $item->share_to as $service}}
+						{{$sharer = $item->getPromoter( $service );}}
+						{{if !$item->serviceFailed( $service )}}
+							<span class='ipsBadge ipsBadge_icon ipsBadge_small ipsBadge_style1 ipsFaded'>
+								<i data-ipsTooltip title='{lang="promote_service_success" sprintf="$sharer->key"}' class="fa fa-{$sharer::$icon}"></i>
+							</span>
+						{{else}}
+							<span class='ipsBadge ipsBadge_icon ipsBadge_small ipsBadge_negative'>
+								<i data-ipsToolTip title="{lang="promote_service_failed"}" class="fa fa-{$sharer::$icon}"></i>
+							</span>
+						{{endif}}
+					{{endforeach}}
+				</div>
+			</div>
+			<div class='ipsDataItem_main'>
+				{{if $item->failed and $item->failed < 4}}
+					<span class='ipsType_large'>
+						<i class="fa fa-exclamation-triangle" data-ipsToolTip title="{lang="promote_failed_count" pluralize="$item->failed"}"></i>
+					</span>
+				{{elseif $item->failed and $item->failed > 3}}
+					<span class='ipsType_large'>
+						<i class="fa fa-exclamation-triangle ipsType_negative" data-ipsToolTip title="{lang="promote_failed_totally"}"></i>
+					</span>
+				{{elseif $item->scheduled > time()}}
+					<span class='ipsType_large'>
+						<i class="fa fa-circle"></i>
+					</span>
+					<strong>
+				{{endif}}
+						<a href="{$item->object()->url()}" class='ipsDataItem_title {{if $item->failed and $item->failed > 3}}ipsType_light{{endif}}'>{$item->objectTitle}</a>
+				{{if $item->scheduled > time()}}
+					</strong>
+				{{endif}}
+				<br>
+				{{if $item->scheduled > time()}}
+					<span class="ipsType_light">{lang="promote_time_scheduled"} {$item->scheduledDateTime()->html()|raw} {$item->scheduledDateTime()->localeTime(FALSE)|raw}</span>
+				{{elseif $item->failed and $item->failed < 4}}
+					<span class="ipsType_light">{lang="promote_time_failed_resend"} {{if $item->scheduled < time()}}{lang="promote_time_failed_resend_soon"}{{else}}{datetime="$item->scheduled"}{{endif}}</span>
+				{{elseif $item->failed and $item->failed > 3}}
+					<span class="ipsType_light">{lang="promote_failed_totally_description"}</span>
+				{{elseif $sent}}
+					<span class="ipsType_light">
+						{lang="promote_time_sent"} {datetime="$item->sent"}
+						&middot; <a href="{url="app=core&module=promote&controller=promote&do=history&promote_id={$item->id}" seoTemplate="promote_history"}" data-ipsDialog-size="narrow" data-ipsDialog data-ipsDialog-title="{lang="promote_view_history"}">{lang="promote_view_history"}</a>
+					</span>
+				{{else}}
+					<span class="ipsType_light">{lang="promote_time_sending_soon"}</span>
+				{{endif}}
+				{{$photoCount = count( $item->imageObjects() );}}
+				{{if $photoCount}}
+					&nbsp; <span class="ipsType_light"><i class="fa fa-photo"></i> {lang="promote_photo_count" pluralize="$photoCount"}</span>
+				{{endif}}
+			</div>
+			{{if $item->scheduled > time() or ! $sent}}
+				<div class="ipsDataItem_generic ipsDataItem_size9 ipsPos_top ipsType_right">
+					{{if ! $sent}}
+						<a href="{url="app=core&module=promote&controller=promote&do=delete&promote_id={$item->id}" seoTemplate="promote_manage" csrf="true"}" class="ipsButton ipsButton_verySmall ipsButton_light ipsButton_narrow ipsPos_right" data-ipsToolTip title="{lang="delete"}"><i class="fa fa-times-circle"></i></a>
+					{{endif}}
+					{{if $item->scheduled > time()}}
+						<a href="{url="app=core&module=promote&controller=promote&do=manage&promote_id={$item->id}" seoTemplate="promote"}" data-action="edit" data-ipsDialog ipsDialog-title="{lang="promote_social_button"}" class="ipsButton ipsButton_verySmall ipsButton_light ipsButton_narrow ipsPos_right"><i class="fa fa-pencil"></i></a>
+					{{endif}}
+				</div>
+			{{elseif $sent}}
+				<div class="ipsDataItem_generic ipsDataItem_size10 ipsPos_top ipsType_right">
+					{{foreach $item->share_to as $service}}
+						{{if $url = $item->getPublishedUrl( $service )}}
+							{{$sharer = $item->getPromoter( $service );}}
+							<a href="{$url}" class="cShareLink cShareLink_{$service} ipsPos_right" title='{lang="promote_shared_on" sprintf="$sharer->key"}' data-ipsTooltip><i class="fa fa-{$sharer::$icon}"></i></a>
+						{{endif}}
+					{{endforeach}}
+				</div>
+				{{$internalText = $item->getText('internal');}}
+				<div class="ipsDataItem_generic {{if $internalText}}ipsDataItem_size3 cPromoteModCP_edit{{else}}ipsDataItem_size1{{endif}} ipsPos_top ipsType_right">
+					<a href="{url="app=core&module=promote&controller=promote&do=delete&promote_id={$item->id}" seoTemplate="promote_manage" csrf="true"}" data-action="delete" class="ipsButton ipsButton_verySmall ipsButton_light ipsButton_narrow ipsPos_right" data-ipsToolTip title="{lang="delete"}"><i class="fa fa-times-circle"></i></a>
+					{{if $internalText}}
+					<a href="{url="app=core&module=promote&controller=promote&do=edit&promote_id={$item->id}" seoTemplate="promote_manage" csrf="true"}" data-ipsDialog data-ipsDialog-title="{lang="edit"}" data-action="edit" class="ipsButton ipsButton_verySmall ipsButton_light ipsButton_narrow ipsPos_right" data-ipsToolTip title="{lang="edit"}"><i class="fa fa-pencil"></i></a>
+					{{endif}}
+				</div>
+			{{endif}}			
+		</li>
+	{{endforeach}}
+{{endif}}

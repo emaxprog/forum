@@ -1,0 +1,56 @@
+<ips:template parameters="$data, $params, $exceptions, $response, $additionalClasses" />
+<div class="ipsPad cApi">
+	<div class='ipsBox ipsPad'>
+		<h2 class="ipsType_sectionHead"><code>{expression="\IPS\Api\Controller::parseEndpointForDisplay( $data['title'], 'large' )" raw="true"}</code></h2>
+		<hr class='ipsHr'>
+		<p class="ipsType_normal">{expression="nl2br( $data['description'] )"}</p>
+		<hr class='ipsHr'>
+		
+		<h3 class="ipsType_sectionHead {{if $params}}ipsSpacer_bottom ipsSpacer_half{{endif}}">{lang="api_parameters"}</h3>
+		{{if $params}}
+			{template="referenceTable" group="api" params="$params"}
+		{{else}}
+			<div class='ipsType_normal ipsType_light'>{lang="api_parameters_none"}</div>
+		{{endif}}
+		
+		<hr class='ipsHr'>
+
+		<h3 class="ipsType_sectionHead  {{if $exceptions}}ipsSpacer_bottom ipsSpacer_half{{endif}}">{lang="api_exceptions"}</h3>
+		{{if $exceptions}}
+			<table class="ipsTable">
+				<tr>
+					<th>{lang="api_exception_code"}</th>
+					<th>{lang="api_exception_message"}</th>
+					<th>{lang="api_exception_desc"}</th>
+				</tr>
+				{{foreach $exceptions as $exception}}
+					<tr>
+						<td><code>{$exception[0]}</code></td>
+						<td><code>{$exception[1]}</code></td>
+						<td>{$exception[2]}</td>
+					</tr>
+				{{endforeach}}
+			</table>
+		{{else}}
+			<div class='ipsType_normal ipsType_light'>{lang="api_exceptions_none"}</div>
+		{{endif}}
+		
+		<hr class='ipsHr'>
+
+		<h3 class="ipsType_sectionHead {{if $response}}ipsSpacer_bottom ipsSpacer_half{{endif}}">{lang="api_response"}</h3>
+		{{if $response}}
+			{$response|raw}
+		{{else}}
+			<div class='ipsType_normal ipsType_light'>{lang="api_response_none"}</div>
+		{{endif}}
+		
+		<hr class='ipsHr'>
+
+		{{foreach $additionalClasses as $class => $data}}
+			<a id="object-{$class}"></a>
+			<h3 class="ipsType_sectionHead ipsSpacer_bottom ipsSpacer_half ipsType_blendLinks"><code>{$class}</code> {lang="api_object"}</h3>
+			{$data|raw}
+			<hr class='ipsHr'>
+		{{endforeach}}
+	</div>
+</div>

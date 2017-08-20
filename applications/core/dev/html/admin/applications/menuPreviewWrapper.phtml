@@ -1,0 +1,30 @@
+<ips:template parameters="$html, $title=NULL" />
+<!DOCTYPE html>
+<html lang="{expression="\IPS\Member::loggedIn()->language()->bcp47()"}" dir="{{if member.language()->isrtl}}rtl{{else}}ltr{{endif}}">
+	<head>
+		<title>{expression="output.getTitle( $title )"}</title>
+		{template="includeMeta" app="core" group="global" location="global" params=""}
+		{template="includeCSS" app="core" group="global" location="global" params=""}
+		{template="includeJS" if="theme.js_include != 'footer'" app="core" group="global" location="global" params=""}
+	</head>
+	<body class="ipsApp ipsPad ipsClearfix ipsLayout_container" id='elMenuManagerPreview_body'>
+		<div id="ipsLayout_header">
+			<header>
+			</header>
+		</div>
+		{$html|raw}
+		<main>
+			<div id="ipsLayout_contentArea">
+				<div id="ipsLayout_contentWrapper">					
+					<div id="ipsLayout_mainArea">
+						<p class='ipsType_center ipsType_normal ipsType_light'>
+							{lang="menu_manager_preview_note"}
+						</p>
+					</div>
+				</div>
+			</div>
+		</main>
+		{template="includeJS" if="theme.js_include == 'footer'" app="core" group="global" location="global" params=""}
+		{expression="output.endBodyCode" raw="true"}
+	</body>
+</html>

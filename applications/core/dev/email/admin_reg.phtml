@@ -1,0 +1,44 @@
+<ips:template parameters="$member, $password, $email" />
+
+{expression="$email->language->addToStack( 'email_admin_reg', FALSE, array( 'sprintf' => array( \IPS\Settings::i()->board_name ) ) )"}
+<br />
+<br />
+<table width='100%' cellpadding='15' cellspacing='0' border='0' style='background: #f9f9f9;'>
+	<tr>
+		<td dir='{dir}'>
+			<table width='100%' cellpadding='0' cellspacing='0' border='0' style='background: #f9f9f9;' class='responsive_table'>
+				{{if $member->name}}
+					<tr class='responsive_row'>
+						<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;"><strong>{$email->language->addToStack("username", FALSE)}:</strong></td>
+						<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">{$member->name}</td>
+					</tr>
+				{{endif}}
+				{{if $member->email}}
+					<tr class='responsive_row'>
+						<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;"><strong>{$email->language->addToStack("email_address", FALSE)}:</strong></td>
+						<td dir='{dir}' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;">{$member->email}</td>
+					</tr>
+				{{endif}}
+				{{if $password}}
+					<tr class='responsive_row'>
+						<td dir='{dir}' width='150' style="font-family: 'Helvetica Neue', helvetica, sans-serif; font-size: 14px;"><strong>{$email->language->addToStack("password", FALSE)}:</strong></td>
+						<td dir='{dir}' style="font-family: monaco, 'Courier New', courier, monospace; font-size: 14px;">{$password}</td>
+					</tr>
+				{{endif}}
+			</table>
+		</td>
+	</tr>
+</table>
+<br />
+
+{{if $password}}
+	{$email->language->addToStack("email_plz_change_password", FALSE)}
+	<br />
+{{endif}}
+
+<br />
+
+<a href='{setting="base_url"}' style="color: #ffffff; font-family: 'Helvetica Neue', helvetica, sans-serif; text-decoration: none; font-size: 12px; background: {setting="email_color"}; line-height: 32px; padding: 0 10px; display: inline-block; border-radius: 3px;">{expression="$email->language->addToStack( 'email_go_to_site', FALSE, array( 'sprintf' => array( \IPS\Settings::i()->board_name ) ) )"}</a>
+
+<br /><br />
+<em style='color: #8c8c8c'>&mdash; {setting="board_name"}</em>

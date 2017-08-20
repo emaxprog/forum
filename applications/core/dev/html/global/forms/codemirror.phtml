@@ -1,0 +1,54 @@
+<ips:template parameters="$name, $value='', $required, $maxlength=NULL, $disabled=FALSE, $class='', $placeholder='', $tags=array(), $mode='htmlmixed', $id=NULL, $height='300px'" />
+{{if !empty( $tags )}}
+<div class='ipsColumns ipsColumns_collapseTablet' data-controller='core.global.editor.customtags' data-tagFieldType='codemirror' data-tagFieldID='elCodemirror_{{if $id}}{$id}{{else}}{$name}{{endif}}'>
+	<div class='ipsColumn_fluid ipsColumn'>
+{{endif}}
+<div class='ipsAreaBackground ipsPad_half' data-role="editor">
+	<textarea
+	name="{$name}"
+	id='elCodemirror_{{if $id}}{$id}{{else}}{$name}{{endif}}'
+	value="{expression="htmlentities( $value, \IPS\HTMLENTITIES, 'UTF-8', TRUE )"}"
+	class="ipsField_fullWidth {$class}"
+	{{if $maxlength !== NULL}}maxlength="{$maxlength}"{{endif}}
+	{{if $required === TRUE}}aria-required='true'{{endif}}
+	{{if $disabled}}disabled aria-disabled='true'{{endif}}
+	{{if $placeholder}}placeholder="{$placeholder}"{{endif}}
+	data-control="codemirror"
+	data-mode="{$mode}"
+	{{if $height}}data-height="{$height}"{{endif}}
+>{$value}</textarea>
+</div>
+{{if !empty( $tags )}}
+	</div>
+	<div class='ipsColumn_medium ipsColumn ipsAreaBackground_light ipsComposeArea_sidebar {{if !isset( \IPS\Request::i()->cookie['tagSidebar'] )}}ipsComposeArea_sidebarOpen{{else}}ipsComposeArea_sidebarClosed{{endif}}' data-codemirrorid='elCodemirror_{{if $id}}{$id}{{else}}{$name}{{endif}}'>
+		<a href='#' data-action='tagsToggle' data-ipsTooltip data-ipsTooltip-label="{lang="toggle_sidebar"}">{lang="toggle_sidebar"}</a>
+		<h3 class='ipsAreaBackground ipsPad_half ipsType_reset' data-role='tagsHeader'>{lang="editor_tags"}</h3>
+		<ul class='ipsList_reset ipsScrollbar' data-role='tagsList'>
+		{{foreach $tags as $tagKey => $tagValue}}
+			{{if is_array( $tagValue )}}
+				<li>
+					<ul class='ipsList_reset'>
+						<li><h4 class='ipsAreaBackground ipsPad_half ipsType_reset'>{lang="$tagKey"}</h4></li>
+						<li>
+							<ul class='ipsList_reset'>
+							{{foreach $tagValue as $key => $value}}
+								<li class='ipsPad_half'>
+									<label data-tagKey="{$key}">{$key}</label>
+									<div class='ipsType_light ipsType_small'>{$value}</div>
+								</li>
+							{{endforeach}}
+							</ul>
+						</li>
+					</ul>
+				</li>
+			{{else}}
+				<li class='ipsPad_half'>
+					<label data-tagKey="{$tagKey}">{$tagKey}</label>
+					<div class='ipsType_light ipsType_small'>{$tagValue}</div>
+				</li>
+			{{endif}}
+		{{endforeach}}
+		</ul>
+	</div>
+</div>
+{{endif}}

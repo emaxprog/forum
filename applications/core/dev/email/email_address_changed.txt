@@ -1,0 +1,9 @@
+<ips:template parameters="$member, $oldEmail, $email" />
+{$email->language->addToStack("email_email_address_changed", FALSE, array( 'sprintf' => \IPS\Settings::i()->board_name ) )}
+
+=====
+{$email->language->addToStack("email_new_email", FALSE)}: {$member->email}
+{$email->language->addToStack("email_old_email", FALSE)}: {$oldEmail}
+=====
+
+-- {setting="board_name"}

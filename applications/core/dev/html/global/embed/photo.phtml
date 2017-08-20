@@ -1,0 +1,4 @@
+<ips:template parameters="$imageUrl, $linkUrl=NULL, $title=NULL, $width=NULL, $height=NULL" />
+{{if $linkUrl}}<a href='{$linkUrl}' target='_blank' rel='noopener'>{{endif}}
+    <img src='{$imageUrl}' alt='{$title}' class='ipsImage' {{if $width}}width="{$width}"{{endif}} {{if $height}}height="{$height}"{{endif}}>
+{{if $linkUrl}}</a>{{endif}}

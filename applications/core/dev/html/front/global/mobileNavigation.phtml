@@ -1,0 +1,119 @@
+<ips:template parameters=" " />
+<div id='elMobileDrawer' class='ipsDrawer ipsHide'>
+	<a href='#' class='ipsDrawer_close' data-action='close'><span>&times;</span></a>
+	<div class='ipsDrawer_menu'>
+		<div class='ipsDrawer_content'>
+			{{if \IPS\Member::loggedIn()->member_id}}
+				<ul id='elUserNav_mobile' class='ipsList_inline signed_in ipsClearfix'>
+					<li class='cNotifications cUserNav_icon'>
+						<a href='#elMobNotifications_menu' id='elMobNotifications' data-ipsMenu data-ipsMenu-menuID='elFullNotifications_menu' data-ipsMenu-closeOnClick='false'>
+							<i class='fa fa-bell'></i> <span class='ipsNotificationCount {{if !member.notification_cnt}}ipsHide{{endif}}' data-notificationType='notify'>{member="notification_cnt"}</span>
+						</a>
+					</li>
+					{{if !\IPS\Member::loggedIn()->members_disable_pm and \IPS\Member::loggedIn()->canAccessModule( \IPS\Application\Module::get( 'core', 'messaging' ) )}}
+						<li class='cInbox cUserNav_icon'>
+							<a href='#elMobInbox_menu' id='elMobInbox' data-ipsMenu data-ipsMenu-menuID='elFullInbox_menu' data-ipsMenu-closeOnClick='false'>
+								<i class='fa fa-envelope'></i> <span class='ipsNotificationCount {{if !\IPS\Member::loggedIn()->msg_count_new}}ipsHide{{endif}}' data-notificationType='inbox'>{member="msg_count_new"}</span>
+							</a>
+						</li>
+					{{endif}}
+					{{if \IPS\Member::loggedIn()->canAccessModule( \IPS\Application\Module::get( 'core', 'modcp' ) ) and \IPS\Member::loggedIn()->modPermission('can_view_reports')}}
+						<li class='cReports cUserNav_icon'>
+							<a href='#elMobReports_menu' id='elMobReports' data-ipsMenu data-ipsMenu-menuID='elFullReports_menu' data-ipsMenu-closeOnClick='false'>
+								<i class='fa fa-warning'></i> {{if \IPS\Member::loggedIn()->reportCount()}}<span class='ipsNotificationCount' data-notificationType='reports'>{member="reportCount()"}</span>{{endif}}
+							</a>
+						</li>
+					{{endif}}
+				</ul>
+			{{endif}}
+
+			<div class='ipsSpacer_bottom ipsPad'>
+				<ul class='ipsToolList ipsToolList_vertical'>
+					{{if \IPS\Member::loggedIn()->member_id}}
+						<li>
+							<a href='{url="app=core&module=system&controller=login&do=logout" csrf="true"}' class='ipsButton ipsButton_light ipsButton_small ipsButton_fullWidth'>
+								{{if isset( $_SESSION['logged_in_as_key'] )}}{lang="switch_to_account" sprintf="$_SESSION['logged_in_from']['name']"}{{else}}{lang="sign_out"}{{endif}}
+							</a>
+						</li>
+					{{else}}
+						<li>
+							<a href='{url="app=core&module=system&controller=login" seoTemplate="login" protocol="\IPS\Settings::i()->logins_over_https"}' class='ipsButton ipsButton_light ipsButton_small ipsButton_fullWidth'>{lang="sign_in"}</a>
+						</li>
+						{{if \IPS\Settings::i()->allow_reg}}
+							<li>
+								<a href='{url="app=core&module=system&controller=register" seoTemplate="register" protocol="\IPS\Settings::i()->logins_over_https"}' {{if \IPS\Settings::i()->quick_register}}data-ipsDialog data-ipsDialog-size='narrow' data-ipsDialog-title='{lang="sign_up"}'{{endif}} id='elRegisterButton_mobile' class='ipsButton ipsButton_small ipsButton_fullWidth ipsButton_important'>{lang="sign_up"}</a>
+							</li>
+						{{endif}}
+					{{endif}}
+
+					{{if \IPS\Member::loggedIn()->member_id}}
+						<li>
+							<a class='ipsButton ipsButton_small ipsButton_primary ipsButton_fullWidth' data-action="markSiteRead" data-controller="core.front.core.markRead" href='{url="app=core&module=system&controller=markread" seoTemplate="mark_site_as_read" csrf="true"}'><i class='fa fa-check'></i> {lang="mark_site_read_button"}</a>
+						</li>
+					{{endif}}
+				</ul>
+			</div>
+
+			<ul class='ipsDrawer_list'>
+				{{if \IPS\Member::loggedIn()->member_id}}
+					<li class='ipsDrawer_itemParent'>
+						<h4 class='ipsDrawer_title'><a href='#'>{lang="mobile_menu_account"}</a></h4>
+						<ul class='ipsDrawer_list'>
+							<li data-action="back"><a href='#'>{lang="mobile_menu_back"}</a></li>
+							{{if \IPS\Member::loggedIn()->canAccessModule( \IPS\Application\Module::get( 'core', 'members', 'front' ) )}}
+								<li><a href='{member="url()"}' title='{lang="view_my_profile"}'>{lang="menu_profile"}</a></li>
+							{{endif}}
+							{{if \IPS\Member::loggedIn()->group['g_attach_max'] != 0}}
+								<li><a href='{url="app=core&module=system&controller=attachments" seoTemplate="attachments"}'>{lang="my_attachments"}</a></li>
+							{{endif}}
+                            {{if \IPS\Member::loggedIn()->hasAcpRestriction( 'core', 'promotion', 'promote_manage' ) and \IPS\core\Promote::promoteServices()}}
+                            <li><a href='{url="app=core&module=promote&controller=promote&do=view" seoTemplate="promote_manage"}'>{lang="promote_manage_link"}</a></li>
+                            {{endif}}
+							<li><a href='{url="app=core&module=system&controller=followed" seoTemplate="followed_content"}'>{lang="menu_followed_content"}</a></li>
+							<li id='elAccountSettingsLinkMobile'><a href='{url="app=core&module=system&controller=settings" seoTemplate="settings"}' title='{lang="edit_account_settings"}'>{lang="menu_settings"}</a></li>
+							{{if settings.ignore_system_on}}
+			                	<li><a href='{url="app=core&module=system&controller=ignore" seoTemplate="ignore"}'>{lang="menu_manage_ignore"}</a></li>
+			                {{endif}}
+							{{if ( \IPS\Member::loggedIn()->canAccessModule( \IPS\Application\Module::get( 'core', 'modcp' ) ) AND \IPS\Member::loggedIn()->modPermission() ) or ( \IPS\Member::loggedIn()->isAdmin() AND !\IPS\Settings::i()->security_remove_acp_link )}}
+								{{if \IPS\Member::loggedIn()->canAccessModule( \IPS\Application\Module::get( 'core', 'modcp' ) ) AND \IPS\Member::loggedIn()->modPermission()}}
+									<li><a href='{url="app=core&module=modcp" seoTemplate="modcp"}'>{lang="menu_modcp"}</a></li>
+								{{endif}}
+								{{if \IPS\Member::loggedIn()->isAdmin() AND !\IPS\Settings::i()->security_remove_acp_link }}
+									<li><a href='{expression="\IPS\Http\Url::baseURL( ( \IPS\Settings::i()->logins_over_https ) ? \IPS\Http\Url::PROTOCOL_HTTPS : \IPS\Http\Url::PROTOCOL_RELATIVE ) . \IPS\CP_DIRECTORY"}' target='_blank'>{lang="menu_admincp"} <i class='fa fa-lock'></i></a></li>
+								{{endif}}
+							{{endif}}
+						</ul>
+					</li>
+				{{endif}}
+
+				{{$primaryBars = \IPS\core\FrontNavigation::i()->roots();}}
+				{{$subBars = \IPS\core\FrontNavigation::i()->subBars();}}
+				
+				{{foreach $primaryBars as $id => $item}}
+					{{if $item->canView()}}
+						{{$children = $item->children();}}
+						{{if ( $subBars && isset( $subBars[ $id ] ) && count( $subBars[ $id ] ) ) || $children}}
+							<li class='ipsDrawer_itemParent'>
+								<h4 class='ipsDrawer_title'><a href='#'>{$item->title()}</a></h4>
+								<ul class='ipsDrawer_list'>
+									<li data-action="back"><a href='#'>{lang="mobile_menu_back"}</a></li>
+									{{if $item->link() && $item->link() !== '#'}}
+										<li><a href='{$item->link()}'>{$item->title()}</a></li>
+									{{endif}}
+									{{if $children}}
+										{template="mobileNavigationChildren" group="global" app="core" params="$children"}
+									{{endif}}
+									{{if $subBars && isset( $subBars[ $id ] ) && count( $subBars[ $id ] )}}
+										{template="mobileNavigationChildren" group="global" app="core" params="$subBars[ $id ]"}
+									{{endif}}	
+								</ul>
+							</li>
+						{{else}}
+							<li><a href='{$item->link()}' {{if method_exists( $item, 'target' ) AND $item->target()}}target='{$item->target()}'{{endif}}>{$item->title()}</a></li>
+						{{endif}}
+					{{endif}}
+				{{endforeach}}
+			</ul>
+		</div>
+	</div>
+</div>

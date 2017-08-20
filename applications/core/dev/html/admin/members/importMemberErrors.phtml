@@ -1,0 +1,12 @@
+<ips:template parameters="$errors" />
+<div class="ipsPad">
+	<p class="ipsType_normal">{lang="import_member_errors"}</p>
+	<ul>
+		{{foreach $errors as $error}}
+			<li>{$error}</li>
+		{{endforeach}}
+	</ul>
+</div>
+<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+	<a class="ipsButton ipsButton_primary" href="{url="app=core&module=members&controller=members"}">{lang="step_finish"}</a>
+</div>

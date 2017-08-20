@@ -1,0 +1,73 @@
+<ips:template parameters="$club, $approvalQueue=FALSE" />
+{{$coverPhoto = $club->coverPhoto( FALSE );}}
+{{$memberStatus = $club->memberStatus( \IPS\Member::loggedIn() );}}
+
+<div class="cClubCard {{if settings.clubs_require_approval and !$club->approved}}{{if $approvalQueue}}ipsBox{{else}}ipsModerated{{endif}}{{endif}}" {{if $approvalQueue}}id="elApprovePanel"{{endif}}>
+	{{if in_array( $memberStatus, array( $club::STATUS_MEMBER, $club::STATUS_MODERATOR, $club::STATUS_LEADER ) )}}
+		<span class='ipsBadge ipsBadge_positive ipsBadge_icon ipsBadge_large cClubCard_status' data-ipsTooltip title="{lang="club_member"}"><i class='fa fa-check'></i></span>
+	{{elseif $memberStatus == $club::STATUS_INVITED}}
+		<span class='ipsBadge ipsBadge_neutral ipsBadge_icon ipsBadge_large cClubCard_status' data-ipsTooltip title="{lang="club_invited"}"><i class='fa fa-envelope'></i></span>
+	{{elseif $memberStatus == $club::STATUS_REQUESTED}}
+		<span class='ipsBadge ipsBadge_intermediary ipsBadge_icon ipsBadge_large cClubCard_status' data-ipsTooltip title="{lang="club_requested_desc_short"}"><i class='fa fa-clock-o'></i></span>
+	{{endif}}
+
+	<div class='ipsPageHead_special' data-controller='core.front.core.coverPhoto' data-url="{$club->url()->csrf()}" data-coverOffset='{$coverPhoto->offset}'>
+		{{if $coverPhoto->file}}
+			<div class='ipsCoverPhoto_container'>
+				<img src='{$coverPhoto->file->url}' class='ipsCoverPhoto_photo' alt=''>
+			</div>
+		{{endif}}
+		{template="clubIcon" group="clubs" app="core" params="$club, 'medium'"}
+		<h2 class="ipsType_reset cClubCard_title ipsType_blendLinks">
+			<span class='ipsPageHead_barText_small ipsTruncate ipsTruncate_line'>
+				{{if !$approvalQueue and settings.clubs_require_approval and !$club->approved}}
+					<span class="ipsBadge ipsBadge_small ipsBadge_icon ipsBadge_warning" data-ipsTooltip title='{lang="club_unapproved"}'><i class='fa fa-eye-slash'></i></span>
+				{{elseif $club->featured}}
+					<span class="ipsBadge ipsBadge_small ipsBadge_icon ipsBadge_positive" data-ipsTooltip title='{lang="featured"}'><i class='fa fa-star'></i></span>
+				{{endif}}
+				<a href='{$club->url()}' title="{$club->name}">{$club->name}</a>
+			</span>
+		</h2>
+	</div>
+
+	<p class='ipsType_reset ipsType_light ipsType_medium cClubCard_info'>
+		{lang="club_{$club->type}"}
+		{{if $club->type !== $club::TYPE_PUBLIC}}
+			&nbsp;&middot;&nbsp;
+			{lang="club_members_count" pluralize="$club->members"}
+		{{endif}}
+		{{if $club->last_activity}}
+			&nbsp;&middot;&nbsp;
+			{lang="club_last_activity"} {datetime="$club->last_activity"}
+		{{endif}}
+	</p>
+
+	<div class='ipsPad'>
+		{{if $club->about}}
+			<div class='ipsType_richText ipsType_medium' data-ipsTruncate data-ipsTruncate-type='remove' data-ipsTruncate-size='2 lines'>
+				{$club->about}
+			</div>
+		{{else}}
+			<div class='ipsType_light ipsType_medium'>
+				<em>{lang="club_no_about"}</em>
+			</div>
+		{{endif}}
+		
+		{{if $club->type != $club::TYPE_PUBLIC}}
+			<hr class='ipsHr ipsHr_small'>
+	
+			<ul class='cClubCard_memberList ipsList_inline ipsList_noSpacing'>
+				{{foreach $club->randomTenMembers() as $member}}
+					<li>
+						{template="userPhotoFromData" group="global" app="core" params="$member['core_members']['member_id'], $member['core_members']['name'], $member['core_members']['members_seo_name'], \IPS\Member::photoUrl( $member['core_members'] ), 'tiny'"}
+					</li>
+				{{endforeach}}
+			</ul>
+	
+			{{if $club->canJoin()}}
+				<hr class='ipsHr ipsHr_small'>
+				<a class="ipsButton ipsButton_small ipsButton_primary ipsButton_fullWidth" href="{$club->url()->setQueryString('do', 'join')->csrf()}">{lang="club_join"}</a>
+			{{endif}}
+		{{endif}}
+	</div>
+</div>

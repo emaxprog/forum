@@ -1,0 +1,2 @@
+<ips:template parameters="$member, $email" />
+{$email->language->addToStack("unsubscribe_blurb", FALSE)} {$email->language->addToStack( 'adjust_digest_prefs', FALSE )}: {url="app=core&module=system&controller=followed&filter=digest" base="front" seoTemplate="followed_content"}

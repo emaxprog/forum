@@ -1,0 +1,7 @@
+<ips:template parameters="$reportedTime" />
+<div class="ipsPad">
+	{lang="sever_time_fail_desc" sprintf="$reportedTime->setTimezone( new \DateTimeZone('UTC') )"}
+</div>
+<div class="ipsAreaBackground_light ipsClearfix ipsPad ipsType_center">
+	<a href="{url="app=core&module=support&controller=support"}" class="ipsButton ipsButton_alternate">{lang="support_check_again"}</a>
+</div>

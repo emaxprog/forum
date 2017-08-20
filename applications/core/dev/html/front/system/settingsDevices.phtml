@@ -1,0 +1,142 @@
+<ips:template parameters="$devices, $ipAddresses" />
+<h2 class="ipsType_sectionHead">{lang="ucp_devices"}</h2>
+<hr class="ipsHr">
+<p class="ipsType_normal ipsSpacer_bottom ipsSpacer_double">{lang="device_management_info"}&nbsp; <a href='{url="app=core&module=system&controller=settings&do=secureAccount" seoTemplate="settings_secure"}'>{lang="device_list_secure_account"}</a></p>
+{{if count( $devices )}}
+	{{foreach $devices as $device}}
+		<div class="ipsBox ipsSpacer_bottom ipsClearfix">
+			<div class="ipsAreaBackground_light ipsClearfix ipsPad_half">
+				<div class="ipsPos_left">
+					{{if $device->userAgent()->platform === 'Macintosh'}}
+						<img src="{resource="logos/devices/mac.png" location="interface"}" width="64">
+					{{elseif $device->userAgent()->platform === 'Android' or $device->userAgent()->platform === 'Windows Phone'}}
+						<img src="{resource="logos/devices/android.png" location="interface"}" width="64">
+					{{elseif $device->userAgent()->platform === 'iPad'}}
+						<img src="{resource="logos/devices/ipad.png" location="interface"}" width="64">
+					{{elseif $device->userAgent()->platform === 'iPhone'}}
+						<img src="{resource="logos/devices/iphone.png" location="interface"}" width="64">
+					{{else}}
+						<img src="{resource="logos/devices/pc.png" location="interface"}" width="64">
+					{{endif}}
+				</div>
+				{{if $device->login_key}}
+					<div class="ipsPos_right ipsPad">
+						<a href="{url="=core&module=system&controller=settings&area=devices&do=disableAutomaticLogin&device={$device->device_key}" seoTemplate="settings_devices" csrf=""}" class="ipsButton ipsButton_negative ipsButton_small">
+							{{if isset( request.cookie['device_key'] ) and request.cookie['device_key'] === $device->device_key}}
+								{lang="disable_automatic_login"}
+							{{else}}
+								{lang="sign_out"}
+							{{endif}}
+						</a>
+					</div>
+				{{endif}}
+				<div class="ipsPad_half">
+					<h2 class="ipsType_sectionHead">
+						{$device->userAgent()->platform}
+					</h2>
+					<br>
+					{{if isset( request.cookie['device_key'] ) and request.cookie['device_key'] === $device->device_key}}
+						{lang="current_device"}
+					{{else}}
+						{lang="device_last_loggedin" sprintf="\IPS\DateTime::ts( $device->last_seen )->relative()"}
+					{{endif}}
+				</div>
+			</div>
+			<div class="ipsPad">
+				<ul class="ipsDataList">
+					<li class="ipsDataItem">
+						<span class="ipsDataItem_generic ipsDataItem_size6">
+							<strong>{lang="device_table_user_agent"}</strong>
+						</span>
+						<span class="ipsDataItem_generic">
+							{{if in_array( $device->userAgent()->browser, array( 'Android Browser', 'AppleWebKit', 'Camino', 'Chrome', 'Edge', 'Firefox', 'IEMobile', 'Midori', 'MSIE', 'Opera', 'Puffin', 'Safari', 'SamsungBrowser', 'Silk', 'UCBrowser', 'Vivaldi' ) )}}
+								{{$browser = str_replace( ' ', '', $device->userAgent()->browser );}}
+								<img src="{resource="logos/browsers/{$browser}.png" location="interface"}" width="24"> &nbsp; 
+							{{endif}}
+							{$device->userAgent()->browser} {$device->userAgent()->browserVersion}
+						</span>
+					</li>
+					{{if $device->login_handler and $handlers = \IPS\Login::handlers( TRUE ) and isset( $handlers[ $device->login_handler ] ) and $handler = $handlers[ $device->login_handler ] and method_exists( $handler, 'loginForm' )}}
+						<li class="ipsDataItem">
+							<span class="ipsDataItem_generic ipsDataItem_size6">
+								<strong>{lang="device_table_login_handler"}</strong>
+							</span>
+							<span class="ipsDataItem_generic">
+								{{if $handler::$logo}}
+									<img src="{resource="logos/login/{$handler::$logo}.png" location="interface"}" width="24"> &nbsp; 
+								{{endif}}
+								{$handler->_title}
+							</span>
+						</li>
+					{{endif}}
+					<li class="ipsDataItem">
+						<div class="ipsDataItem_generic ipsDataItem_size6">
+							<strong>{{if settings.ipsgeoip}}{lang="device_last_locations"}*{{else}}{lang="device_last_logins"}{{endif}}</strong>
+						</div>
+						<div class="ipsDataItem_generic">
+							<ul class="ipsDataList">
+								{{foreach $ipAddresses[ $device->device_key ] as $ipAddress => $details}}
+									<li class="ipsDataItem">
+										<span class="ipsDataItem_generic">
+											{{if settings.ipsgeoip}}
+												{$details['location']}
+											{{else}}
+												{$ipAddress}
+											{{endif}}
+											 &nbsp; <span class="ipsType_light">{datetime="$details['date']"}</span>
+										</span>
+									</li>
+								{{endforeach}}
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	{{endforeach}}
+	{{if settings.ipsgeoip}}
+		<p class="ipsType_light ipsType_small">* {lang="ip_geolocation_info"}</p>
+	{{endif}}
+{{else}}
+	{{$userAgent = \IPS\Http\UserAgent::parse();}}
+	<div class="ipsBox ipsSpacer_bottom ipsClearfix">
+		<div class="ipsAreaBackground_light ipsClearfix ipsPad_half">
+			<div class="ipsPos_left">
+				{{if $userAgent->platform === 'Macintosh'}}
+					<img src="{resource="logos/devices/mac.png" location="interface"}" width="64">
+				{{elseif $userAgent->platform === 'Android' or $userAgent->platform === 'Windows Phone'}}
+					<img src="{resource="logos/devices/android.png" location="interface"}" width="64">
+				{{elseif $userAgent->platform === 'iPad'}}
+					<img src="{resource="logos/devices/ipad.png" location="interface"}" width="64">
+				{{elseif $userAgent->platform === 'iPhone'}}
+					<img src="{resource="logos/devices/iphone.png" location="interface"}" width="64">
+				{{else}}
+					<img src="{resource="logos/devices/pc.png" location="interface"}" width="64">
+				{{endif}}
+			</div>
+			<div class="ipsPad_half">
+				<h2 class="ipsType_sectionHead">
+					{$userAgent->platform}
+				</h2>
+				<br>
+				{lang="current_device"}
+			</div>
+		</div>
+		<div class="ipsPad">
+			<ul class="ipsDataList">
+				<li class="ipsDataItem">
+					<span class="ipsDataItem_generic ipsDataItem_size6">
+						<strong>{lang="device_table_user_agent"}</strong>
+					</span>
+					<span class="ipsDataItem_generic">
+						{{if in_array( $userAgent->browser, array( 'Android Browser', 'AppleWebKit', 'Camino', 'Chrome', 'Edge', 'Firefox', 'IEMobile', 'Midori', 'MSIE', 'Opera', 'Puffin', 'Safari', 'SamsungBrowser', 'Silk', 'UCBrowser', 'Vivaldi' ) )}}
+							{{$browser = str_replace( ' ', '', $userAgent->browser );}}
+							<img src="{resource="logos/browsers/{$browser}.png" location="interface"}" width="24">
+						{{endif}}
+						{$userAgent->browser} {$userAgent->browserVersion}
+					</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+{{endif}}

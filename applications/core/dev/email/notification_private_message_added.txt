@@ -1,0 +1,7 @@
+<ips:template parameters="$message, $added, $email" />
+
+{$email->language->addToStack("messenger_notify_add_title", FALSE, array( 'sprintf' => array( $added->name ) ) )}
+
+{$email->language->addToStack("email_url_to_message", FALSE)}: {$message->url()}
+
+-- {setting="board_name"}

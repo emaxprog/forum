@@ -1,0 +1,34 @@
+<ips:template parameters="$block, $embedKey" />
+
+<div class="ipsMessage ipsMessage_info">
+    {lang="embed_message"}
+</div>
+
+<div data-controller='cms.admin.pages.embed'>
+	<div class='ipsPhotoPanel ipsPhotoPanel_mini ipsSpacer_top ipsSpacer_double'>
+		<span class='ipsPos_left ipsBadge ipsBadge_large ipsBadge_icon ipsBadge_positive'>1</span>
+		<div>
+			<h2 class='ipsType_sectionHead'>{lang="embed_1_title"}</h2>
+			<p>{lang="embed_1_desc"}</p>
+
+			<div class='ipsAreaBackground ipsPad'>
+				<input type='checkbox' id='elEmbedInherit' checked> <span class='ipsType_medium'>{lang="embed_1_toggle"}</span>
+				<textarea rows='2' spellcheck='false' class='ipsType_monospace ipsSpacer_top ipsSpacer_half' data-role='blockCode'>&lt;div id='block_{$embedKey}' data-blockID='{$block->key}' class='ipsExternalWidget' data-inheritStyle='true'&gt;&lt;/div&gt;</textarea>
+			</div>
+		</div>
+	</div>
+
+	<hr class='ipsHr'>
+
+	<div class='ipsPhotoPanel ipsPhotoPanel_mini'>
+		<span class='ipsPos_left ipsBadge ipsBadge_large ipsBadge_icon ipsBadge_positive'>2</span>
+		<div>
+			<h2 class='ipsType_sectionHead'>{lang="embed_2_title"}</h2>
+			<p>{lang="embed_2_desc"}</p>
+
+			<div class='ipsAreaBackground ipsPad'>
+				<textarea rows='2' spellcheck='false' class='ipsType_monospace'>&lt;script type='text/javascript' src='{url="applications/cms/interface/external/external.js" base="none"}' id='ipsWidgetLoader'&gt;&lt;/script&gt;</textarea>
+			</div>
+		</div>
+	</div>
+</div>

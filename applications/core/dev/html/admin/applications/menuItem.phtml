@@ -1,0 +1,6 @@
+<ips:template parameters="$item, $id" />
+
+<div class='cMenuManager_leaf' data-role="menuItem" data-itemID='{$id}'>
+	{template="menuItemTools" group="applications" app="core" params="$item, $id"}
+	<h3 class='cMenuManager_leafTitle'>{$item->title()}</h3>
+</div>

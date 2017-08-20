@@ -1,0 +1,5 @@
+<ips:template parameters="$container, $member, $contentClass, $email" />
+
+{$email->language->addToStack("email_new_content_unapproved_bulk_plain", FALSE, array( 'sprintf' => array( $member->name, $email->language->addToStack( $contentClass::$title . '_pl', FALSE ) ) ) )} {$container->_title}
+
+-- {setting="board_name"}
