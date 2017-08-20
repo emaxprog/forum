@@ -843,7 +843,7 @@ class _Forum extends \IPS\Node\Model implements \IPS\Node\Permissions
 		$form->add( new \IPS\Helpers\Form\Translatable( 'forum_name', NULL, TRUE, array( 'app' => 'forums', 'key' => ( $this->id ? "forums_forum_{$this->id}" : NULL ) ) ) );
 		$form->add( new \IPS\Helpers\Form\Translatable( 'forum_description', NULL, FALSE, array( 'app' => 'forums', 'key' => ( $this->id ? "forums_forum_{$this->id}_desc" : NULL ), 'editor' => array( 'app' => 'forums', 'key' => 'Forums', 'autoSaveKey' => ( $this->id ? "forums-forum-{$this->id}" : "forums-new-forum" ), 'attachIds' => $this->id ? array( $this->id, NULL, 'description' ) : NULL, 'minimize' => 'forum_description_placeholder' ) ) ) );
 //        $form->add( new \IPS\Helpers\Form\Upload( 'my_upload_field', NULL, TRUE, array( 'storageExtension' => 'app_Key' ) ) );
-        $form->add( new \IPS\Helpers\Form\Upload( 'forum_preview', $this->preview ? \IPS\File::get( 'forums_Icons', $this->preview ) : NULL, TRUE, array( 'image' => TRUE, 'storageExtension' => 'forums_Previews' ), NULL, NULL, NULL, 'forum_preview' ) );
+        $form->add( new \IPS\Helpers\Form\Upload( 'forum_preview', $this->preview ? \IPS\File::get( 'forums_Previews', $this->preview ) : NULL, TRUE, array( 'image' => TRUE, 'storageExtension' => 'forums_Previews' ), NULL, NULL, NULL, 'forum_preview' ) );
 
 
         $type = 'normal';
