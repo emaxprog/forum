@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8842347b-1c11-430f-9484-871890b14d62" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/uploads/monthly_2017_08/2222.jpg.7fb39731a6d7929c135e04f54b87d395.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/applications/forums/sources/Forum/Forum.php" afterPath="$PROJECT_DIR$/applications/forums/sources/Forum/Forum.php" />
     </list>
@@ -28,8 +29,8 @@
       <file leaf-file-name="Forum.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/applications/forums/sources/Forum/Forum.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="845" column="116" lean-forward="false" selection-start-line="845" selection-start-column="116" selection-end-line="845" selection-end-column="116" />
+            <state relative-caret-position="123">
+              <caret line="845" column="149" lean-forward="false" selection-start-line="845" selection-start-column="149" selection-end-line="845" selection-end-column="149" />
               <folding />
             </state>
           </provider>
@@ -565,12 +566,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1503130690745</updated>
-      <workItem from="1503130692615" duration="7205000" />
+      <workItem from="1503130692615" duration="8488000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7205000" />
+    <option name="totallyTimeSpent" value="8488000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="36" width="1366" height="732" extended-state="6" />
@@ -663,8 +664,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/applications/forums/sources/Forum/Forum.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="845" column="116" lean-forward="false" selection-start-line="845" selection-start-column="116" selection-end-line="845" selection-end-column="116" />
+        <state relative-caret-position="123">
+          <caret line="845" column="149" lean-forward="false" selection-start-line="845" selection-start-column="149" selection-end-line="845" selection-end-column="149" />
           <folding />
         </state>
       </provider>
